@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { PlusCircle, ArrowLeft } from 'lucide-react';
+import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface TaskDetailPageProps {
@@ -43,12 +43,20 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
               Project: {task.project.name}
             </p>
           </div>
-          <Link href={`/projects/${projectId}/tasks/${taskId}/subtasks/new`}>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              New Subtask
-            </Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link href={`/projects/${projectId}/tasks/${taskId}/edit`}>
+              <Button variant="outline">
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Task
+              </Button>
+            </Link>
+            <Link href={`/projects/${projectId}/tasks/${taskId}/subtasks/new`}>
+              <Button>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                New Subtask
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 

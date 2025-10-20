@@ -15,7 +15,6 @@ export function CreateSubtaskForm({ taskId }: CreateSubtaskFormProps) {
   return (
     <Form formConfig={formConfig}>
       <div className="space-y-6">
-        <DynamicFormField fieldName={fieldNames.taskId} />
         <DynamicFormField fieldName={fieldNames.name} />
         <DynamicFormField fieldName={fieldNames.content} />
       </div>

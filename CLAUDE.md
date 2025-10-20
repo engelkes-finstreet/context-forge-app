@@ -375,6 +375,35 @@ export function CreateXForm() {
 - `hidden` - Hidden field (for IDs, metadata)
 - More types available via `DynamicFormField`
 
+### Important: Hidden Fields
+
+**DO NOT render `DynamicFormField` components for hidden fields.** Hidden fields should only be defined in the form config but not rendered in the form component.
+
+**Why?** Hidden fields are meant to pass metadata (like IDs) through the form without displaying them to the user. The form values are automatically passed to the server action, including hidden fields, even if they're not rendered.
+
+**Example:**
+
+```typescript
+// ❌ WRONG - Don't render hidden fields
+<Form formConfig={formConfig}>
+  <div className="space-y-6">
+    <DynamicFormField fieldName={fieldNames.taskId} /> {/* Hidden field */}
+    <DynamicFormField fieldName={fieldNames.name} />
+  </div>
+</Form>
+
+// ✅ CORRECT - Only render visible fields
+<Form formConfig={formConfig}>
+  <div className="space-y-6">
+    <DynamicFormField fieldName={fieldNames.name} />
+    <DynamicFormField fieldName={fieldNames.content} />
+    {/* taskId is in form config but not rendered */}
+  </div>
+</Form>
+```
+
+The hidden field values are still included in the form submission through the `defaultValues` in the form config.
+
 ---
 
 ## Service Layer Pattern
@@ -727,3 +756,4 @@ Potential features to add:
 ## License
 
 [Your License Here]
+- I want you to only commit and push changes if I explicitly tell you to do so. Always use the github cli for all github related actions

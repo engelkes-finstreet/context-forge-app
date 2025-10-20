@@ -15,7 +15,6 @@ export function CreateTaskForm({ projectId }: CreateTaskFormProps) {
   return (
     <Form formConfig={formConfig}>
       <div className="space-y-6">
-        <DynamicFormField fieldName={fieldNames.projectId} />
         <DynamicFormField fieldName={fieldNames.name} />
         <DynamicFormField fieldName={fieldNames.sharedContext} />
       </div>
