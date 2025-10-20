@@ -108,16 +108,25 @@ model Task {
   @@map("tasks")
 }
 
+enum SubtaskType {
+  GENERIC
+  INQUIRY_PROCESS
+  FORM
+  MODAL
+}
+
 model Subtask {
-  id        String   @id @default(cuid())
+  id        String       @id @default(cuid())
   taskId    String
   name      String
-  content   String   @db.Text
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  type      SubtaskType  @default(GENERIC)
+  content   String       @db.Text
+  metadata  Json?
+  order     Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 
-  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  task      Task         @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
   @@index([taskId])
   @@map("subtasks")

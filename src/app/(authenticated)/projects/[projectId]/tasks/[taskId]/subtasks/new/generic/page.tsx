@@ -1,61 +1,63 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { SubtaskService } from '@/lib/services/subtask-service';
+import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { EditSubtaskForm } from '@/features/subtasks/components/forms/edit-subtask/edit-subtask-form';
+import { CreateGenericSubtaskForm } from '@/features/subtasks/components/forms/generic-subtask/create-subtask-form';
 import { ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
 import { getTypeConfig } from '@/features/subtasks/config/type-config';
+import { SubtaskType } from '@/features/subtasks/types/subtask-types';
+import { Badge } from '@/components/ui/badge';
 
-interface EditSubtaskPageProps {
+interface NewGenericSubtaskPageProps {
   params: Promise<{
     projectId: string;
     taskId: string;
-    subtaskId: string;
   }>;
 }
 
-export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) {
-  const { projectId, taskId, subtaskId } = await params;
-  const subtask = await SubtaskService.getSubtaskById(subtaskId);
+/**
+ * Generic Subtask Creation Page (Step 2 of 2-step wizard)
+ *
+ * Displays the form for creating a generic subtask after type selection.
+ */
+export default async function NewGenericSubtaskPage({ params }: NewGenericSubtaskPageProps) {
+  const { projectId, taskId } = await params;
+  const task = await TaskService.getTaskById(taskId);
 
-  if (!subtask || subtask.taskId !== taskId || subtask.task.projectId !== projectId) {
+  if (!task || task.projectId !== projectId) {
     notFound();
   }
 
-  const typeConfig = getTypeConfig(subtask.type);
+  const typeConfig = getTypeConfig(SubtaskType.GENERIC);
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <Link href={`/projects/${projectId}/tasks/${taskId}`}>
+        <Link href={`/projects/${projectId}/tasks/${taskId}/subtasks/new`}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to {subtask.task.name}
+            Back to Type Selection
           </Button>
         </Link>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold">Edit Subtask</h1>
+          <h1 className="text-3xl font-bold">Create Generic Subtask</h1>
           <Badge variant={typeConfig.badgeVariant}>
             {typeConfig.icon} {typeConfig.label}
           </Badge>
         </div>
         <p className="text-muted-foreground">
-          Update subtask in {subtask.task.name}
-        </p>
-        <p className="text-muted-foreground text-sm mt-1">
-          Note: Subtask type cannot be changed after creation
+          {typeConfig.description}
         </p>
       </div>
 
-      {subtask.task.sharedContext && (
+      {task.sharedContext && (
         <Alert>
           <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
           <AlertDescription className="prose prose-sm max-w-none mt-2">
             <pre className="whitespace-pre-wrap text-sm">
-              {subtask.task.sharedContext}
+              {task.sharedContext}
             </pre>
           </AlertDescription>
         </Alert>
@@ -65,19 +67,11 @@ export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) 
         <CardHeader>
           <CardTitle>Subtask Details</CardTitle>
           <CardDescription>
-            Update the subtask name and content (supports Markdown)
+            Define the subtask name and content (supports Markdown)
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <EditSubtaskForm
-            subtaskId={subtaskId}
-            taskId={taskId}
-            projectId={projectId}
-            defaultValues={{
-              name: subtask.name,
-              content: subtask.content,
-            }}
-          />
+          <CreateGenericSubtaskForm taskId={taskId} />
         </CardContent>
       </Card>
     </div>

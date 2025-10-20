@@ -2,10 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CreateSubtaskForm } from '@/features/subtasks/components/forms/create-subtask/create-subtask-form';
+import { TypeSelector } from '@/features/subtasks/components/type-selector/type-selector';
 import { ArrowLeft } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface NewSubtaskPageProps {
   params: Promise<{
@@ -14,6 +12,12 @@ interface NewSubtaskPageProps {
   }>;
 }
 
+/**
+ * Type Selection Page (Step 1 of 2-step wizard)
+ *
+ * Allows users to select which type of subtask to create.
+ * After selection, navigates to the type-specific form page.
+ */
 export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   const { projectId, taskId } = await params;
   const task = await TaskService.getTaskById(taskId);
@@ -31,34 +35,9 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
             Back to {task.name}
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold">Create New Subtask</h1>
-        <p className="text-muted-foreground mt-2">
-          Add a new subtask to {task.name}
-        </p>
       </div>
 
-      {task.sharedContext && (
-        <Alert>
-          <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-          <AlertDescription className="prose prose-sm max-w-none mt-2">
-            <pre className="whitespace-pre-wrap text-sm">
-              {task.sharedContext}
-            </pre>
-          </AlertDescription>
-        </Alert>
-      )}
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Subtask Details</CardTitle>
-          <CardDescription>
-            Define the subtask name and content (supports Markdown)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CreateSubtaskForm taskId={taskId} />
-        </CardContent>
-      </Card>
+      <TypeSelector projectId={projectId} taskId={taskId} />
     </div>
   );
 }

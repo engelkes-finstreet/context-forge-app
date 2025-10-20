@@ -4,12 +4,67 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import type { CreateSubtaskInput, UpdateSubtaskInput } from "@/lib/validations/subtask-schema";
+import type { CreateGenericSubtaskFormInput } from "@/lib/validations/forms/generic-subtask-form-schema";
+import { SubtaskType } from "@/features/subtasks/types/subtask-types";
 
 export type SubtaskFormState = {
   error: string | null;
   message: string | null;
 } | null;
 
+/**
+ * Create Generic Subtask Action
+ *
+ * Transforms form input (CreateGenericSubtaskFormInput) into database input (CreateSubtaskInput)
+ * by adding the type and metadata fields.
+ *
+ * Flow:
+ * 1. Receive form data from user
+ * 2. Add type: GENERIC and metadata: null
+ * 3. Create subtask via service
+ * 4. Redirect to task detail page
+ */
+export async function createGenericSubtaskAction(
+  state: SubtaskFormState,
+  formData: CreateGenericSubtaskFormInput
+): Promise<SubtaskFormState> {
+  let subtask;
+  let task;
+
+  try {
+    // Transform form input to database input
+    const subtaskInput: CreateSubtaskInput = {
+      ...formData,
+      type: SubtaskType.GENERIC,
+      metadata: null, // Generic type has no metadata
+    };
+
+    subtask = await SubtaskService.createSubtask(subtaskInput);
+
+    // Get task to find projectId for revalidation
+    task = await SubtaskService.getSubtaskById(subtask.id).then((s) => s?.task);
+  } catch (error) {
+    console.error("Failed to create subtask:", error);
+    return {
+      error: error instanceof Error ? error.message : "Failed to create subtask",
+      message: null,
+    };
+  }
+
+  if (task) {
+    revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
+    redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+  }
+
+  return {
+    error: null,
+    message: "Subtask created successfully",
+  };
+}
+
+/**
+ * @deprecated Use type-specific actions (createGenericSubtaskAction, etc.) instead
+ */
 export async function createSubtaskAction(
   state: SubtaskFormState,
   data: CreateSubtaskInput

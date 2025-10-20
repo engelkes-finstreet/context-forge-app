@@ -3,22 +3,31 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { createSubtaskSchema, CreateSubtaskInput } from '@/lib/validations/subtask-schema';
-import { createSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
+import {
+  createGenericSubtaskFormSchema,
+  CreateGenericSubtaskFormInput
+} from '@/lib/validations/forms/generic-subtask-form-schema';
+import { createGenericSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 
-const createSubtaskFormId = 'create-subtask-form';
+const createSubtaskFormId = 'create-generic-subtask-form';
 
-export function useCreateSubtaskFormConfig(taskId: string): FormConfig<SubtaskFormState, CreateSubtaskInput> {
+/**
+ * Form configuration for creating a Generic subtask
+ *
+ * Uses the form schema (CreateGenericSubtaskFormInput) which contains only
+ * the fields the user inputs. The server action will add type and metadata.
+ */
+export function useCreateGenericSubtaskFormConfig(taskId: string): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
-  const defaultValues: DeepPartial<CreateSubtaskInput> = {
+  const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
     name: '',
     content: '',
   };
 
-  const fields: FormFieldsType<CreateSubtaskInput> = {
+  const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
     taskId: {
       type: 'hidden',
     },
@@ -39,9 +48,9 @@ export function useCreateSubtaskFormConfig(taskId: string): FormConfig<SubtaskFo
   return {
     fields,
     defaultValues,
-    schema: createSubtaskSchema,
+    schema: createGenericSubtaskFormSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: createSubtaskAction,
+    serverAction: createGenericSubtaskAction,
     formId: createSubtaskFormId,
     useErrorAction: () => {
       return (state: SubtaskFormState) => {
