@@ -77,3 +77,48 @@ model Verification {
   @@unique([identifier, value])
   @@map("verifications")
 }
+
+// Context Forge Models
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tasks       Task[]
+
+  @@map("projects")
+}
+
+model Task {
+  id            String   @id @default(cuid())
+  projectId     String
+  name          String
+  sharedContext String   @db.Text
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  subtasks      Subtask[]
+
+  @@index([projectId])
+  @@map("tasks")
+}
+
+model Subtask {
+  id        String   @id @default(cuid())
+  taskId    String
+  name      String
+  content   String   @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@map("subtasks")
+}

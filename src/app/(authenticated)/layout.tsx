@@ -19,7 +19,7 @@ export default async function AuthenticatedLayout({
   return (
     <>
       <MainNav />
-      <main className="container mx-auto pt-8">{children}</main>
+      <main className="container mx-auto pt-8 px-4">{children}</main>
     </>
   );
 }
