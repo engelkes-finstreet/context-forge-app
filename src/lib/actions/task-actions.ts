@@ -14,11 +14,10 @@ export async function createTaskAction(
   state: TaskFormState,
   data: CreateTaskInput
 ): Promise<TaskFormState> {
-  try {
-    const task = await TaskService.createTask(data);
+  let task;
 
-    revalidatePath(`/projects/${task.projectId}`);
-    redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+  try {
+    task = await TaskService.createTask(data);
   } catch (error) {
     console.error("Failed to create task:", error);
     return {
@@ -26,6 +25,9 @@ export async function createTaskAction(
       message: null,
     };
   }
+
+  revalidatePath(`/projects/${task.projectId}`);
+  redirect(`/projects/${task.projectId}/tasks/${task.id}`);
 }
 
 export async function updateTaskAction(
@@ -53,6 +55,8 @@ export async function updateTaskAction(
 }
 
 export async function deleteTask(id: string): Promise<{ error: string | null }> {
+  let projectId: string;
+
   try {
     const task = await TaskService.getTaskById(id);
     if (!task) {
@@ -61,17 +65,17 @@ export async function deleteTask(id: string): Promise<{ error: string | null }> 
       };
     }
 
-    const projectId = task.projectId;
+    projectId = task.projectId;
     await TaskService.deleteTask(id);
-
-    revalidatePath(`/projects/${projectId}`);
-    redirect(`/projects/${projectId}`);
   } catch (error) {
     console.error("Failed to delete task:", error);
     return {
       error: error instanceof Error ? error.message : "Failed to delete task",
     };
   }
+
+  revalidatePath(`/projects/${projectId}`);
+  redirect(`/projects/${projectId}`);
 }
 
 export async function reorderTasks(
@@ -80,14 +84,13 @@ export async function reorderTasks(
 ): Promise<{ error: string | null }> {
   try {
     await TaskService.reorderTasks(projectId, taskIds);
-
-    revalidatePath(`/projects/${projectId}`);
-
-    return { error: null };
   } catch (error) {
     console.error("Failed to reorder tasks:", error);
     return {
       error: error instanceof Error ? error.message : "Failed to reorder tasks",
     };
   }
+
+  revalidatePath(`/projects/${projectId}`);
+  return { error: null };
 }

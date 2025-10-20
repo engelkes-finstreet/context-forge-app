@@ -14,11 +14,10 @@ export async function createProjectAction(
   state: ProjectFormState,
   data: CreateProjectInput
 ): Promise<ProjectFormState> {
-  try {
-    const project = await ProjectService.createProject(data);
+  let project;
 
-    revalidatePath("/projects");
-    redirect(`/projects/${project.id}`);
+  try {
+    project = await ProjectService.createProject(data);
   } catch (error) {
     console.error("Failed to create project:", error);
     return {
@@ -26,6 +25,9 @@ export async function createProjectAction(
       message: null,
     };
   }
+
+  revalidatePath("/projects");
+  redirect(`/projects/${project.id}`);
 }
 
 export async function updateProjectAction(
@@ -55,13 +57,13 @@ export async function updateProjectAction(
 export async function deleteProject(id: string): Promise<{ error: string | null }> {
   try {
     await ProjectService.deleteProject(id);
-
-    revalidatePath("/projects");
-    redirect("/projects");
   } catch (error) {
     console.error("Failed to delete project:", error);
     return {
       error: error instanceof Error ? error.message : "Failed to delete project",
     };
   }
+
+  revalidatePath("/projects");
+  redirect("/projects");
 }

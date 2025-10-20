@@ -14,20 +14,14 @@ export async function createSubtaskAction(
   state: SubtaskFormState,
   data: CreateSubtaskInput
 ): Promise<SubtaskFormState> {
+  let subtask;
+  let task;
+
   try {
-    const subtask = await SubtaskService.createSubtask(data);
+    subtask = await SubtaskService.createSubtask(data);
 
     // Get task to find projectId for revalidation
-    const task = await SubtaskService.getSubtaskById(subtask.id).then((s) => s?.task);
-    if (task) {
-      revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-      redirect(`/projects/${task.projectId}/tasks/${task.id}`);
-    }
-
-    return {
-      error: null,
-      message: "Subtask created successfully",
-    };
+    task = await SubtaskService.getSubtaskById(subtask.id).then((s) => s?.task);
   } catch (error) {
     console.error("Failed to create subtask:", error);
     return {
@@ -35,6 +29,16 @@ export async function createSubtaskAction(
       message: null,
     };
   }
+
+  if (task) {
+    revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
+    redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+  }
+
+  return {
+    error: null,
+    message: "Subtask created successfully",
+  };
 }
 
 export async function updateSubtaskAction(
@@ -61,6 +65,9 @@ export async function updateSubtaskAction(
 }
 
 export async function deleteSubtask(id: string): Promise<{ error: string | null }> {
+  let projectId: string;
+  let taskId: string;
+
   try {
     const subtask = await SubtaskService.getSubtaskById(id);
     if (!subtask) {
@@ -69,24 +76,26 @@ export async function deleteSubtask(id: string): Promise<{ error: string | null 
       };
     }
 
-    const task = subtask.task;
+    projectId = subtask.task.projectId;
+    taskId = subtask.task.id;
     await SubtaskService.deleteSubtask(id);
-
-    revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-
-    return { error: null };
   } catch (error) {
     console.error("Failed to delete subtask:", error);
     return {
       error: error instanceof Error ? error.message : "Failed to delete subtask",
     };
   }
+
+  revalidatePath(`/projects/${projectId}/tasks/${taskId}`);
+  return { error: null };
 }
 
 export async function reorderSubtasks(
   taskId: string,
   subtaskIds: string[]
 ): Promise<{ error: string | null }> {
+  let projectId: string | undefined;
+
   try {
     await SubtaskService.reorderSubtasks(taskId, subtaskIds);
 
@@ -95,15 +104,19 @@ export async function reorderSubtasks(
     if (subtask) {
       const fullSubtask = await SubtaskService.getSubtaskById(subtask.id);
       if (fullSubtask?.task) {
-        revalidatePath(`/projects/${fullSubtask.task.projectId}/tasks/${taskId}`);
+        projectId = fullSubtask.task.projectId;
       }
     }
-
-    return { error: null };
   } catch (error) {
     console.error("Failed to reorder subtasks:", error);
     return {
       error: error instanceof Error ? error.message : "Failed to reorder subtasks",
     };
   }
+
+  if (projectId) {
+    revalidatePath(`/projects/${projectId}/tasks/${taskId}`);
+  }
+
+  return { error: null };
 }
