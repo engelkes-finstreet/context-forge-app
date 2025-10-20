@@ -12,9 +12,9 @@ import {
 import { PlusCircle, ArrowLeft } from 'lucide-react';
 
 interface ProjectDetailPageProps {
-  params: {
+  params: Promise<{
     projectId: string;
-  };
+  }>;
 }
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {

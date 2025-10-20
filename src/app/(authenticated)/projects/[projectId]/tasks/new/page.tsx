@@ -7,9 +7,9 @@ import { CreateTaskForm } from '@/features/tasks/components/forms/create-task/cr
 import { ArrowLeft } from 'lucide-react';
 
 interface NewTaskPageProps {
-  params: {
+  params: Promise<{
     projectId: string;
-  };
+  }>;
 }
 
 export default async function NewTaskPage({ params }: NewTaskPageProps) {

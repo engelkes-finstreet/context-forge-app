@@ -13,10 +13,10 @@ import { PlusCircle, ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface TaskDetailPageProps {
-  params: {
+  params: Promise<{
     projectId: string;
     taskId: string;
-  };
+  }>;
 }
 
 export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
