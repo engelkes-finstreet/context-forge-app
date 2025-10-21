@@ -224,8 +224,11 @@ export type RoutePattern =
 // RE-EXPORTS - Import everything from '@/lib/routes'
 // ========================================================================
 
-// Client-side navigation
-export { TypedLink, useTypedRouter } from './components';
+// Type-safe Link component (works in Server and Client Components)
+export { TypedLink } from './link';
+
+// Type-safe router hook (Client Components only)
+export { useTypedRouter } from './hooks';
 
 // Server-side redirect
 export { typedRedirect } from './redirect';
