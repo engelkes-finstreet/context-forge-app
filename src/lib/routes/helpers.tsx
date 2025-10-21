@@ -17,7 +17,7 @@
  */
 
 import Link, { LinkProps } from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import { type Route, type QueryParams, type RouteParams } from './builder';
 
 /**
@@ -232,29 +232,28 @@ export function useTypedRouter() {
 }
 
 /**
- * Type-safe redirect helper for Server Actions and Server Components
+ * Type-safe redirect for Server Actions and Server Components
  *
- * Use this in Server Actions instead of next/navigation's redirect()
- * to get type safety.
+ * Drop-in replacement for next/navigation's redirect() with type safety.
  *
  * @example
- * import { redirect } from 'next/navigation';
  * import { typedRedirect } from '@/lib/routes/helpers';
  * import { routes } from '@/lib/routes';
  *
  * async function myAction() {
  *   'use server';
  *
- *   // Type-safe redirect
- *   redirect(typedRedirect(routes.projects.detail, { projectId: '123' }));
+ *   // Type-safe redirect (no need to wrap in redirect()!)
+ *   typedRedirect(routes.projects.detail, { projectId: '123' });
  * }
  */
 export function typedRedirect<TPath extends string>(
   route: Route<TPath>,
   params?: RouteParams<Route<TPath>>,
   query?: QueryParams
-): string {
-  return params
+): never {
+  const href = params
     ? (route.path as any)(params, query)
     : (route.path as any)(query);
+  redirect(href);
 }
