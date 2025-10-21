@@ -1,5 +1,9 @@
 # Database Schema
 
+## Overview
+
+Context Forge uses PostgreSQL with Prisma ORM. The full schema is defined in `prisma/schema.prisma`.
+
 ## Entity Relationships
 
 ```
@@ -8,113 +12,39 @@ Project (1) ──────< Task (n)
                      └──────< Subtask (n)
 ```
 
-## Models
+**Hierarchy:**
+- Each **Project** can have multiple **Tasks**
+- Each **Task** belongs to one **Project** and can have multiple **Subtasks**
+- Each **Subtask** belongs to one **Task**
 
-### Project
-
-```prisma
-model Project {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tasks       Task[]
-}
-```
-
-**Fields:**
-- `id` - Unique identifier (CUID)
-- `name` - Project name (required)
-- `description` - Optional project description
-- `createdAt` - Automatic timestamp when created
-- `updatedAt` - Automatic timestamp when modified
-- `tasks` - One-to-many relation with Task
-
-### Task
-
-```prisma
-model Task {
-  id            String   @id @default(cuid())
-  projectId     String
-  name          String
-  sharedContext String   @db.Text  // Markdown content shared with all subtasks
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  subtasks      Subtask[]
-}
-```
-
-**Fields:**
-- `id` - Unique identifier (CUID)
-- `projectId` - Foreign key to Project
-- `name` - Task name (required)
-- `sharedContext` - Markdown content accessible by all subtasks
-- `order` - Display order (default: 0)
-- `createdAt` - Automatic timestamp when created
-- `updatedAt` - Automatic timestamp when modified
-- `project` - Many-to-one relation with Project
-- `subtasks` - One-to-many relation with Subtask
-
-### Subtask
-
-```prisma
-model Subtask {
-  id        String   @id @default(cuid())
-  taskId    String
-  name      String
-  content   String   @db.Text  // Markdown content specific to this subtask
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
-```
-
-**Fields:**
-- `id` - Unique identifier (CUID)
-- `taskId` - Foreign key to Task
-- `name` - Subtask name (required)
-- `content` - Markdown content for this subtask
-- `order` - Display order (default: 0)
-- `createdAt` - Automatic timestamp when created
-- `updatedAt` - Automatic timestamp when modified
-- `task` - Many-to-one relation with Task
-
-## Key Features
-
-### Cascading Deletes
-
-Deleting a project removes all associated tasks and subtasks automatically.
-
-```
-DELETE Project → CASCADE → DELETE Tasks → CASCADE → DELETE Subtasks
-```
-
-### Ordering
-
-Tasks and subtasks maintain an `order` field for consistent display ordering.
+## Key Concepts
 
 ### Shared Context
 
-Tasks have a `sharedContext` field that all subtasks can access. This provides common context for related work items.
+Tasks include a `sharedContext` field (markdown) that provides common information accessible to all subtasks within that task. This avoids duplicating context across subtasks.
 
-### Automatic Timestamps
+**Use Case:** Define requirements, constraints, or background information once at the task level, rather than repeating it in each subtask.
 
-All models automatically track:
-- `createdAt` - Set when record is created
-- `updatedAt` - Updated whenever record is modified
+### Cascading Deletes
+
+The schema uses cascading deletes to maintain referential integrity:
+- Deleting a **Project** → automatically deletes all its **Tasks** and **Subtasks**
+- Deleting a **Task** → automatically deletes all its **Subtasks**
+
+### Ordering
+
+Both Tasks and Subtasks include an `order` field to maintain consistent display ordering across the application.
 
 ### Typed Subtasks
 
-Subtasks support a `type` field for different subtask types:
-- `GENERIC` - Standard subtask (implemented)
-- `FORM` - Form-based subtask (planned)
-- `MODAL` - Modal dialog subtask (planned)
-- `INQUIRY_PROCESS` - Multi-step wizard (planned)
+Subtasks support different types (GENERIC, FORM, MODAL, INQUIRY_PROCESS) with optional type-specific metadata stored as JSON. See [Typed Subtasks](../features/typed-subtasks.md) for details.
 
-Each type can have associated metadata stored as JSON.
+### Automatic Timestamps
+
+All entities automatically track when they were created and last modified with `createdAt` and `updatedAt` fields.
+
+## Schema Location
+
+**File:** `prisma/schema.prisma`
+
+For migration and setup information, see [Database Setup](./setup.md).
