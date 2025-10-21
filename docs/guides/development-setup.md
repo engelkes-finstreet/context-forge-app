@@ -17,6 +17,7 @@ Create a `.env` file in the project root:
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/context-forge-dev"
 BETTER_AUTH_SECRET="your-secret-here"
 BETTER_AUTH_URL="http://localhost:3000"
+GITHUB_TOKEN="your-github-token-here"
 ```
 
 ### 2. Generate Auth Secret
@@ -41,6 +42,16 @@ DATABASE_URL="postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE"
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/context-forge-dev"
 ```
+
+### 4. Configure GitHub Token (Optional)
+
+For accessing company GitHub repositories to fetch Swagger/OpenAPI files:
+
+1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Generate new token with `repo` scope
+3. Copy the token and set it as `GITHUB_TOKEN` in your `.env` file
+
+**Note:** Without this token, only public repositories are accessible.
 
 ## Installation
 

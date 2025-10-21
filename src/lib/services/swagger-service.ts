@@ -13,7 +13,7 @@ export interface SwaggerEndpoint {
 
 export class SwaggerService {
   private static octokit = new Octokit({
-    // You can add auth token here if needed: auth: process.env.GITHUB_TOKEN
+    auth: process.env.GITHUB_TOKEN,
   });
 
   /**
