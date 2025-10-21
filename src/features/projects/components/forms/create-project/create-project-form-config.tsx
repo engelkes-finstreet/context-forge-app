@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { createProjectSchema, CreateProjectInput } from '@/lib/validations/project-schema';
 import { createProjectAction, ProjectFormState } from '@/lib/actions/project-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
+import { routes } from '@/lib/routes';
 
 const createProjectFormId = 'create-project-form';
 
@@ -46,7 +47,7 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
     useSuccessAction: () => {
       return (state: ProjectFormState) => {
         toast.success(state?.message || 'Project created successfully');
-        router.push('/projects');
+        router.push(routes.projects.list.path());
       };
     },
     renderFormActions: (isPending: boolean) => {

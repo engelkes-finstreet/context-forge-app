@@ -1,16 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { TypedLink, useTypedRouter, routes } from '@/lib/routes';
 
 export function MainNav() {
   const pathname = usePathname();
-  const router = useRouter();
+  const router = useTypedRouter();
 
 //   const routes = [
 //     {
@@ -28,7 +27,7 @@ export function MainNav() {
   const handleSignOut = async () => {
     try {
       await authClient.signOut();
-      router.push('/sign-in');
+      router.push(routes.auth.signIn);
       toast.success('Signed out successfully');
     } catch {
       toast.error('Failed to sign out');
@@ -39,9 +38,9 @@ export function MainNav() {
     <div className="border-b">
       <div className="container mx-auto flex h-16 items-center px-4">
         <div className="flex items-center gap-6">
-          <Link href="/projects" className="font-semibold">
+          <TypedLink route={routes.projects.list} className="font-semibold">
             Context Forge
-          </Link>
+          </TypedLink>
           <nav className="flex items-center gap-4">
             {/* {routes.map((route) => (
               <Link

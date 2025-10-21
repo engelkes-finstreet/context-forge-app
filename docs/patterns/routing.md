@@ -38,8 +38,7 @@ routes.projects.detail.path({ id }); // ❌ Error: wrong parameter name
 ### Import Routes
 
 ```typescript
-import { routes } from '@/lib/routes';
-import { TypedLink, useTypedRouter, typedRedirect } from '@/lib/routes/helpers';
+import { routes, TypedLink, useTypedRouter, typedRedirect } from '@/lib/routes';
 ```
 
 ### Basic Usage
@@ -87,7 +86,7 @@ Type-safe router hook:
 ```typescript
 'use client';
 
-import { useTypedRouter } from '@/lib/routes/helpers';
+import { useTypedRouter, routes } from '@/lib/routes';
 
 export function MyComponent() {
   const router = useTypedRouter();
@@ -108,7 +107,7 @@ Type-safe redirect for server-side:
 ```typescript
 'use server';
 
-import { typedRedirect } from '@/lib/routes/helpers';
+import { typedRedirect, routes } from '@/lib/routes';
 
 export async function createProjectAction(data: FormData) {
   const project = await db.project.create({ data });
@@ -145,9 +144,10 @@ That's it! TypeScript will automatically enforce type safety everywhere the rout
 
 ```
 src/lib/routes/
-├── builder.ts      # Route builder utilities and types
-├── index.ts        # All route definitions (edit this to add routes)
-└── helpers.tsx     # TypedLink, useTypedRouter, typedRedirect
+├── builder.ts      # Route builder utilities and types (internal)
+├── index.ts        # All route definitions + main exports
+├── components.tsx  # TypedLink, useTypedRouter (client components)
+└── redirect.ts     # typedRedirect (server-side)
 ```
 
 ## Key Features

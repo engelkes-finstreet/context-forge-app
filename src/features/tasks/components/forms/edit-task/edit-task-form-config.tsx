@@ -7,6 +7,7 @@ import { updateTaskSchema, UpdateTaskInput } from '@/lib/validations/task-schema
 import { updateTaskAction, TaskFormState } from '@/lib/actions/task-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';
+import { routes } from '@/lib/routes';
 
 const editTaskFormId = 'edit-task-form';
 
@@ -77,7 +78,7 @@ export function useEditTaskFormConfig({
     useSuccessAction: () => {
       return (state: TaskFormState) => {
         toast.success(state?.message || 'Task updated successfully');
-        router.push(`/projects/${projectId}/tasks/${taskId}`);
+        router.push(routes.projects.tasks.detail.path({ projectId, taskId }));
       };
     },
     renderFormActions: (isPending: boolean) => {

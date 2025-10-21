@@ -120,8 +120,7 @@ export class ProjectService {
 All routes are defined in a centralized, type-safe system that provides compile-time validation:
 
 ```typescript
-import { routes } from '@/lib/routes';
-import { TypedLink } from '@/lib/routes/helpers';
+import { routes, TypedLink } from '@/lib/routes';
 
 // Type-safe navigation with autocomplete and validation
 <TypedLink route={routes.projects.detail} params={{ projectId: '123' }}>

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 import { ProjectService } from '@/lib/services/project-service';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,12 +28,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/projects">
+        <TypedLink route={routes.projects.list}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Projects
           </Button>
-        </Link>
+        </TypedLink>
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-3xl font-bold">{project.name}</h1>
@@ -41,12 +41,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               <p className="text-muted-foreground mt-2">{project.description}</p>
             )}
           </div>
-          <Link href={`/projects/${projectId}/tasks/new`}>
+          <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
               New Task
             </Button>
-          </Link>
+          </TypedLink>
         </div>
       </div>
 
@@ -56,15 +56,15 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
               <p className="text-muted-foreground mb-4">No tasks yet</p>
-              <Link href={`/projects/${projectId}/tasks/new`}>
+              <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
                 <Button>Create Your First Task</Button>
-              </Link>
+              </TypedLink>
             </CardContent>
           </Card>
         ) : (
           <div className="grid gap-4">
             {project.tasks.map((task) => (
-              <Link key={task.id} href={`/projects/${projectId}/tasks/${task.id}`}>
+              <TypedLink key={task.id} route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
                 <Card className="hover:border-primary transition-colors cursor-pointer">
                   <CardHeader>
                     <CardTitle>{task.name}</CardTitle>
@@ -74,7 +74,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     </CardDescription>
                   </CardHeader>
                 </Card>
-              </Link>
+              </TypedLink>
             ))}
           </div>
         )}

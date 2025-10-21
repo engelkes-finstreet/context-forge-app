@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 import { SubtaskService } from '@/lib/services/subtask-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,12 +30,12 @@ export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <Link href={`/projects/${projectId}/tasks/${taskId}`}>
+        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to {subtask.task.name}
           </Button>
-        </Link>
+        </TypedLink>
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-3xl font-bold">Edit Subtask</h1>
           <Badge variant={typeConfig.badgeVariant}>

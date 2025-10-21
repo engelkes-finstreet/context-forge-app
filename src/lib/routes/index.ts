@@ -219,3 +219,16 @@ export type RoutePattern =
   | typeof routes.api.mcp.listResources.pattern
   | typeof routes.api.mcp.readResource.pattern
   | typeof routes.api.mcp.updateResource.pattern;
+
+// ========================================================================
+// RE-EXPORTS - Import everything from '@/lib/routes'
+// ========================================================================
+
+// Client-side navigation
+export { TypedLink, useTypedRouter } from './components';
+
+// Server-side redirect
+export { typedRedirect } from './redirect';
+
+// Type utilities (for advanced usage)
+export type { Route, QueryParams, RouteParams } from './builder';
