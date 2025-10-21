@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import { TypedLink, useTypedRouter, routes } from '@/lib/routes';
-import { ThemeSwitcher } from '@/components/theme-switcher';
 import { ModeToggle } from '@/components/mode-toggle';
 
 export function MainNav() {
@@ -60,7 +59,6 @@ export function MainNav() {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <ModeToggle />
-          <ThemeSwitcher />
           <Button variant="outline" size="sm" onClick={handleSignOut}>
             Sign Out
           </Button>
