@@ -1,4 +1,5 @@
 import { SwaggerEndpointTester } from "@/features/swagger/components/swagger-endpoint-tester";
+import { SwaggerFormDemo } from "@/features/swagger/components/swagger-form-demo";
 
 export default function Home() {
   return (
@@ -12,10 +13,19 @@ export default function Home() {
 
       <div className="space-y-8">
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Swagger Endpoint Tester</h2>
+          <h2 className="text-2xl font-semibold mb-4">React Hook Form Integration</h2>
           <p className="text-muted-foreground mb-4">
-            Test the searchable endpoint selector with your projects. Select a project
-            with a configured GitHub repository and Swagger path to see all available endpoints.
+            This demo shows how to use the FormSwaggerEndpointSelector component in a form
+            with react-hook-form validation. The endpoint is stored as a string (METHOD:PATH).
+          </p>
+          <SwaggerFormDemo />
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">Standalone Selector Demo</h2>
+          <p className="text-muted-foreground mb-4">
+            This demonstrates the standalone SwaggerEndpointSelector component without form integration.
+            Select a project to see all available endpoints with full details.
           </p>
           <SwaggerEndpointTester />
         </section>

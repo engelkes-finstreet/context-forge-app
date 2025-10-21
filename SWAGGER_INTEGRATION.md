@@ -120,9 +120,35 @@ GET     /api/users/{id}
     ...
 ```
 
+## React Hook Form Integration ✅
+
+The searchable endpoint selector is now integrated with react-hook-form! See the demo on the home page.
+
+### Usage in Forms
+
+```typescript
+import { FormSwaggerEndpointSelector } from '@/components/forms/fields/form-swagger-endpoint-selector';
+
+<FormSwaggerEndpointSelector
+  name="endpoint"
+  fieldConfig={{
+    label: "API Endpoint",
+    description: "Select the endpoint for this request",
+    placeholder: "Select an endpoint...",
+  }}
+  endpoints={endpoints}
+  loading={loading}
+/>
+```
+
+The component stores endpoints as strings (e.g., `"GET:/api/users"`) for easy serialization.
+
+**See full documentation:** [React Hook Form Integration Guide](./docs/integrations/swagger-react-hook-form.md)
+
 ## Next Steps (Future Enhancements)
 
-- Add a searchable dropdown in subtask forms to select endpoints
+- ✅ ~~Add a searchable dropdown in subtask forms to select endpoints~~
+- Integrate endpoint selector into subtask creation forms
 - Cache parsed endpoints to reduce API calls
 - Add UI to view and explore endpoints
 - Support for multiple branches
