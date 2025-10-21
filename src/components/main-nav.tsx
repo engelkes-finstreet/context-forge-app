@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,16 @@ import { ModeToggle } from '@/components/mode-toggle';
 export function MainNav() {
   const pathname = usePathname();
   const router = useTypedRouter();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
 //   const routes = [
 //     {
@@ -36,10 +47,13 @@ export function MainNav() {
   };
 
   return (
-    <div className="border-b">
+    <div className={cn(
+      "sticky top-0 z-50 border-b transition-all duration-300",
+      scrolled && "glass shadow-2"
+    )}>
       <div className="container mx-auto flex h-16 items-center px-4">
         <div className="flex items-center gap-6">
-          <TypedLink route={routes.projects.list} className="font-semibold">
+          <TypedLink route={routes.projects.list} className="font-semibold text-lg transition-colors hover:text-primary">
             Context Forge
           </TypedLink>
           <nav className="flex items-center gap-4">

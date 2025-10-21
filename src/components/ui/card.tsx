@@ -14,8 +14,8 @@ function Card({
     <Component
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm transition-shadow duration-300",
-        interactive && "cursor-pointer hover:shadow-lg hover:shadow-primary/10",
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-1 transition-all duration-300 bg-gradient-card",
+        interactive && "cursor-pointer hover:shadow-3 hover:shadow-primary/10 hover:border-primary/30",
         className
       )}
       {...(interactive && {
