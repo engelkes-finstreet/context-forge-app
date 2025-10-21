@@ -53,6 +53,9 @@ export function ThemeSwitcher() {
     if (savedTheme && themes.some((t) => t.id === savedTheme)) {
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
+    } else {
+      // Apply default theme if none is saved
+      applyTheme('sapphire');
     }
   }, []);
 
