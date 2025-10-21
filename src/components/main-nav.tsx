@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 import { TypedLink, useTypedRouter, routes } from '@/lib/routes';
 import { ModeToggle } from '@/components/mode-toggle';
 

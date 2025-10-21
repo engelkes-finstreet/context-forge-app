@@ -5,7 +5,7 @@ import {
   FormState,
 } from '@/components/forms/types';
 import { DeepPartial } from 'react-hook-form';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
 import { signInFormAction } from '@/features/auth/components/forms/sign-in/sign-in-form-action';

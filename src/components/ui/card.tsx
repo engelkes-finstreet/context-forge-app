@@ -1,15 +1,27 @@
 import * as React from "react"
+import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function Card({
+  className,
+  interactive = false,
+  ...props
+}: React.ComponentProps<"div"> & { interactive?: boolean }) {
+  const Component = interactive ? motion.div : "div"
+
   return (
-    <div
+    <Component
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm transition-shadow duration-300",
+        interactive && "cursor-pointer hover:shadow-lg hover:shadow-primary/10",
         className
       )}
+      {...(interactive && {
+        whileHover: { y: -4, scale: 1.01 },
+        transition: { type: "spring", stiffness: 300, damping: 20 }
+      })}
       {...props}
     />
   )

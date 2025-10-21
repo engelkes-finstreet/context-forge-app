@@ -37,7 +37,7 @@ import { TypedLink } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { reorderSubtasks } from "@/lib/actions/subtask-actions";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import type { Subtask } from "@/generated/prisma";
 
 interface DraggableSubtaskListProps {
@@ -92,7 +92,7 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
           pointerEvents: isDragActive ? 'none' : 'auto'
         }}
       >
-        <Card className="hover:border-primary transition-colors cursor-pointer">
+        <Card interactive>
           <CardHeader>
             <div className="flex items-start gap-3">
               <button

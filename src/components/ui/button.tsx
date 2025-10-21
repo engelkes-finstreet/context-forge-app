@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -41,17 +42,23 @@ function Button({
   variant,
   size,
   asChild = false,
+  disabled,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
   const Comp = asChild ? Slot : "button"
+  const MotionComp = asChild ? Comp : motion.button
 
   return (
-    <Comp
+    <MotionComp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled}
+      whileHover={!disabled && !asChild ? { scale: 1.02 } : undefined}
+      whileTap={!disabled && !asChild ? { scale: 0.98 } : undefined}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       {...props}
     />
   )
