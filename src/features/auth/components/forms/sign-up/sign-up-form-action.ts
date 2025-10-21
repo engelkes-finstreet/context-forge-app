@@ -3,7 +3,7 @@ import {
   SignUpType,
 } from '@/features/auth/components/forms/sign-up/sign-up-form-config';
 import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
+import { typedRedirect, routes } from '@/lib/routes';
 
 export async function signUpFormAction(
   state: SignUpFormState,
@@ -23,5 +23,5 @@ export async function signUpFormAction(
     };
   }
 
-  redirect('/');
+  typedRedirect(routes.home);
 }

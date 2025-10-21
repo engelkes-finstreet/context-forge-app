@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { TypeCard } from './type-card';
 import { getEnabledTypes } from '@/features/subtasks/config/type-config';
 import { Button } from '@/components/ui/button';
+import { routes } from '@/lib/routes';
 
 interface TypeSelectorProps {
   projectId: string;
@@ -20,8 +21,19 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
   const router = useRouter();
   const enabledTypes = getEnabledTypes();
 
+  // Map subtask type route strings to route objects
+  const routeMap = {
+    'generic': routes.projects.tasks.subtasks.newGeneric,
+    'inquiry-process': routes.projects.tasks.subtasks.newInquiryProcess,
+    'form': routes.projects.tasks.subtasks.newForm,
+    'modal': routes.projects.tasks.subtasks.newModal,
+  } as const;
+
   const handleTypeSelect = (route: string) => {
-    router.push(`/projects/${projectId}/tasks/${taskId}/subtasks/new/${route}`);
+    const routeObj = routeMap[route];
+    if (routeObj) {
+      router.push(routeObj.path({ projectId, taskId }));
+    }
   };
 
   const handleCancel = () => {

@@ -7,6 +7,7 @@ import { updateSubtaskSchema, UpdateSubtaskInput } from '@/lib/validations/subta
 import { updateSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';
+import { routes } from '@/lib/routes';
 
 const editSubtaskFormId = 'edit-subtask-form';
 
@@ -84,7 +85,7 @@ export function useEditSubtaskFormConfig({
     useSuccessAction: () => {
       return (state: SubtaskFormState) => {
         toast.success(state?.message || 'Subtask updated successfully');
-        router.push(`/projects/${projectId}/tasks/${taskId}`);
+        router.push(routes.projects.tasks.detail.path({ projectId, taskId }));
       };
     },
     renderFormActions: (isPending: boolean) => {

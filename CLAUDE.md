@@ -39,6 +39,7 @@ All detailed documentation is organized in the [`docs/`](./docs/) directory.
 #### Development Patterns
 
 - [Forms](./docs/patterns/forms.md) - Form configuration and validation patterns
+- [Routing](./docs/patterns/routing.md) - Type-safe routing system
 - [Services](./docs/patterns/services.md) - Business logic layer patterns
 - [Server Actions](./docs/patterns/server-actions.md) - Form submission handling
 - [Validation](./docs/patterns/validation.md) - Zod schema patterns
@@ -113,6 +114,25 @@ export class ProjectService {
   // ...
 }
 ```
+
+### Type-Safe Routing
+
+All routes are defined in a centralized, type-safe system that provides compile-time validation:
+
+```typescript
+import { routes, TypedLink } from '@/lib/routes';
+
+// Type-safe navigation with autocomplete and validation
+<TypedLink route={routes.projects.detail} params={{ projectId: '123' }}>
+  View Project
+</TypedLink>
+
+// TypeScript error if params are missing or incorrect
+routes.projects.detail.path({ projectId: '123' }); // ✓
+routes.projects.detail.path(); // ✗ Error: projectId required
+```
+
+See [Routing](./docs/patterns/routing.md) for comprehensive documentation.
 
 ### MCP Integration
 

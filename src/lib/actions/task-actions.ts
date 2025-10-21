@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { typedRedirect, routes } from '@/lib/routes';
 import { TaskService } from "@/lib/services/task-service";
 import type { CreateTaskInput, UpdateTaskInput } from "@/lib/validations/task-schema";
 
@@ -27,7 +27,7 @@ export async function createTaskAction(
   }
 
   revalidatePath(`/projects/${task.projectId}`);
-  redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+  typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
 }
 
 export async function updateTaskAction(
@@ -75,7 +75,7 @@ export async function deleteTask(id: string): Promise<{ error: string | null }> 
   }
 
   revalidatePath(`/projects/${projectId}`);
-  redirect(`/projects/${projectId}`);
+  typedRedirect(routes.projects.detail, { projectId });
 }
 
 export async function reorderTasks(

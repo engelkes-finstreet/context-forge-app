@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,12 +32,12 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
   return (
     <div className="space-y-8">
       <div>
-        <Link href={`/projects/${projectId}`}>
+        <TypedLink route={routes.projects.detail} params={{ projectId }}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to {task.project.name}
           </Button>
-        </Link>
+        </TypedLink>
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-3xl font-bold">{task.name}</h1>
@@ -46,18 +46,18 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
             </p>
           </div>
           <div className="flex gap-2">
-            <Link href={`/projects/${projectId}/tasks/${taskId}/edit`}>
+            <TypedLink route={routes.projects.tasks.edit} params={{ projectId, taskId }}>
               <Button variant="outline">
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit Task
               </Button>
-            </Link>
-            <Link href={`/projects/${projectId}/tasks/${taskId}/subtasks/new`}>
+            </TypedLink>
+            <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }}>
               <Button>
                 <PlusCircle className="mr-2 h-4 w-4" />
                 New Subtask
               </Button>
-            </Link>
+            </TypedLink>
           </div>
         </div>
       </div>
@@ -79,9 +79,9 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
               <p className="text-muted-foreground mb-4">No subtasks yet</p>
-              <Link href={`/projects/${projectId}/tasks/${taskId}/subtasks/new`}>
+              <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }}>
                 <Button>Create Your First Subtask</Button>
-              </Link>
+              </TypedLink>
             </CardContent>
           </Card>
         ) : (
@@ -89,9 +89,10 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
             {task.subtasks.map((subtask) => {
               const typeConfig = getTypeConfig(subtask.type);
               return (
-                <Link
+                <TypedLink
                   key={subtask.id}
-                  href={`/projects/${projectId}/tasks/${taskId}/subtasks/${subtask.id}/edit`}
+                  route={routes.projects.tasks.subtasks.edit}
+                  params={{ projectId, taskId, subtaskId: subtask.id }}
                 >
                   <Card className="hover:border-primary transition-colors cursor-pointer">
                     <CardHeader>
@@ -107,7 +108,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
                       </CardDescription>
                     </CardHeader>
                   </Card>
-                </Link>
+                </TypedLink>
               );
             })}
           </div>

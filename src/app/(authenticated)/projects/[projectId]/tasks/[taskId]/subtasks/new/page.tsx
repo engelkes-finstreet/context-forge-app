@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import { TypeSelector } from '@/features/subtasks/components/type-selector/type-selector';
@@ -29,12 +29,12 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <Link href={`/projects/${projectId}/tasks/${taskId}`}>
+        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to {task.name}
           </Button>
-        </Link>
+        </TypedLink>
       </div>
 
       <TypeSelector projectId={projectId} taskId={taskId} />

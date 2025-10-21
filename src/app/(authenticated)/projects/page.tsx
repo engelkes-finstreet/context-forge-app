@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 import { ProjectService } from '@/lib/services/project-service';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,27 +22,27 @@ export default async function ProjectsPage() {
             Manage your Context Forge projects
           </p>
         </div>
-        <Link href="/projects/new">
+        <TypedLink route={routes.projects.new}>
           <Button>
             <PlusCircle className="mr-2 h-4 w-4" />
             New Project
           </Button>
-        </Link>
+        </TypedLink>
       </div>
 
       {projects.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16">
             <p className="text-muted-foreground mb-4">No projects yet</p>
-            <Link href="/projects/new">
+            <TypedLink route={routes.projects.new}>
               <Button>Create Your First Project</Button>
-            </Link>
+            </TypedLink>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Link key={project.id} href={`/projects/${project.id}`}>
+            <TypedLink key={project.id} route={routes.projects.detail} params={{ projectId: project.id }}>
               <Card className="hover:border-primary transition-colors cursor-pointer h-full">
                 <CardHeader>
                   <CardTitle>{project.name}</CardTitle>
@@ -56,7 +56,7 @@ export default async function ProjectsPage() {
                   </div>
                 </CardContent>
               </Card>
-            </Link>
+            </TypedLink>
           ))}
         </div>
       )}

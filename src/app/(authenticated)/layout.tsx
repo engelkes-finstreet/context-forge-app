@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { typedRedirect, routes } from '@/lib/routes';
 import { auth } from '@/lib/auth';
 import { MainNav } from '@/components/main-nav';
 
@@ -13,7 +13,7 @@ export default async function AuthenticatedLayout({
   });
 
   if (!session) {
-    redirect('/sign-in');
+    typedRedirect(routes.auth.signIn);
   }
 
   return (

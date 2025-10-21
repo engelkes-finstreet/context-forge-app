@@ -1,6 +1,6 @@
 import { SignInCard } from '@/features/auth/components/cards/sign-in-card';
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { TypedLink, routes } from '@/lib/routes';
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -22,12 +22,12 @@ export default function SignInPage() {
 
         <div className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{' '}
-          <Link
-            href="/sign-up"
+          <TypedLink
+            route={routes.auth.signUp}
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
             Sign up
-          </Link>
+          </TypedLink>
         </div>
       </div>
     </div>

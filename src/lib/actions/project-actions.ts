@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { typedRedirect, routes } from '@/lib/routes';
 import { ProjectService } from "@/lib/services/project-service";
 import type { CreateProjectInput, UpdateProjectInput } from "@/lib/validations/project-schema";
 
@@ -27,7 +27,7 @@ export async function createProjectAction(
   }
 
   revalidatePath("/projects");
-  redirect(`/projects/${project.id}`);
+  typedRedirect(routes.projects.detail, { projectId: project.id });
 }
 
 export async function updateProjectAction(
@@ -65,5 +65,5 @@ export async function deleteProject(id: string): Promise<{ error: string | null 
   }
 
   revalidatePath("/projects");
-  redirect("/projects");
+  typedRedirect(routes.projects.list);
 }

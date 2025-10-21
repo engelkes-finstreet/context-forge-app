@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { typedRedirect, routes } from '@/lib/routes';
 import { SubtaskService } from "@/lib/services/subtask-service";
 import type { CreateSubtaskInput, UpdateSubtaskInput } from "@/lib/validations/subtask-schema";
 import type { CreateGenericSubtaskFormInput } from "@/lib/validations/forms/generic-subtask-form-schema";
@@ -53,7 +53,7 @@ export async function createGenericSubtaskAction(
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-    redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+    typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
   }
 
   return {
@@ -87,7 +87,7 @@ export async function createSubtaskAction(
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-    redirect(`/projects/${task.projectId}/tasks/${task.id}`);
+    typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
   }
 
   return {
