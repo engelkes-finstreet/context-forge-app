@@ -11,7 +11,7 @@
  * 5. If failed, React automatically reverts to the previous state
  */
 
-import { useOptimistic, useTransition } from "react";
+import { useOptimistic, useTransition, useState } from "react";
 
 import {
   DndContext,          
@@ -51,6 +51,7 @@ interface SortableSubtaskItemProps {
   index: number;
   projectId: string;
   taskId: string;
+  isDragActive: boolean;  // Prevents clicks during/after drag operations
 }
 
 /**
@@ -62,7 +63,7 @@ interface SortableSubtaskItemProps {
  * - Apply transform animations (smooth movement)
  * - Handle accessibility (keyboard navigation)
  */
-function SortableSubtaskItem({ subtask, index, projectId, taskId }: SortableSubtaskItemProps) {
+function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }: SortableSubtaskItemProps) {
   const {
     attributes,
     listeners,
@@ -86,6 +87,10 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId }: SortableSubt
         route={routes.projects.tasks.subtasks.edit}
         params={{ projectId, taskId, subtaskId: subtask.id }}
         className="block"
+        style={{
+          // Disable all pointer events during drag to prevent navigation
+          pointerEvents: isDragActive ? 'none' : 'auto'
+        }}
       >
         <Card className="hover:border-primary transition-colors cursor-pointer">
           <CardHeader>
@@ -144,6 +149,26 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
 
   const [isPending, startTransition] = useTransition();
 
+  /**
+   * Track whether a drag operation is currently active or just completed.
+   *
+   * This prevents unwanted navigation when dragging items upward. Here's why:
+   *
+   * Problem: When dragging from bottom to top:
+   * 1. User picks up card #10 (bottom)
+   * 2. Drags it upward toward position #5
+   * 3. As the dragged card moves UP, other cards (#6-#9) slide DOWN to fill the gap
+   * 4. When user releases, their pointer is physically over card #9 (not the card they dragged!)
+   * 5. Card #9's TypedLink receives the pointer-up event → triggers navigation ❌
+   *
+   * Solution:
+   * - Set isDragActive = true when drag starts
+   * - Keep it true for 100ms after drag ends (pointer-up happens during this window)
+   * - Prevent all TypedLink clicks while isDragActive = true
+   * - After 100ms delay, allow normal click behavior again
+   */
+  const [isDragActive, setIsDragActive] = useState(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -155,8 +180,22 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
     })
   );
 
+  /**
+   * Called when user starts dragging a subtask
+   */
+  function handleDragStart() {
+    setIsDragActive(true);
+  }
+
+  /**
+   * Called when user finishes dragging a subtask
+   */
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
+
+    // Keep isDragActive true for 100ms after drag ends to prevent clicks
+    // This is necessary because the pointer-up event happens after onDragEnd
+    setTimeout(() => setIsDragActive(false), 100);
 
     if (!over || active.id === over.id) {
       return;
@@ -192,6 +231,7 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
       <DndContext
         sensors={sensors}                    // Mouse, touch, and keyboard sensors
         collisionDetection={closestCenter}   // Drop on the closest item
+        onDragStart={handleDragStart}        // Track when drag starts
         onDragEnd={handleDragEnd}            // Handle reordering when drag ends
       >
         <SortableContext
@@ -206,6 +246,7 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
                 index={index}
                 projectId={projectId}
                 taskId={taskId}
+                isDragActive={isDragActive}
               />
             ))}
           </div>

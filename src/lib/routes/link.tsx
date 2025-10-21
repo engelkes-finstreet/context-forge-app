@@ -18,6 +18,7 @@ interface TypedLinkPropsWithParams<TPath extends string>
   query?: QueryParams;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -30,6 +31,7 @@ interface TypedLinkPropsWithoutParams<TPath extends string>
   query?: QueryParams;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -65,6 +67,7 @@ export function TypedLink<TPath extends string>({
   query,
   children,
   className,
+  style,
   ...linkProps
 }: TypedLinkProps<TPath>) {
   const href = params
@@ -72,7 +75,7 @@ export function TypedLink<TPath extends string>({
     : (route.path as any)(query);
 
   return (
-    <Link href={href} className={className} {...linkProps}>
+    <Link href={href} className={className} style={style} {...linkProps}>
       {children}
     </Link>
   );
