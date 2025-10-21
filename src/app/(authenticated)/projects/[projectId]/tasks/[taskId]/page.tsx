@@ -26,7 +26,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <TypedLink route={routes.projects.detail} params={{ projectId }}>
           <Button variant="ghost" size="sm" className="mb-4">

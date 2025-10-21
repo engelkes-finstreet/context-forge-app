@@ -3,7 +3,7 @@ import { CreateProjectForm } from '@/features/projects/components/forms/create-p
 
 export default function NewProjectPage() {
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-bold">Create New Project</h1>
         <p className="text-muted-foreground mt-2">

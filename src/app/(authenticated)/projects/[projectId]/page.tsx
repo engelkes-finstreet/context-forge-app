@@ -26,7 +26,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <TypedLink route={routes.projects.list}>
           <Button variant="ghost" size="sm" className="mb-4">
