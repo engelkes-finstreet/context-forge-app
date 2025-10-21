@@ -22,7 +22,7 @@ export default async function ProjectsPage() {
             Manage your Context Forge projects
           </p>
         </div>
-        <TypedLink route={routes.projects.new}>
+        <TypedLink route={routes.projects.new} params={{}}>
           <Button>
             <PlusCircle className="mr-2 h-4 w-4" />
             New Project
@@ -34,7 +34,7 @@ export default async function ProjectsPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16">
             <p className="text-muted-foreground mb-4">No projects yet</p>
-            <TypedLink route={routes.projects.new}>
+            <TypedLink route={routes.projects.new} params={{}}>
               <Button>Create Your First Project</Button>
             </TypedLink>
           </CardContent>

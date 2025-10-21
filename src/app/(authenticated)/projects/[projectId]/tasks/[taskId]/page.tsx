@@ -5,14 +5,10 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { getTypeConfig } from '@/features/subtasks/config/type-config';
+import { DraggableSubtaskList } from '@/features/subtasks/components/draggable-subtask-list';
 
 interface TaskDetailPageProps {
   params: Promise<{
@@ -85,33 +81,11 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {task.subtasks.map((subtask) => {
-              const typeConfig = getTypeConfig(subtask.type);
-              return (
-                <TypedLink
-                  key={subtask.id}
-                  route={routes.projects.tasks.subtasks.edit}
-                  params={{ projectId, taskId, subtaskId: subtask.id }}
-                >
-                  <Card className="hover:border-primary transition-colors cursor-pointer">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-lg flex-1">{subtask.name}</CardTitle>
-                        <Badge variant={typeConfig.badgeVariant} className="shrink-0">
-                          {typeConfig.icon} {typeConfig.label}
-                        </Badge>
-                      </div>
-                      <CardDescription className="line-clamp-2">
-                        {subtask.content.substring(0, 200)}
-                        {subtask.content.length > 200 && '...'}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                </TypedLink>
-              );
-            })}
-          </div>
+          <DraggableSubtaskList
+            subtasks={task.subtasks}
+            taskId={taskId}
+            projectId={projectId}
+          />
         )}
       </div>
     </div>
