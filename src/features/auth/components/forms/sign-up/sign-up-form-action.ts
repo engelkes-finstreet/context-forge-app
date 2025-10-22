@@ -4,7 +4,7 @@ import {
   SignUpFormState,
   SignUpType,
 } from '@/features/auth/components/forms/sign-up/sign-up-form-config';
-import { authClient } from '@/lib/auth-client';
+import { auth } from '@/lib/auth';
 import { typedRedirect, routes } from '@/lib/routes';
 
 export async function signUpFormAction(
@@ -12,15 +12,50 @@ export async function signUpFormAction(
   { email, password, name }: SignUpType
 ): Promise<SignUpFormState> {
   try {
-    await authClient.signUp.email({
-      email,
-      password,
-      name,
+    console.log('[SignUp] Attempting to create user:', { email, name });
+
+    const result = await auth.api.signUpEmail({
+      body: {
+        email,
+        password,
+        name,
+      },
     });
-  } catch (error) {
-    console.error(error);
+
+    console.log('[SignUp] User created successfully:', { email, userId: result?.user?.id });
+
+    if (!result || !result.user) {
+      console.error('[SignUp] No user returned from auth.api.signUpEmail');
+      return {
+        error: 'Failed to create user account. Please try again.',
+        message: null,
+      };
+    }
+  } catch (error: any) {
+    console.error('[SignUp] Error during sign up:', {
+      message: error?.message,
+      status: error?.status,
+      body: error?.body,
+      stack: error?.stack,
+    });
+
+    // Check for specific error types
+    if (error?.status === 400) {
+      return {
+        error: 'Invalid email or password format.',
+        message: null,
+      };
+    }
+
+    if (error?.status === 409 || error?.message?.includes('already exists')) {
+      return {
+        error: 'An account with this email already exists.',
+        message: null,
+      };
+    }
+
     return {
-      error: 'Something went wrong. Please try again.',
+      error: error?.message || 'Something went wrong. Please try again.',
       message: null,
     };
   }
