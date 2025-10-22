@@ -30,7 +30,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   return (
     <PageTransition>
       <div>
-        <TypedLink route={routes.projects.list}>
+        <TypedLink route={routes.projects.list} params={{}}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Projects
@@ -68,7 +68,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             {project.tasks.map((task) => (
               <StaggeredItem key={task.id}>
                 <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
-                  <Card interactive>
+                  <Card>
                     <CardHeader>
                       <CardTitle>{task.name}</CardTitle>
                       <CardDescription>

@@ -31,7 +31,7 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
   } as const;
 
   const handleTypeSelect = (route: string) => {
-    const routeObj = routeMap[route];
+    const routeObj = (routeMap as any)[route];
     if (routeObj) {
       router.push(routeObj.path({ projectId, taskId }));
     }

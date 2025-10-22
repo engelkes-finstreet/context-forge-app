@@ -1,45 +1,16 @@
-"use client";
-
 import * as React from "react"
-import { motion, type HTMLMotionProps } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
-type CardProps = {
-  interactive?: boolean;
-} & (
-  | (React.ComponentProps<"div"> & { interactive?: false | undefined })
-  | (Omit<HTMLMotionProps<"div">, "children"> & React.PropsWithChildren & { interactive: true })
-)
-
-function Card({
-  className,
-  interactive = false,
-  ...props
-}: CardProps) {
-  const baseClassName = cn(
-    "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 transition-all duration-300 bg-gradient-card shadow-md hover:border-primary",
-    interactive && "cursor-pointer",
-    className
-  )
-
-  if (interactive) {
-    return (
-      <motion.div
-        data-slot="card"
-        className={baseClassName}
-        whileHover={{ y: -2, scale: 1.01 }}
-        transition={{ type: "tween", duration: 0.1 }}
-        {...(props as HTMLMotionProps<"div">)}
-      />
-    )
-  }
-
+function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
-      className={baseClassName}
-      {...props as React.ComponentProps<"div">}
+      className={cn(
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border-2 py-6 transition-all bg-gradient-card hover:shadow-md hover:border-primary hover:border-2 hover:scale-[102%]",
+        className
+      )}
+      {...props}
     />
   )
 }
