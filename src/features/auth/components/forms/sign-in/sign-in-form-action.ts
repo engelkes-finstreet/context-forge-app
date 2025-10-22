@@ -5,6 +5,8 @@ import {
   SignInType,
 } from '@/features/auth/components/forms/sign-in/sign-in-form-config';
 import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { typedRedirect, routes } from '@/lib/routes';
 
 export async function signInFormAction(
   state: SignInFormState,
@@ -18,6 +20,7 @@ export async function signInFormAction(
         email,
         password,
       },
+      headers: await headers(),
     });
 
     console.log('[SignIn] User signed in successfully:', { email, userId: result?.user?.id });
@@ -30,10 +33,8 @@ export async function signInFormAction(
       };
     }
 
-    return {
-      error: null,
-      message: 'Signed in successfully',
-    };
+    // Redirect after successful sign-in
+    typedRedirect(routes.home);
   } catch (error: any) {
     console.error('[SignIn] Error during sign in:', {
       message: error?.message,

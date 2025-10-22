@@ -5,6 +5,7 @@ import {
   SignUpType,
 } from '@/features/auth/components/forms/sign-up/sign-up-form-config';
 import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import { typedRedirect, routes } from '@/lib/routes';
 
 export async function signUpFormAction(
@@ -20,6 +21,7 @@ export async function signUpFormAction(
         password,
         name,
       },
+      headers: await headers(),
     });
 
     console.log('[SignUp] User created successfully:', { email, userId: result?.user?.id });
