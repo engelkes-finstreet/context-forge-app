@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && prisma migrate deploy",
     "db:start": "docker compose up -d",
     "db:stop": "docker compose down",
     "db:studio": "prisma studio",
