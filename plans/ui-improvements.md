@@ -83,53 +83,69 @@ The app has **solid foundations** (accessible components, good architecture, mod
 
 ---
 
-## Phase 2: Visual Depth & Hierarchy 🔄 IN PROGRESS
+## Phase 2: Visual Depth & Hierarchy ✅ COMPLETED
 
 *Creates structure and guides attention*
 
-### 2.1 Layered Shadow System ⏳
+### 2.1 Layered Shadow System ✅
 - [x] Create shadow-colored utility (basic)
 - [x] Create shadow-colored-lg utility (basic)
-- [ ] Define 5 elevation levels in theme:
-  - [ ] `shadow-1`: Subtle (cards at rest)
-  - [ ] `shadow-2`: Raised (hover states)
-  - [ ] `shadow-3`: Floating (dialogs)
-  - [ ] `shadow-4`: Overlay (top-level modals)
-  - [ ] `shadow-5`: Maximum elevation
-- [ ] Apply elevation levels to appropriate components
-- [ ] Add colored shadows to primary action buttons
+- [x] Define 5 elevation levels in theme:
+  - [x] `shadow-1`: Subtle (cards at rest)
+  - [x] `shadow-2`: Raised (hover states)
+  - [x] `shadow-3`: Floating (dialogs)
+  - [x] `shadow-4`: Overlay (top-level modals)
+  - [x] `shadow-5`: Maximum elevation
+- [x] Apply elevation levels to appropriate components
+- [x] Add colored shadows for all semantic colors (success, warning, info, destructive)
 - **Impact**: Creates spatial hierarchy
 
-### 2.2 Background Layers ⏳
-- [ ] Add subtle gradient to page backgrounds
-- [ ] Use `bg-secondary/50` for content sections
-- [ ] Add texture/noise overlay (5% opacity) - optional
-- [ ] Implement glassmorphism for header/nav (backdrop blur)
-- [ ] Add subtle background variations for different sections
+### 2.2 Background Layers ✅
+- [x] Add subtle gradient to page backgrounds
+- [x] Apply gradient to authenticated layout
+- [x] Apply gradient to auth pages (sign-in, sign-up)
+- [ ] Add texture/noise overlay (5% opacity) - optional (deferred)
+- [x] Implement glassmorphism for header/nav (backdrop blur)
+- [x] Add subtle background variations (gradient utilities)
 - **Impact**: Depth without overwhelming
 
-### 2.3 Typography Hierarchy ⏳
+### 2.3 Typography Hierarchy ✅
 - [x] Improve font weights (already done in Phase 1)
 - [x] Add letter-spacing to headings (already done)
 - [x] Increase line-height (already done)
 - [x] Create gradient text utility (already done)
-- [ ] Add gradient text to more headings
-- [ ] Consider additional font size variations
+- [x] Add gradient text to ALL page headings (auth, forms, lists, detail pages)
+- [x] Consistent h1 styling across entire app
 - **Impact**: Content feels structured
 
-### 2.4 Color-Coded Status System ⏳
-- [ ] Add semantic colors to theme:
-  - [ ] **Success**: Green (`oklch(0.65 0.15 145)`)
-  - [ ] **Warning**: Amber (`oklch(0.75 0.15 85)`)
-  - [ ] **Info**: Blue (`oklch(0.60 0.18 250)`)
-  - [ ] **Error**: Red (already exists as destructive)
-- [ ] Create semantic badge variants
-- [ ] Apply to badges throughout app
-- [ ] Add subtle background tints to cards by type
-- [ ] Create status indicators for tasks/projects
+### 2.4 Color-Coded Status System ✅
+- [x] Add semantic colors to theme:
+  - [x] **Success**: Green (`oklch(0.65 0.15 145)`)
+  - [x] **Warning**: Amber (`oklch(0.75 0.15 85)`)
+  - [x] **Info**: Blue (`oklch(0.60 0.18 250)`)
+  - [x] **Error**: Red (already exists as destructive)
+- [x] Create semantic badge variants (success, warning, info)
+- [x] Update Badge component with new variants and hover animations
+- [ ] Apply semantic colors to specific use cases (future enhancement)
+- [ ] Add subtle background tints to cards by type (future enhancement)
+- [ ] Create status indicators for tasks/projects (future enhancement)
 - **Impact**: Information at a glance
 
-**Phase 2 Target**: Depth and structure without visual clutter
+### 2.5 Universal Consistency Pass ✅ (BONUS)
+- [x] Add PageTransition to ALL pages (12 total)
+  - [x] Auth pages (sign-in, sign-up)
+  - [x] Form pages (new project, new task, new subtask)
+  - [x] Edit pages (edit task, edit subtask)
+  - [x] Type selector page
+  - [x] All list/detail pages
+- [x] Apply shadow-2 to all form cards consistently
+- [x] Add gradient text to all page titles
+- [x] Add staggered animations to TypeSelector component
+- [x] Apply background gradients to auth pages
+- [x] Update home page to redirect to projects
+- **Impact**: 100% visual consistency across the app
+
+**Phase 2 Target**: Depth and structure without visual clutter ✅ ACHIEVED
 
 ---
 
@@ -382,11 +398,13 @@ The app has **solid foundations** (accessible components, good architecture, mod
 - ✅ Typography improvements
 - ✅ Toast icons
 
-### 🔄 Sprint 2 (In Progress): Visual Depth
-- Shadow system
-- Color semantics
-- Background layers
-- Glassmorphism
+### ✅ Sprint 2 (Completed): Visual Depth
+- ✅ Shadow system (5 levels + colored variants)
+- ✅ Color semantics (success, warning, info)
+- ✅ Background layers (gradients + glassmorphism)
+- ✅ Glassmorphism (nav with scroll effect)
+- ✅ Universal consistency (all pages)
+- ✅ Badge enhancements (semantic variants)
 
 ### ⏳ Sprint 3 (Planned): State Communication
 - Skeleton screens
@@ -469,6 +487,23 @@ The app has **solid foundations** (accessible components, good architecture, mod
 - ✅ All major page components (projects, tasks, subtasks)
 - ✅ All form config files (toast imports)
 
+### Files Modified (Phase 2)
+- ✅ `src/app/globals.css` (semantic colors, shadows, gradients, glassmorphism)
+- ✅ `src/components/ui/badge.tsx` (semantic variants + animations)
+- ✅ `src/components/ui/card.tsx` (elevation shadows + gradients)
+- ✅ `src/components/main-nav.tsx` (glassmorphism + sticky positioning)
+- ✅ `src/app/(authenticated)/layout.tsx` (background gradient)
+- ✅ `src/app/(auth)/sign-in/page.tsx` (PageTransition + gradient text)
+- ✅ `src/app/(auth)/sign-up/page.tsx` (PageTransition + gradient text)
+- ✅ `src/app/(authenticated)/page.tsx` (redirect to projects)
+- ✅ `src/app/(authenticated)/projects/new/page.tsx` (PageTransition + shadow-2)
+- ✅ `src/app/(authenticated)/projects/[id]/tasks/new/page.tsx` (PageTransition + shadow-2)
+- ✅ `src/app/(authenticated)/projects/[id]/tasks/[id]/edit/page.tsx` (PageTransition + shadow-2)
+- ✅ `src/app/(authenticated)/projects/[id]/tasks/[id]/subtasks/new/page.tsx` (PageTransition)
+- ✅ `src/app/(authenticated)/projects/[id]/tasks/[id]/subtasks/new/generic/page.tsx` (PageTransition + shadow-2)
+- ✅ `src/app/(authenticated)/projects/[id]/tasks/[id]/subtasks/[id]/edit/page.tsx` (PageTransition + shadow-2)
+- ✅ `src/features/subtasks/components/type-selector/type-selector.tsx` (StaggeredContainer)
+
 ---
 
 ## Philosophy
@@ -494,13 +529,25 @@ The goal isn't to add flashy animations everywhere. It's to create a **cohesive 
 - Toast icons significantly improve feedback clarity
 - Small scale changes (1.01-1.02) are enough - don't overdo it
 
+### Phase 2 Learnings
+- 5-level shadow system provides enough granularity for depth hierarchy
+- Colored shadows (primary-tinted) work well for interactive elements
+- Glassmorphism on scroll creates a modern, polished navigation feel
+- OKLCH color space makes it easy to create consistent semantic colors
+- Universal consistency pass was crucial - ensures no page feels "left behind"
+- Gradient backgrounds should be subtle (2-5% lightness change) to avoid distraction
+- PageTransition on ALL pages creates cohesive experience
+- Shadow system only creates impact when actively applied to components
+
 ### Upcoming Considerations
-- Need to ensure all animations work well in dark mode
+- Need to ensure all animations work well in dark mode ✅ (colors support dark mode)
 - Should test performance with large lists (100+ items)
 - Consider reduced motion preferences for accessibility
-- May need to add loading states for slower connections
+- May need to add loading states for slower connections (Phase 3)
+- Consider adding status colors to actual task/project cards (future)
 
 ---
 
-**Last Updated**: 2025-10-21
-**Next Review**: After Phase 2 completion
+**Last Updated**: 2025-10-22
+**Next Review**: After Phase 3 completion
+**Status**: Phase 1 ✅ Complete | Phase 2 ✅ Complete | Phase 3 ⏳ Next
