@@ -3,6 +3,7 @@ import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageTransition } from '@/components/ui/page-transition';
 import { CreateGenericSubtaskForm } from '@/features/subtasks/components/forms/generic-subtask/create-subtask-form';
 import { ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -33,7 +34,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
   const typeConfig = getTypeConfig(SubtaskType.GENERIC);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <PageTransition className="max-w-4xl mx-auto space-y-8">
       <div>
         <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }}>
           <Button variant="ghost" size="sm" className="mb-4">
@@ -42,7 +43,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
           </Button>
         </TypedLink>
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold">Create Generic Subtask</h1>
+          <h1 className="text-3xl font-bold text-gradient">Create Generic Subtask</h1>
           <Badge variant={typeConfig.badgeVariant}>
             {typeConfig.icon} {typeConfig.label}
           </Badge>
@@ -63,7 +64,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
         </Alert>
       )}
 
-      <Card>
+      <Card className="shadow-2">
         <CardHeader>
           <CardTitle>Subtask Details</CardTitle>
           <CardDescription>
@@ -74,6 +75,6 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
           <CreateGenericSubtaskForm taskId={taskId} />
         </CardContent>
       </Card>
-    </div>
+    </PageTransition>
   );
 }

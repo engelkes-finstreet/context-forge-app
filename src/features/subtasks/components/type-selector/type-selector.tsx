@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { TypeCard } from './type-card';
 import { getEnabledTypes } from '@/features/subtasks/config/type-config';
 import { Button } from '@/components/ui/button';
+import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
 import { routes } from '@/lib/routes';
 
 interface TypeSelectorProps {
@@ -43,23 +44,24 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Create New Subtask</h2>
+        <h2 className="text-2xl font-bold mb-2 text-gradient">Create New Subtask</h2>
         <p className="text-muted-foreground">
           Select the type of subtask you want to create
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {enabledTypes.map((config) => (
-          <TypeCard
-            key={config.type}
-            config={config}
-            onClick={() => handleTypeSelect(config.route)}
-          />
-        ))}
-      </div>
-
-      {enabledTypes.length === 0 && (
+      {enabledTypes.length > 0 ? (
+        <StaggeredContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {enabledTypes.map((config) => (
+            <StaggeredItem key={config.type}>
+              <TypeCard
+                config={config}
+                onClick={() => handleTypeSelect(config.route)}
+              />
+            </StaggeredItem>
+          ))}
+        </StaggeredContainer>
+      ) : (
         <div className="text-center py-8 text-muted-foreground">
           <p>No subtask types are currently available.</p>
           <p className="text-sm mt-2">
