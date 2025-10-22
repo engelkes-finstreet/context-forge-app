@@ -44,6 +44,7 @@ export const auth = betterAuth({
   },
   secret: process.env.BETTER_AUTH_SECRET || "",
   baseURL,
+  trustedOrigins: [baseURL],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day (session token is refreshed if it's older than this)

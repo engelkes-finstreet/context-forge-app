@@ -13,7 +13,14 @@ export default async function AuthenticatedLayout({
     headers: await headers(),
   });
 
+  console.log('[AuthLayout] Session check:', {
+    hasSession: !!session,
+    userId: session?.user?.id,
+    email: session?.user?.email,
+  });
+
   if (!session) {
+    console.log('[AuthLayout] No session found, redirecting to sign-in');
     typedRedirect(routes.auth.signIn);
   }
 
