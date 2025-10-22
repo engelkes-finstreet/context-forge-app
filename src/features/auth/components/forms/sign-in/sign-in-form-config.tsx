@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import {
-  FormConfig,
+  ClientFormConfig,
   FormFieldsType,
-  FormState,
 } from '@/components/forms/types';
 import { DeepPartial } from 'react-hook-form';
 import { toast } from '@/lib/toast';
@@ -11,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { signInFormAction } from '@/features/auth/components/forms/sign-in/sign-in-form-action';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/lib/routes';
+import { authClient } from '@/lib/auth-client';
 
 export const signInSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -20,9 +20,8 @@ export const signInSchema = z.object({
 const signInFormId = 'sign-in-form';
 
 export type SignInType = z.infer<typeof signInSchema>;
-export type SignInFormState = FormState;
 
-export function useSignInFormConfig(): FormConfig<SignInFormState, SignInType> {
+export function useSignInFormConfig(): ClientFormConfig<SignInType> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<SignInType> = {
@@ -49,19 +48,16 @@ export function useSignInFormConfig(): FormConfig<SignInFormState, SignInType> {
     defaultValues,
     schema: signInSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: signInFormAction,
     hideActions: true,
     formId: signInFormId,
-    useErrorAction: () => {
-      return (state: SignInFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
-      };
-    },
-    useSuccessAction: () => {
-      return (state: SignInFormState) => {
-        toast.success(state?.message || 'Signed in successfully');
-        router.push(routes.home.path({}));
-      };
+    onSubmit: async (data) => {
+      await authClient.signIn.email({
+        email: data.email,
+        password: data.password,
+      });
+
+      toast.success('Signed in successfully');
+      router.push(routes.home.path({}));
     },
     renderFormActions: (isPending: boolean) => {
       return (
