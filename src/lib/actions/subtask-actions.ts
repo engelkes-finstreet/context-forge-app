@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { SubtaskService } from "@/lib/services/subtask-service";
 import { Prisma } from "@/generated/prisma";
-import type { CreateGenericSubtaskFormInput } from "@/lib/validations/forms/generic-subtask-form-schema";
+import type { CreateGenericSubtaskFormInput } from "@/features/subtasks/components/forms/generic-subtask/create-generic-subtask-form-schema";
 import { SubtaskType } from "@/features/subtasks/types/subtask-types";
 
 export type SubtaskFormState = {

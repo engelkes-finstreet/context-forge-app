@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { updateTaskSchema, UpdateTaskInput } from '@/lib/validations/task-schema';
+import { updateTaskSchema, UpdateTaskInput } from './edit-task-form-schema';
 import { updateTaskAction, TaskFormState } from '@/lib/actions/task-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';
