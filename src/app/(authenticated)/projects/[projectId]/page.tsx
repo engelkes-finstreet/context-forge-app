@@ -28,7 +28,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <PageTransition className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <TypedLink route={routes.projects.list}>
           <Button variant="ghost" size="sm" className="mb-4">

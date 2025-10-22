@@ -34,7 +34,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
   const typeConfig = getTypeConfig(SubtaskType.GENERIC);
 
   return (
-    <PageTransition className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }}>
           <Button variant="ghost" size="sm" className="mb-4">

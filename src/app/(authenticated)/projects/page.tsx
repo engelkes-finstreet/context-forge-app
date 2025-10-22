@@ -16,7 +16,7 @@ export default async function ProjectsPage() {
   const projects = await ProjectService.getAllProjects();
 
   return (
-    <PageTransition className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gradient">Projects</h1>

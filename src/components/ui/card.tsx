@@ -18,7 +18,7 @@ function Card({
   ...props
 }: CardProps) {
   const baseClassName = cn(
-    "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 transition-all duration-300 bg-gradient-card shadow-md",
+    "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 transition-all duration-300 bg-gradient-card shadow-md hover:border-primary",
     interactive && "cursor-pointer",
     className
   )
@@ -38,8 +38,7 @@ function Card({
   return (
     <div
       data-slot="card"
-      // className={baseClassName}
-      className="hover:text-amber-500"
+      className={baseClassName}
       {...props as React.ComponentProps<"div">}
     />
   )

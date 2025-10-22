@@ -22,7 +22,7 @@ export default async function NewTaskPage({ params }: NewTaskPageProps) {
   }
 
   return (
-    <PageTransition className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <TypedLink route={routes.projects.detail} params={{ projectId }}>
           <Button variant="ghost" size="sm" className="mb-4">

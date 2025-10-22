@@ -4,7 +4,7 @@ import { CreateProjectForm } from '@/features/projects/components/forms/create-p
 
 export default function NewProjectPage() {
   return (
-    <PageTransition className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <h1 className="text-3xl font-bold text-gradient">Create New Project</h1>
         <p className="text-muted-foreground mt-2">
