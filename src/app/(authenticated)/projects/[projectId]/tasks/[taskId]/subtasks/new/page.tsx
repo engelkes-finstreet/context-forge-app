@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
+import { PageTransition } from '@/components/ui/page-transition';
 import { TypeSelector } from '@/features/subtasks/components/type-selector/type-selector';
 import { ArrowLeft } from 'lucide-react';
 
@@ -27,7 +28,7 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }}>
           <Button variant="ghost" size="sm" className="mb-4">
@@ -38,6 +39,6 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
       </div>
 
       <TypeSelector projectId={projectId} taskId={taskId} />
-    </div>
+    </PageTransition>
   );
 }

@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { PageTransition } from '@/components/ui/page-transition';
+import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
 import { PlusCircle, ArrowLeft } from 'lucide-react';
 
 interface ProjectDetailPageProps {
@@ -26,9 +28,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
-        <TypedLink route={routes.projects.list}>
+        <TypedLink route={routes.projects.list} params={{}}>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Projects
@@ -36,7 +38,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </TypedLink>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold">{project.name}</h1>
+            <h1 className="text-3xl font-bold text-gradient">{project.name}</h1>
             {project.description && (
               <p className="text-muted-foreground mt-2">{project.description}</p>
             )}
@@ -62,23 +64,25 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
+          <StaggeredContainer className="grid gap-4">
             {project.tasks.map((task) => (
-              <TypedLink key={task.id} route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
-                <Card className="hover:border-primary transition-colors cursor-pointer">
-                  <CardHeader>
-                    <CardTitle>{task.name}</CardTitle>
-                    <CardDescription>
-                      {task._count.subtasks}{' '}
-                      {task._count.subtasks === 1 ? 'subtask' : 'subtasks'}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </TypedLink>
+              <StaggeredItem key={task.id}>
+                <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{task.name}</CardTitle>
+                      <CardDescription>
+                        {task._count.subtasks}{' '}
+                        {task._count.subtasks === 1 ? 'subtask' : 'subtasks'}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </TypedLink>
+              </StaggeredItem>
             ))}
-          </div>
+          </StaggeredContainer>
         )}
       </div>
-    </div>
+    </PageTransition>
   );
 }

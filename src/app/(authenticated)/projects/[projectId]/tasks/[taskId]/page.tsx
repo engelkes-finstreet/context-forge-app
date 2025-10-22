@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
 } from '@/components/ui/card';
+import { PageTransition } from '@/components/ui/page-transition';
 import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { DraggableSubtaskList } from '@/features/subtasks/components/draggable-subtask-list';
@@ -26,7 +27,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div>
         <TypedLink route={routes.projects.detail} params={{ projectId }}>
           <Button variant="ghost" size="sm" className="mb-4">
@@ -36,7 +37,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
         </TypedLink>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold">{task.name}</h1>
+            <h1 className="text-3xl font-bold text-gradient">{task.name}</h1>
             <p className="text-sm text-muted-foreground mt-1">
               Project: {task.project.name}
             </p>
@@ -88,6 +89,6 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
           />
         )}
       </div>
-    </div>
+    </PageTransition>
   );
 }

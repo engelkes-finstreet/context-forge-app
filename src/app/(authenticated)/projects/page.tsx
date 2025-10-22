@@ -8,16 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { PageTransition } from '@/components/ui/page-transition';
+import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
 import { PlusCircle } from 'lucide-react';
 
 export default async function ProjectsPage() {
   const projects = await ProjectService.getAllProjects();
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <PageTransition>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Projects</h1>
+          <h1 className="text-3xl font-bold text-gradient">Projects</h1>
           <p className="text-muted-foreground mt-2">
             Manage your Context Forge projects
           </p>
@@ -40,26 +42,28 @@ export default async function ProjectsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <StaggeredContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <TypedLink key={project.id} route={routes.projects.detail} params={{ projectId: project.id }}>
-              <Card className="hover:border-primary transition-colors cursor-pointer h-full">
-                <CardHeader>
-                  <CardTitle>{project.name}</CardTitle>
-                  {project.description && (
-                    <CardDescription>{project.description}</CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <div className="text-sm text-muted-foreground">
-                    {project._count.tasks} {project._count.tasks === 1 ? 'task' : 'tasks'}
-                  </div>
-                </CardContent>
-              </Card>
-            </TypedLink>
+            <StaggeredItem key={project.id}>
+              <TypedLink route={routes.projects.detail} params={{ projectId: project.id }}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{project.name}</CardTitle>
+                    {project.description && (
+                      <CardDescription>{project.description}</CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-sm text-muted-foreground">
+                      {project._count.tasks} {project._count.tasks === 1 ? 'task' : 'tasks'}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TypedLink>
+            </StaggeredItem>
           ))}
-        </div>
+        </StaggeredContainer>
       )}
-    </div>
+    </PageTransition>
   );
 }
