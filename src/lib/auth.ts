@@ -4,6 +4,22 @@ import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
+// Dynamically determine the base URL based on environment
+const getBaseURL = () => {
+  // If BETTER_AUTH_URL is explicitly set, use it
+  if (process.env.BETTER_AUTH_URL) {
+    return process.env.BETTER_AUTH_URL;
+  }
+
+  // On Vercel, use the deployment URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Fallback to localhost for local development
+  return "http://localhost:3000";
+};
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -13,7 +29,7 @@ export const auth = betterAuth({
     requireEmailVerification: false, // Set to true if you want to verify emails
   },
   secret: process.env.BETTER_AUTH_SECRET || "",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: getBaseURL(),
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day (session token is refreshed if it's older than this)
