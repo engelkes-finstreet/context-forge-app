@@ -7,7 +7,6 @@ import { DeepPartial } from 'react-hook-form';
 import { toast } from '@/lib/toast';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { signInFormAction } from '@/features/auth/components/forms/sign-in/sign-in-form-action';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/lib/routes';
 import { authClient } from '@/lib/auth-client';
