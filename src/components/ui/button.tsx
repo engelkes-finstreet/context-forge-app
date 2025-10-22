@@ -39,12 +39,10 @@ const buttonVariants = cva(
   }
 )
 
-type ButtonProps = VariantProps<typeof buttonVariants> & {
-  asChild?: boolean;
-} & (
-  | (React.ComponentProps<"button"> & { asChild?: false | undefined })
-  | (React.ComponentProps<typeof Slot> & { asChild: true }) & { disabled?: boolean }
-)
+type ButtonProps = React.ComponentProps<"button"> &
+VariantProps<typeof buttonVariants> & {
+  asChild?: boolean
+} 
 
 function Button({
   className,

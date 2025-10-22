@@ -25,6 +25,7 @@ export default function SignInPage() {
           Don&apos;t have an account?{' '}
           <TypedLink
             route={routes.auth.signUp}
+            params={{}}
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
             Sign up

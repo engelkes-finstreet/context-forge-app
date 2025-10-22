@@ -8,11 +8,7 @@
  * - Type guards for runtime validation
  */
 
-import { SubtaskType as PrismaSubtaskType } from '@/generated/prisma';
-
-// Re-export Prisma enum for consistency
-export const SubtaskType = PrismaSubtaskType;
-export type SubtaskType = PrismaSubtaskType;
+import { SubtaskType } from "@prisma/client";
 
 // ============================================================================
 // Metadata Interfaces (Discriminated Union)

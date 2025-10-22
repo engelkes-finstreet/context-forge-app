@@ -8,7 +8,7 @@
  * - Visibility (which types are enabled)
  */
 
-import { SubtaskType } from '@/features/subtasks/types/subtask-types';
+import { SubtaskType } from "@prisma/client";
 
 export interface SubtaskTypeConfig {
   type: SubtaskType;

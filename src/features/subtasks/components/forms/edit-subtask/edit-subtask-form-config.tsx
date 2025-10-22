@@ -67,7 +67,10 @@ export function useEditSubtaskFormConfig({
       label: 'Content',
       placeholder: 'Enter subtask content (supports Markdown)',
       description: 'This content is specific to this subtask',
-    },
+    },  
+    order: {
+      type: 'hidden',
+    }
   };
 
   return {

@@ -38,7 +38,7 @@ import { routes } from "@/lib/routes";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { reorderSubtasks } from "@/lib/actions/subtask-actions";
 import { toast } from "@/lib/toast";
-import type { Subtask } from "@/generated/prisma";
+import { Subtask } from "@prisma/client";
 
 interface DraggableSubtaskListProps {
   subtasks: Subtask[];

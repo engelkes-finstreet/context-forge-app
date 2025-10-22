@@ -60,7 +60,7 @@ export function useSignInFormConfig(): FormConfig<SignInFormState, SignInType> {
     useSuccessAction: () => {
       return (state: SignInFormState) => {
         toast.success(state?.message || 'Signed in successfully');
-        router.push(routes.home.path());
+        router.push(routes.home.path({}));
       };
     },
     renderFormActions: (isPending: boolean) => {

@@ -34,6 +34,9 @@ export function useCreateTaskFormConfig(projectId: string): FormConfig<TaskFormS
       placeholder: 'Enter shared context for all subtasks (supports Markdown)',
       description: 'This context will be accessible by all subtasks within this task',
     },
+    order: {
+      type: 'hidden',
+    }
   };
 
   return {

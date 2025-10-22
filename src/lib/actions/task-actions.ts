@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { TaskService } from "@/lib/services/task-service";
-import { Prisma } from "@/generated/prisma";
+import { Prisma } from "@prisma/client";
 
 export type TaskFormState = {
   error: string | null;

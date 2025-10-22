@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-import { Prisma } from "@/generated/prisma";
+import { Prisma } from "@prisma/client";
+
 
 export class ProjectService {
   /**
@@ -37,6 +38,7 @@ export class ProjectService {
                 subtasks: true,
               },
             },
+            subtasks: true
           },
         },
       },

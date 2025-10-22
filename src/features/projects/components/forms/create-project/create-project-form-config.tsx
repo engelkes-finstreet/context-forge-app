@@ -47,7 +47,7 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
     useSuccessAction: () => {
       return (state: ProjectFormState) => {
         toast.success(state?.message || 'Project created successfully');
-        router.push(routes.projects.list.path());
+        router.push(routes.projects.list.path({}));
       };
     },
     renderFormActions: (isPending: boolean) => {

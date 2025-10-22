@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { SubtaskService } from "@/lib/services/subtask-service";
-import { Prisma } from "@/generated/prisma";
 import type { CreateGenericSubtaskFormInput } from "@/features/subtasks/components/forms/generic-subtask/create-generic-subtask-form-schema";
-import { SubtaskType } from "@/features/subtasks/types/subtask-types";
+import { Prisma, SubtaskType } from "@prisma/client";
 
 export type SubtaskFormState = {
   error: string | null;
@@ -36,7 +35,7 @@ export async function createGenericSubtaskAction(
     const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
       ...formData,
       type: SubtaskType.GENERIC,
-      metadata: null, // Generic type has no metadata
+      metadata: {}, // Generic type has no metadata
     };
 
     subtask = await SubtaskService.createSubtask(subtaskInput);

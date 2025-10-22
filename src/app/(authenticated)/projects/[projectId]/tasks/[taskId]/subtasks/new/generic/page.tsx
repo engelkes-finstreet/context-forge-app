@@ -8,8 +8,8 @@ import { CreateGenericSubtaskForm } from '@/features/subtasks/components/forms/g
 import { ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { getTypeConfig } from '@/features/subtasks/config/type-config';
-import { SubtaskType } from '@/features/subtasks/types/subtask-types';
 import { Badge } from '@/components/ui/badge';
+import { SubtaskType } from '@prisma/client';
 
 interface NewGenericSubtaskPageProps {
   params: Promise<{
