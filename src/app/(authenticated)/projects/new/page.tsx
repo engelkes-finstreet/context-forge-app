@@ -12,7 +12,7 @@ export default function NewProjectPage() {
         </p>
       </div>
 
-      <Card className="shadow-2">
+      <Card>
         <CardHeader>
           <CardTitle>Project Details</CardTitle>
           <CardDescription>

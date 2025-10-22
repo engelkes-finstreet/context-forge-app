@@ -62,7 +62,7 @@ export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) 
         </Alert>
       )}
 
-      <Card className="shadow-2">
+      <Card>
         <CardHeader>
           <CardTitle>Subtask Details</CardTitle>
           <CardDescription>

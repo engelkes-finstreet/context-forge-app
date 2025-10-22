@@ -49,11 +49,11 @@ export function MainNav() {
   return (
     <div className={cn(
       "sticky top-0 z-50 border-b transition-all duration-300",
-      scrolled && "glass shadow-2"
+      scrolled && "glass shadow-md"
     )}>
       <div className="container mx-auto flex h-16 items-center px-4">
         <div className="flex items-center gap-6">
-          <TypedLink route={routes.projects.list} className="font-semibold text-lg transition-colors hover:text-primary">
+          <TypedLink route={routes.projects.list} params={{}} className="font-semibold text-lg transition-colors hover:text-primary">
             Context Forge
           </TypedLink>
           <nav className="flex items-center gap-4">

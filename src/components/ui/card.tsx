@@ -1,28 +1,46 @@
+"use client";
+
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, type HTMLMotionProps } from "framer-motion"
 
 import { cn } from "@/lib/utils"
+
+type CardProps = {
+  interactive?: boolean;
+} & (
+  | (React.ComponentProps<"div"> & { interactive?: false | undefined })
+  | (Omit<HTMLMotionProps<"div">, "children"> & React.PropsWithChildren & { interactive: true })
+)
 
 function Card({
   className,
   interactive = false,
   ...props
-}: React.ComponentProps<"div"> & { interactive?: boolean }) {
-  const Component = interactive ? motion.div : "div"
+}: CardProps) {
+  const baseClassName = cn(
+    "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 transition-all duration-300 bg-gradient-card shadow-md",
+    interactive && "cursor-pointer",
+    className
+  )
+
+  if (interactive) {
+    return (
+      <motion.div
+        data-slot="card"
+        className={baseClassName}
+        whileHover={{ y: -2, scale: 1.01 }}
+        transition={{ type: "tween", duration: 0.1 }}
+        {...(props as HTMLMotionProps<"div">)}
+      />
+    )
+  }
 
   return (
-    <Component
+    <div
       data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-1 transition-all duration-300 bg-gradient-card",
-        interactive && "cursor-pointer hover:shadow-3 hover:shadow-primary/10 hover:border-primary/30",
-        className
-      )}
-      {...(interactive && {
-        whileHover: { y: -4, scale: 1.01 },
-        transition: { type: "spring", stiffness: 300, damping: 20 }
-      })}
-      {...props}
+      // className={baseClassName}
+      className="hover:text-amber-500"
+      {...props as React.ComponentProps<"div">}
     />
   )
 }

@@ -1,7 +1,9 @@
+"use client";
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { motion } from "framer-motion"
+import { motion, type HTMLMotionProps } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -37,6 +39,13 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonProps = VariantProps<typeof buttonVariants> & {
+  asChild?: boolean;
+} & (
+  | (React.ComponentProps<"button"> & { asChild?: false | undefined })
+  | (React.ComponentProps<typeof Slot> & { asChild: true }) & { disabled?: boolean }
+)
+
 function Button({
   className,
   variant,
@@ -44,22 +53,28 @@ function Button({
   asChild = false,
   disabled,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
-  const MotionComp = asChild ? Comp : motion.button
+}: ButtonProps) {
+  const baseClassName = cn(buttonVariants({ variant, size, className }))
+
+  if (asChild) {
+    return (
+      <Slot
+        data-slot="button"
+        className={baseClassName}
+        {...props}
+      />
+    )
+  }
 
   return (
-    <MotionComp
+    <motion.button
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={baseClassName}
       disabled={disabled}
-      whileHover={!disabled && !asChild ? { scale: 1.02 } : undefined}
-      whileTap={!disabled && !asChild ? { scale: 0.98 } : undefined}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      {...props}
+      whileHover={!disabled ? { scale: 1.02 } : undefined}
+      whileTap={!disabled ? { scale: 0.98 } : undefined}
+      transition={{ type: "tween", duration: 0.1 }}
+      {...(props as HTMLMotionProps<"button">)}
     />
   )
 }

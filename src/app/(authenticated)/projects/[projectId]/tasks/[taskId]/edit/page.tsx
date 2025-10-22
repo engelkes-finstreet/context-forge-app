@@ -37,7 +37,7 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
         </p>
       </div>
 
-      <Card className="shadow-2">
+      <Card>
         <CardHeader>
           <CardTitle>Task Details</CardTitle>
           <CardDescription>

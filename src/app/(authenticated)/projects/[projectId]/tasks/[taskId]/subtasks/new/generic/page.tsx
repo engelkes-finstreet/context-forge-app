@@ -64,7 +64,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
         </Alert>
       )}
 
-      <Card className="shadow-2">
+      <Card>
         <CardHeader>
           <CardTitle>Subtask Details</CardTitle>
           <CardDescription>
