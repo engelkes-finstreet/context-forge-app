@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { CreateProjectInput, UpdateProjectInput } from "@/lib/validations/project-schema";
+import { Prisma } from "@/generated/prisma";
 
 export class ProjectService {
   /**
@@ -46,7 +46,7 @@ export class ProjectService {
   /**
    * Create a new project
    */
-  static async createProject(data: CreateProjectInput) {
+  static async createProject(data: Prisma.ProjectCreateInput) {
     return db.project.create({
       data,
     });
@@ -55,7 +55,7 @@ export class ProjectService {
   /**
    * Update an existing project
    */
-  static async updateProject(id: string, data: UpdateProjectInput) {
+  static async updateProject(id: string, data: Prisma.ProjectUpdateInput) {
     return db.project.update({
       where: { id },
       data,

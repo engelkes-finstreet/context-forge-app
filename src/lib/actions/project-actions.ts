@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { ProjectService } from "@/lib/services/project-service";
-import type { CreateProjectInput, UpdateProjectInput } from "@/lib/validations/project-schema";
+import { Prisma } from "@/generated/prisma";
 
 export type ProjectFormState = {
   error: string | null;
@@ -12,7 +12,7 @@ export type ProjectFormState = {
 
 export async function createProjectAction(
   state: ProjectFormState,
-  data: CreateProjectInput
+  data: Prisma.ProjectCreateInput
 ): Promise<ProjectFormState> {
   let project;
 
@@ -32,7 +32,7 @@ export async function createProjectAction(
 
 export async function updateProjectAction(
   state: ProjectFormState,
-  data: UpdateProjectInput & { id: string }
+  data: Prisma.ProjectUpdateInput & { id: string }
 ): Promise<ProjectFormState> {
   try {
     const { id, ...updateData } = data;
