@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { TaskService } from "@/lib/services/task-service";
-import type { CreateTaskInput, UpdateTaskInput } from "@/lib/validations/task-schema";
+import { Prisma } from "@/generated/prisma";
 
 export type TaskFormState = {
   error: string | null;
@@ -12,7 +12,7 @@ export type TaskFormState = {
 
 export async function createTaskAction(
   state: TaskFormState,
-  data: CreateTaskInput
+  data: Prisma.TaskUncheckedCreateInput
 ): Promise<TaskFormState> {
   let task;
 
@@ -32,7 +32,7 @@ export async function createTaskAction(
 
 export async function updateTaskAction(
   state: TaskFormState,
-  data: UpdateTaskInput & { id: string; projectId: string }
+  data: Prisma.TaskUncheckedUpdateInput & { id: string; projectId: string }
 ): Promise<TaskFormState> {
   try {
     const { id, projectId, ...updateData } = data;

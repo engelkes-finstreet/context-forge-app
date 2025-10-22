@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { CreateSubtaskInput, UpdateSubtaskInput } from "@/lib/validations/subtask-schema";
+import { Prisma } from "@/generated/prisma";
 
 export class SubtaskService {
   /**
@@ -36,7 +36,7 @@ export class SubtaskService {
   /**
    * Create a new subtask
    */
-  static async createSubtask(data: CreateSubtaskInput) {
+  static async createSubtask(data: Prisma.SubtaskUncheckedCreateInput) {
     // Get the max order for subtasks in this task
     const maxOrderSubtask = await db.subtask.findFirst({
       where: { taskId: data.taskId },
@@ -57,7 +57,7 @@ export class SubtaskService {
   /**
    * Update an existing subtask
    */
-  static async updateSubtask(id: string, data: UpdateSubtaskInput) {
+  static async updateSubtask(id: string, data: Prisma.SubtaskUncheckedUpdateInput) {
     return db.subtask.update({
       where: { id },
       data,

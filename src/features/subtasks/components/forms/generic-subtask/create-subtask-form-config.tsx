@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import {
   createGenericSubtaskFormSchema,
   CreateGenericSubtaskFormInput
-} from '@/lib/validations/forms/generic-subtask-form-schema';
+} from './create-generic-subtask-form-schema';
 import { createGenericSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 

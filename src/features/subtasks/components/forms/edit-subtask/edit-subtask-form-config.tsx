@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { updateSubtaskSchema, UpdateSubtaskInput } from '@/lib/validations/subtask-schema';
+import { updateSubtaskSchema, UpdateSubtaskInput } from './edit-subtask-form-schema';
 import { updateSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';

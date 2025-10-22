@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { createProjectSchema, CreateProjectInput } from '@/lib/validations/project-schema';
+import { createProjectSchema, CreateProjectInput } from './create-project-form-schema';
 import { createProjectAction, ProjectFormState } from '@/lib/actions/project-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { routes } from '@/lib/routes';

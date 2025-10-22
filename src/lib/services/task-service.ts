@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { CreateTaskInput, UpdateTaskInput } from "@/lib/validations/task-schema";
+import { Prisma } from "@/generated/prisma";
 
 export class TaskService {
   /**
@@ -46,7 +46,7 @@ export class TaskService {
   /**
    * Create a new task
    */
-  static async createTask(data: CreateTaskInput) {
+  static async createTask(data: Prisma.TaskUncheckedCreateInput) {
     // Get the max order for tasks in this project
     const maxOrderTask = await db.task.findFirst({
       where: { projectId: data.projectId },
@@ -67,7 +67,7 @@ export class TaskService {
   /**
    * Update an existing task
    */
-  static async updateTask(id: string, data: UpdateTaskInput) {
+  static async updateTask(id: string, data: Prisma.TaskUncheckedUpdateInput) {
     return db.task.update({
       where: { id },
       data,
