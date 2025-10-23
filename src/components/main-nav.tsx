@@ -57,18 +57,26 @@ export function MainNav() {
             Context Forge
           </TypedLink>
           <nav className="flex items-center gap-4">
-            {/* {routes.map((route) => (
-              <Link
-                key={route.href}
-                href={route.href}
-                className={cn(
-                  'hover:text-primary text-sm font-medium transition-colors',
-                  route.active ? 'text-foreground' : 'text-muted-foreground'
-                )}
-              >
-                {route.label}
-              </Link>
-            ))} */}
+            <TypedLink
+              route={routes.projects.list}
+              params={{}}
+              className={cn(
+                'hover:text-primary text-sm font-medium transition-colors',
+                pathname.startsWith('/projects') ? 'text-foreground' : 'text-muted-foreground'
+              )}
+            >
+              Projects
+            </TypedLink>
+            <TypedLink
+              route={routes.markdownDemo}
+              params={{}}
+              className={cn(
+                'hover:text-primary text-sm font-medium transition-colors',
+                pathname === '/markdown-demo' ? 'text-foreground' : 'text-muted-foreground'
+              )}
+            >
+              Markdown Demo
+            </TypedLink>
           </nav>
         </div>
         <div className="ml-auto flex items-center gap-2">

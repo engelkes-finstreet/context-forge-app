@@ -54,6 +54,12 @@ export const routes = {
   home: route('/'),
 
   /**
+   * Markdown editor demo page - /markdown-demo
+   * Requires authentication
+   */
+  markdownDemo: route('/markdown-demo'),
+
+  /**
    * Project-related routes
    */
   projects: {
@@ -203,6 +209,7 @@ export type RoutePattern =
   | typeof routes.auth.signIn.pattern
   | typeof routes.auth.signUp.pattern
   | typeof routes.home.pattern
+  | typeof routes.markdownDemo.pattern
   | typeof routes.projects.list.pattern
   | typeof routes.projects.new.pattern
   | typeof routes.projects.detail.pattern
