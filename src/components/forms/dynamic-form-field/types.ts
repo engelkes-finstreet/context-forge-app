@@ -1,9 +1,12 @@
+import { SwaggerEndpoint } from "@/lib/services/swagger-service";
+
 export enum BaseField {
   HIDDEN = 'hidden',
   INPUT = 'input',
   PASSWORD = 'password',
   TEXTAREA = 'textarea',
   SELECT = 'select',
+  SWAGGER_ENDPOINT_SELECTOR = 'swagger_endpoint_selector',
   CHECKBOX = 'checkbox',
   DATE_PICKER = 'date_picker',
   DATE_RANGE_PICKER = 'date_range_picker',
@@ -52,6 +55,11 @@ export type SelectFieldConfig<
   options: Array<{ label: string; value: string }>;
 };
 
+export type SwaggerEndpointSelectorFieldConfig<FormValues, FieldName extends keyof FormValues> = BaseFieldConfig<FormValues, FieldName, 'swagger_endpoint_selector'>  & {
+  endpoints: SwaggerEndpoint[];
+  emptyText?: string;
+}
+
 export type CheckboxFieldConfig<
   FormValues,
   FieldName extends keyof FormValues,
@@ -85,6 +93,7 @@ export type FormFieldConfig<
   | InputFieldConfig<FormValues, FieldName>
   | PasswordFieldConfig<FormValues, FieldName>
   | TextareaFieldConfig<FormValues, FieldName>
+  | SwaggerEndpointSelectorFieldConfig<FormValues, FieldName>
   | SelectFieldConfig<FormValues, FieldName>
   | CheckboxFieldConfig<FormValues, FieldName>
   | DatePickerFieldConfig<FormValues, FieldName>

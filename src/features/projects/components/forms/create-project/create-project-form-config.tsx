@@ -16,6 +16,8 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
   const defaultValues: DeepPartial<CreateProjectInput> = {
     name: '',
     description: '',
+    githubRepo: '',
+    swaggerPath: '',
   };
 
   const fields: FormFieldsType<CreateProjectInput> = {
@@ -29,6 +31,18 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
       type: 'textarea',
       label: 'Description (optional)',
       placeholder: 'Enter project description',
+    },
+    githubRepo: {
+      type: 'input',
+      inputType: 'text',
+      label: 'GitHub Repository (optional)',
+      placeholder: 'e.g., owner/repo-name',
+    },
+    swaggerPath: {
+      type: 'input',
+      inputType: 'text',
+      label: 'Swagger File Path (optional)',
+      placeholder: 'e.g., docs/swagger.yaml',
     },
   };
 

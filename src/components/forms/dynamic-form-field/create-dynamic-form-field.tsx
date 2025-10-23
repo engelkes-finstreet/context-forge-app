@@ -16,6 +16,7 @@ import { getFormFieldConfig } from '@/components/forms/utils/get-form-field-conf
 import React from 'react';
 
 import { useWatch } from 'react-hook-form';
+import { FormSwaggerEndpointSelector } from '@/components/forms/fields';
 
 type FieldComponentProps = {
   name: string;
@@ -34,6 +35,7 @@ const defaultComponents: Partial<
   [BaseField.PASSWORD]: FormPasswordInput,
   [BaseField.TEXTAREA]: FormTextarea,
   [BaseField.SELECT]: FormSelect,
+  [BaseField.SWAGGER_ENDPOINT_SELECTOR]: FormSwaggerEndpointSelector,
   [BaseField.CHECKBOX]: FormCheckbox,
   [BaseField.DATE_PICKER]: FormDatePicker,
   [BaseField.DATE_RANGE_PICKER]: FormDateRangePicker,

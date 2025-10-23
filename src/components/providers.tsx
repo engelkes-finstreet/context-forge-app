@@ -14,7 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           await animate(
             'main',
             { opacity: 0, y: -10 },
-            { duration: 0.15, ease: 'easeOut' }
+            { duration: 0.1, ease: 'easeOut' }
           );
           next();
         }}
@@ -26,7 +26,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           await animate(
             'main',
             { opacity: [0, 1], y: [10, 0] },
-            { duration: 0.2, ease: 'easeOut' }
+            { duration: 0.1, ease: 'easeOut' }
           );
         }}
       >

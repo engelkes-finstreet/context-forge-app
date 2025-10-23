@@ -1,6 +1,5 @@
-import { redirect } from 'next/navigation';
-import { routes } from '@/lib/routes';
+import { routes, typedRedirect } from "@/lib/routes";
 
 export default function Home() {
-  redirect(routes.projects.list.path({}));
+  typedRedirect(routes.projects.list)
 }
