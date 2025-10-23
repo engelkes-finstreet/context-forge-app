@@ -1,18 +1,20 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageTransition } from '@/components/ui/page-transition';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { CreateProjectForm } from '@/features/projects/components/forms/create-project/create-project-form';
 
 export default function NewProjectPage() {
   return (
-    <PageTransition>
-      <div>
-        <h1 className="text-3xl font-bold text-gradient">Create New Project</h1>
-        <p className="text-muted-foreground mt-2">
-          Set up a new project to organize your tasks and contexts
-        </p>
-      </div>
+    <>
+      <PageHeader>
+        <PageHeader.Title
+          title="Create New Project"
+          subtitle="Set up a new project to organize your tasks and contexts"
+        />
+      </PageHeader>
 
-      <Card>
+      <PageContent>
+        <Card>
         <CardHeader>
           <CardTitle>Project Details</CardTitle>
           <CardDescription>
@@ -23,6 +25,7 @@ export default function NewProjectPage() {
           <CreateProjectForm />
         </CardContent>
       </Card>
-    </PageTransition>
+      </PageContent>
+    </>
   );
 }
