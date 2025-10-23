@@ -220,3 +220,4 @@ Having issues? Check the [Troubleshooting Guide](./docs/guides/troubleshooting.m
 ---
 
 **Note:** For detailed documentation on any topic, please refer to the files in the [`docs/`](./docs/) directory. This file serves as a quick reference and index to the full documentation.
+- Stop to write everything into some markdown files if I do not explicitly ask you. If you want to add a short explanation do it inside the console but stop creating markdown files

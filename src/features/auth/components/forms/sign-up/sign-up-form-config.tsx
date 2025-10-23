@@ -1,14 +1,15 @@
-import { signUpFormAction } from '@/features/auth/components/forms/sign-up/sign-up-form-action';
+import { z } from 'zod';
 import {
-  FormConfig,
+  ClientFormConfig,
   FormFieldsType,
-  FormState,
 } from '@/components/forms/types';
-import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
-import { Button } from '@/components/ui/button';
 import { DeepPartial } from 'react-hook-form';
 import { toast } from '@/lib/toast';
-import { z } from 'zod';
+import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/lib/routes';
+import { authClient } from '@/lib/auth-client';
 
 export const signUpSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -19,9 +20,10 @@ export const signUpSchema = z.object({
 const signUpFormId = 'sign-up-form';
 
 export type SignUpType = z.infer<typeof signUpSchema>;
-export type SignUpFormState = FormState;
 
-export function useSignUpFormConfig(): FormConfig<SignUpFormState, SignUpType> {
+export function useSignUpFormConfig(): ClientFormConfig<SignUpType> {
+  const router = useRouter();
+
   const defaultValues: DeepPartial<SignUpType> = {
     email: '',
     password: '',
@@ -52,18 +54,17 @@ export function useSignUpFormConfig(): FormConfig<SignUpFormState, SignUpType> {
     defaultValues,
     schema: signUpSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: signUpFormAction,
-    formId: signUpFormId,
     hideActions: true,
-    useErrorAction: () => {
-      return (state: SignUpFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
-      };
-    },
-    useSuccessAction: () => {
-      return (state: SignUpFormState) => {
-        toast.success(state?.message || 'Account created successfully');
-      };
+    formId: signUpFormId,
+    onSubmit: async (data) => {
+      await authClient.signUp.email({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      });
+
+      toast.success('Account created successfully');
+      router.push(routes.home.path({}));
     },
     renderFormActions: (isPending: boolean) => {
       return (
