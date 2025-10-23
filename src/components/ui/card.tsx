@@ -13,7 +13,7 @@ const cardVariants = cva(
       },
     },
     defaultVariants: {
-      interactive: true,
+      interactive: false,
     },
   }
 )

@@ -92,7 +92,7 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
           pointerEvents: isDragActive ? 'none' : 'auto'
         }}
       >
-        <Card>
+        <Card interactive={true}>
           <CardHeader>
             <div className="flex items-start gap-3">
               <button
