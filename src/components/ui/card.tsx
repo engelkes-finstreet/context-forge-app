@@ -1,15 +1,32 @@
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+const cardVariants = cva(
+  "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border-2 py-6 transition-all bg-gradient-card",
+  {
+    variants: {
+      interactive: {
+        true: "hover:shadow-md hover:border-primary hover:border-2 hover:scale-[102%]",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      interactive: false,
+    },
+  }
+)
+
+interface CardProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof cardVariants> {}
+
+function Card({ className, interactive, ...props }: CardProps) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border-2 py-6 transition-all bg-gradient-card hover:shadow-md hover:border-primary hover:border-2 hover:scale-[102%]",
-        className
-      )}
+      className={cn(cardVariants({ interactive }), className)}
       {...props}
     />
   )

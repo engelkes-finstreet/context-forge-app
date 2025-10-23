@@ -48,7 +48,7 @@ export default async function ProjectsPage() {
             {projects.map((project) => (
               <StaggeredItem key={project.id}>
                 <TypedLink route={routes.projects.detail} params={{ projectId: project.id }}>
-                  <Card>
+                  <Card interactive={true}>
                     <CardHeader>
                       <CardTitle>{project.name}</CardTitle>
                       {project.description && (
