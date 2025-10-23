@@ -70,6 +70,12 @@ export const routes = {
     detail: route('/projects/[projectId]'),
 
     /**
+     * Edit project page - /projects/[projectId]/edit
+     * @param projectId - UUID of the project
+     */
+    edit: route('/projects/[projectId]/edit'),
+
+    /**
      * Task-related routes (nested under projects)
      */
     tasks: {
@@ -206,6 +212,7 @@ export type RoutePattern =
   | typeof routes.projects.list.pattern
   | typeof routes.projects.new.pattern
   | typeof routes.projects.detail.pattern
+  | typeof routes.projects.edit.pattern
   | typeof routes.projects.tasks.new.pattern
   | typeof routes.projects.tasks.detail.pattern
   | typeof routes.projects.tasks.edit.pattern
