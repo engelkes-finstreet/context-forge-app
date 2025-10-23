@@ -12,7 +12,7 @@ import {
 import { PageHeader } from '@/components/ui/page-header';
 import { PageContent } from '@/components/ui/page-content';
 import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
-import { PlusCircle, ArrowLeft } from 'lucide-react';
+import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -43,12 +43,20 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           subtitle={project.description || undefined}
         />
         <PageHeader.Actions>
-          <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              New Task
-            </Button>
-          </TypedLink>
+          <div className="flex gap-2">
+            <TypedLink route={routes.projects.edit} params={{ projectId }}>
+              <Button variant="outline">
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Project
+              </Button>
+            </TypedLink>
+            <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
+              <Button>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                New Task
+              </Button>
+            </TypedLink>
+          </div>
         </PageHeader.Actions>
       </PageHeader>
 
