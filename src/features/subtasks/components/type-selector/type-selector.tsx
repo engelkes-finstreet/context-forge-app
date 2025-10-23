@@ -28,6 +28,7 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
     'inquiry-process': routes.projects.tasks.subtasks.newInquiryProcess,
     'form': routes.projects.tasks.subtasks.newForm,
     'modal': routes.projects.tasks.subtasks.newModal,
+    'request': routes.projects.tasks.subtasks.newRequest,
   } as const;
 
   const handleTypeSelect = (route: string) => {

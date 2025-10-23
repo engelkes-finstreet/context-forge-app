@@ -114,6 +114,7 @@ enum SubtaskType {
   INQUIRY_PROCESS
   FORM
   MODAL
+  REQUEST
 }
 
 model Subtask {

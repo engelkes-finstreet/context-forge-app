@@ -152,6 +152,16 @@ export const routes = {
         ),
 
         /**
+         * Create new request subtask page
+         * /projects/[projectId]/tasks/[taskId]/subtasks/new/request
+         * @param projectId - UUID of the parent project
+         * @param taskId - UUID of the parent task
+         */
+        newRequest: route(
+          '/projects/[projectId]/tasks/[taskId]/subtasks/new/request'
+        ),
+
+        /**
          * Edit subtask page
          * /projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit
          * @param projectId - UUID of the parent project

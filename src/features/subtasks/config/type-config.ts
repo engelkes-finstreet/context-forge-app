@@ -35,6 +35,16 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     badgeVariant: 'default',
   },
 
+  [SubtaskType.REQUEST]: {
+    type: SubtaskType.REQUEST,
+    label: 'Request',
+    description: 'Request to an external API',
+    icon: '🌐',
+    route: 'request',
+    enabled: true,
+    badgeVariant: 'default',
+  },
+
   [SubtaskType.INQUIRY_PROCESS]: {
     type: SubtaskType.INQUIRY_PROCESS,
     label: 'Inquiry Process',
