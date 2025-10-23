@@ -9,7 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { PageTransition } from '@/components/ui/page-transition';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
 import { PlusCircle, ArrowLeft } from 'lucide-react';
 
@@ -28,31 +29,30 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <PageTransition>
-      <div>
-        <TypedLink route={routes.projects.list} params={{}}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Projects
-          </Button>
-        </TypedLink>
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gradient">{project.name}</h1>
-            {project.description && (
-              <p className="text-muted-foreground mt-2">{project.description}</p>
-            )}
-          </div>
+    <>
+      <TypedLink route={routes.projects.list} params={{}} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Projects
+        </Button>
+      </TypedLink>
+
+      <PageHeader>
+        <PageHeader.Title
+          title={project.name}
+          subtitle={project.description || undefined}
+        />
+        <PageHeader.Actions>
           <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
               New Task
             </Button>
           </TypedLink>
-        </div>
-      </div>
+        </PageHeader.Actions>
+      </PageHeader>
 
-      <div>
+      <PageContent>
         <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
         {project.tasks.length === 0 ? (
           <Card>
@@ -82,7 +82,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             ))}
           </StaggeredContainer>
         )}
-      </div>
-    </PageTransition>
+      </PageContent>
+    </>
   );
 }
