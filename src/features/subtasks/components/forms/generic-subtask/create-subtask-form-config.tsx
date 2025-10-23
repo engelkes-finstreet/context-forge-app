@@ -9,6 +9,7 @@ import {
 } from './create-generic-subtask-form-schema';
 import { createGenericSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
+import { SwaggerEndpoint } from '@/lib/services/swagger-service';
 
 const createSubtaskFormId = 'create-generic-subtask-form';
 
@@ -18,13 +19,14 @@ const createSubtaskFormId = 'create-generic-subtask-form';
  * Uses the form schema (CreateGenericSubtaskFormInput) which contains only
  * the fields the user inputs. The server action will add type and metadata.
  */
-export function useCreateGenericSubtaskFormConfig(taskId: string): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
+export function useCreateGenericSubtaskFormConfig(taskId: string, endpoints: SwaggerEndpoint[]): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
     name: '',
     content: '',
+    endpoint: undefined
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
@@ -43,6 +45,14 @@ export function useCreateGenericSubtaskFormConfig(taskId: string): FormConfig<Su
       placeholder: 'Enter subtask content (supports Markdown)',
       description: 'This content is specific to this subtask',
     },
+    endpoint: {
+      type: 'swagger_endpoint_selector',
+      label: 'Endpoint',
+      description: 'Select the API endpoint for this request',
+      placeholder: 'Select endpoint...',
+      emptyText: 'No endpoints found',
+      endpoints,
+    }
   };
 
   return {

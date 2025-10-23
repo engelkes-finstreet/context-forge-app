@@ -13,15 +13,6 @@ export default function Home() {
 
       <div className="space-y-8">
         <section>
-          <h2 className="text-2xl font-semibold mb-4">React Hook Form Integration</h2>
-          <p className="text-muted-foreground mb-4">
-            This demo shows how to use the FormSwaggerEndpointSelector component in a form
-            with react-hook-form validation. The endpoint is stored as a string (METHOD:PATH).
-          </p>
-          <SwaggerFormDemo />
-        </section>
-
-        <section>
           <h2 className="text-2xl font-semibold mb-4">Standalone Selector Demo</h2>
           <p className="text-muted-foreground mb-4">
             This demonstrates the standalone SwaggerEndpointSelector component without form integration.

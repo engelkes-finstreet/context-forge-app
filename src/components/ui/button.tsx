@@ -69,9 +69,6 @@ function Button({
       data-slot="button"
       className={baseClassName}
       disabled={disabled}
-      whileHover={!disabled ? { scale: 1.02 } : undefined}
-      whileTap={!disabled ? { scale: 0.98 } : undefined}
-      transition={{ type: "tween", duration: 0.1 }}
       {...(props as HTMLMotionProps<"button">)}
     />
   )

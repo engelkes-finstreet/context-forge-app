@@ -15,6 +15,7 @@ export const createGenericSubtaskFormSchema = z.object({
   name: z.string()
     .min(1, "Subtask name is required")
     .max(200, "Subtask name must be less than 200 characters"),
+  endpoint: z.string().min(1, "Endpoint is required"),
   content: z.string().min(1, "Content is required"),
 });
 

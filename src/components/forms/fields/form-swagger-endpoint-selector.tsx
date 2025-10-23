@@ -12,6 +12,7 @@ import {
 import { FieldPath, FieldValues } from 'react-hook-form';
 import { SwaggerEndpointSelector } from '@/components/swagger/swagger-endpoint-selector';
 import type { SwaggerEndpoint } from '@/lib/services/swagger-service';
+import { SwaggerEndpointSelectorFieldConfig } from '@/components/forms/dynamic-form-field/types';
 
 /**
  * Encodes a SwaggerEndpoint to a string for form storage
@@ -34,22 +35,12 @@ export function decodeEndpoint(
   return endpoints.find((e) => e.method === method && e.path === path) || null;
 }
 
-interface SwaggerEndpointSelectorFieldConfig {
-  label?: string;
-  description?: string;
-  placeholder?: string;
-  emptyText?: string;
-}
-
 interface FormSwaggerEndpointSelectorProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
   name: TName;
-  fieldConfig: SwaggerEndpointSelectorFieldConfig;
-  endpoints: SwaggerEndpoint[];
-  loading?: boolean;
-  disabled?: boolean;
+  fieldConfig: SwaggerEndpointSelectorFieldConfig<TFieldValues, TName>;
 }
 
 /**
@@ -79,10 +70,9 @@ export function FormSwaggerEndpointSelector<
 >({
   name,
   fieldConfig,
-  endpoints,
-  loading = false,
-  disabled = false,
 }: FormSwaggerEndpointSelectorProps<TFieldValues, TName>) {
+  const { endpoints } = fieldConfig;
+
   return (
     <FormField
       name={name}
@@ -105,8 +95,6 @@ export function FormSwaggerEndpointSelector<
                 }}
                 placeholder={fieldConfig.placeholder}
                 emptyText={fieldConfig.emptyText}
-                loading={loading}
-                disabled={disabled}
               />
             </FormControl>
             {fieldConfig.description && (

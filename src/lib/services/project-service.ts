@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 
 export class ProjectService {
@@ -25,7 +26,8 @@ export class ProjectService {
    * Get a single project by ID with all tasks
    */
   static async getProjectById(id: string) {
-    return db.project.findUnique({
+    
+    const project = await db.project.findUnique({
       where: { id },
       include: {
         tasks: {
@@ -43,6 +45,12 @@ export class ProjectService {
         },
       },
     });
+
+    if (!project) {
+      notFound();
+    }
+
+    return project;
   }
 
   /**

@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPIV3, OpenAPIV2 } from "openapi-types";
+import yaml from "js-yaml";
 
 export interface SwaggerEndpoint {
   path: string;
@@ -62,8 +63,19 @@ export class SwaggerService {
    */
   static async parseSwaggerEndpoints(swaggerContent: string): Promise<SwaggerEndpoint[]> {
     try {
-      // Parse and validate the swagger/OpenAPI document
-      const api = await SwaggerParser.validate(swaggerContent as any);
+      // First, parse the YAML/JSON string into an object
+      let apiObject: any;
+      try {
+        // Try parsing as YAML (works for both YAML and JSON)
+        apiObject = yaml.load(swaggerContent);
+      } catch {
+        // If YAML parsing fails, try JSON
+        apiObject = JSON.parse(swaggerContent);
+      }
+
+      // Parse the document (more lenient than validate, won't fail on missing $refs)
+      // This is sufficient for extracting endpoints
+      const api = await SwaggerParser.parse(apiObject);
 
       const endpoints: SwaggerEndpoint[] = [];
 
