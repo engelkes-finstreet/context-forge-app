@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { ProjectService } from "@/lib/services/project-service";
 import { Prisma } from "@prisma/client";
+import { CreateProjectInput } from "@/features/projects/components/forms/create-project/create-project-form-schema";
 
 export type ProjectFormState = {
   error: string | null;
@@ -12,12 +13,12 @@ export type ProjectFormState = {
 
 export async function createProjectAction(
   state: ProjectFormState,
-  data: Prisma.ProjectCreateInput
+  formData: CreateProjectInput
 ): Promise<ProjectFormState> {
   let project;
 
   try {
-    project = await ProjectService.createProject(data);
+    project = await ProjectService.createProject(formData);
   } catch (error) {
     console.error("Failed to create project:", error);
     return {
