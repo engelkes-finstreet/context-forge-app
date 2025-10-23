@@ -1,5 +1,4 @@
 import { SignInCard } from '@/features/auth/components/cards/sign-in-card';
-import { PageTransition } from '@/components/ui/page-transition';
 import type { Metadata } from 'next';
 import { TypedLink, routes } from '@/lib/routes';
 
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-subtle">
-      <PageTransition className="w-full max-w-lg space-y-6">
+      <div className="w-full max-w-lg space-y-6">
         <div className="flex flex-col items-center text-center space-y-2">
           <h1 className="text-3xl font-bold tracking-tight text-gradient">Welcome back</h1>
           <p className="text-muted-foreground">
@@ -31,7 +30,7 @@ export default function SignInPage() {
             Sign up
           </TypedLink>
         </div>
-      </PageTransition>
+      </div>
     </div>
   );
 }
