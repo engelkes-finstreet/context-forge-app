@@ -8,31 +8,20 @@ const prisma = new PrismaClient();
 const getBaseURL = () => {
   // If BETTER_AUTH_URL is explicitly set, use it
   if (process.env.BETTER_AUTH_URL) {
-    console.log('[Auth] Using BETTER_AUTH_URL:', process.env.BETTER_AUTH_URL);
     return process.env.BETTER_AUTH_URL;
   }
 
   // On Vercel, use the deployment URL
   if (process.env.VERCEL_URL) {
     const url = `https://${process.env.VERCEL_URL}`;
-    console.log('[Auth] Using VERCEL_URL:', url);
     return url;
   }
 
   // Fallback to localhost for local development
-  console.log('[Auth] Using localhost fallback');
   return "http://localhost:3000";
 };
 
 const baseURL = getBaseURL();
-const hasSecret = !!process.env.BETTER_AUTH_SECRET;
-
-console.log('[Auth] Configuration:', {
-  baseURL,
-  hasSecret,
-  secretLength: process.env.BETTER_AUTH_SECRET?.length || 0,
-  environment: process.env.VERCEL_ENV || 'local',
-});
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
