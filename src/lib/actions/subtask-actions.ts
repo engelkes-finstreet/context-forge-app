@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from '@/lib/routes';
 import { SubtaskService } from "@/lib/services/subtask-service";
-import type { CreateSubtaskInput, UpdateSubtaskInput } from "@/lib/validations/subtask-schema";
-import type { CreateGenericSubtaskFormInput } from "@/lib/validations/forms/generic-subtask-form-schema";
-import { SubtaskType } from "@/features/subtasks/types/subtask-types";
+import type { CreateGenericSubtaskFormInput } from "@/features/subtasks/components/forms/generic-subtask/create-generic-subtask-form-schema";
+import { Prisma, SubtaskType } from "@prisma/client";
 
 export type SubtaskFormState = {
   error: string | null;
@@ -15,7 +14,7 @@ export type SubtaskFormState = {
 /**
  * Create Generic Subtask Action
  *
- * Transforms form input (CreateGenericSubtaskFormInput) into database input (CreateSubtaskInput)
+ * Transforms form input (CreateGenericSubtaskFormInput) into database input (Prisma.SubtaskUncheckedCreateInput)
  * by adding the type and metadata fields.
  *
  * Flow:
@@ -33,10 +32,10 @@ export async function createGenericSubtaskAction(
 
   try {
     // Transform form input to database input
-    const subtaskInput: CreateSubtaskInput = {
+    const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
       ...formData,
       type: SubtaskType.GENERIC,
-      metadata: null, // Generic type has no metadata
+      metadata: {}, // Generic type has no metadata
     };
 
     subtask = await SubtaskService.createSubtask(subtaskInput);
@@ -67,7 +66,7 @@ export async function createGenericSubtaskAction(
  */
 export async function createSubtaskAction(
   state: SubtaskFormState,
-  data: CreateSubtaskInput
+  data: Prisma.SubtaskUncheckedCreateInput
 ): Promise<SubtaskFormState> {
   let subtask;
   let task;
@@ -98,7 +97,7 @@ export async function createSubtaskAction(
 
 export async function updateSubtaskAction(
   state: SubtaskFormState,
-  data: UpdateSubtaskInput & { id: string; taskId: string; projectId: string }
+  data: Prisma.SubtaskUncheckedUpdateInput & { id: string; taskId: string; projectId: string }
 ): Promise<SubtaskFormState> {
   try {
     const { id, taskId, projectId, ...updateData } = data;

@@ -27,9 +27,9 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <>
       <div>
-        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }}>
+        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }} data-transition-ignore>
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to {task.name}
@@ -38,6 +38,6 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
       </div>
 
       <TypeSelector projectId={projectId} taskId={taskId} />
-    </div>
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import { DeepPartial } from 'react-hook-form';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { updateSubtaskSchema, UpdateSubtaskInput } from '@/lib/validations/subtask-schema';
+import { updateSubtaskSchema, UpdateSubtaskInput } from './edit-subtask-form-schema';
 import { updateSubtaskAction, SubtaskFormState } from '@/lib/actions/subtask-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';
@@ -67,7 +67,10 @@ export function useEditSubtaskFormConfig({
       label: 'Content',
       placeholder: 'Enter subtask content (supports Markdown)',
       description: 'This content is specific to this subtask',
-    },
+    },  
+    order: {
+      type: 'hidden',
+    }
   };
 
   return {

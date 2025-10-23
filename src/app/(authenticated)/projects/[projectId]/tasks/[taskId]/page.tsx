@@ -5,14 +5,12 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { getTypeConfig } from '@/features/subtasks/config/type-config';
+import { DraggableSubtaskList } from '@/features/subtasks/components/draggable-subtask-list';
 
 interface TaskDetailPageProps {
   params: Promise<{
@@ -30,21 +28,20 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
   }
 
   return (
-    <div className="space-y-8">
-      <div>
-        <TypedLink route={routes.projects.detail} params={{ projectId }}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to {task.project.name}
-          </Button>
-        </TypedLink>
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">{task.name}</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Project: {task.project.name}
-            </p>
-          </div>
+    <>
+      <TypedLink route={routes.projects.detail} params={{ projectId }} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to {task.project.name}
+        </Button>
+      </TypedLink>
+
+      <PageHeader>
+        <PageHeader.Title
+          title={task.name}
+          subtitle={`Project: ${task.project.name}`}
+        />
+        <PageHeader.Actions>
           <div className="flex gap-2">
             <TypedLink route={routes.projects.tasks.edit} params={{ projectId, taskId }}>
               <Button variant="outline">
@@ -59,10 +56,11 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
               </Button>
             </TypedLink>
           </div>
-        </div>
-      </div>
+        </PageHeader.Actions>
+      </PageHeader>
 
-      {task.sharedContext && (
+      <PageContent>
+        {task.sharedContext && (
         <Alert>
           <AlertTitle>Shared Context</AlertTitle>
           <AlertDescription className="prose prose-sm max-w-none mt-2">
@@ -85,35 +83,14 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {task.subtasks.map((subtask) => {
-              const typeConfig = getTypeConfig(subtask.type);
-              return (
-                <TypedLink
-                  key={subtask.id}
-                  route={routes.projects.tasks.subtasks.edit}
-                  params={{ projectId, taskId, subtaskId: subtask.id }}
-                >
-                  <Card className="hover:border-primary transition-colors cursor-pointer">
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-lg flex-1">{subtask.name}</CardTitle>
-                        <Badge variant={typeConfig.badgeVariant} className="shrink-0">
-                          {typeConfig.icon} {typeConfig.label}
-                        </Badge>
-                      </div>
-                      <CardDescription className="line-clamp-2">
-                        {subtask.content.substring(0, 200)}
-                        {subtask.content.length > 200 && '...'}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                </TypedLink>
-              );
-            })}
-          </div>
+          <DraggableSubtaskList
+            subtasks={task.subtasks}
+            taskId={taskId}
+            projectId={projectId}
+          />
         )}
-      </div>
-    </div>
+        </div>
+      </PageContent>
+    </>
   );
 }

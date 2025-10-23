@@ -60,9 +60,9 @@ routes.projects.list.path({ view: 'grid', sort: 'name' });
 
 ## Components & Hooks
 
-### TypedLink (Client Components)
+### TypedLink (Server & Client Components)
 
-Drop-in replacement for Next.js `Link`:
+Drop-in replacement for Next.js `Link` that works in both Server and Client Components:
 
 ```typescript
 // Static route
@@ -78,6 +78,8 @@ Drop-in replacement for Next.js `Link`:
   Grid View
 </TypedLink>
 ```
+
+**Note:** TypedLink can be used in Server Components (like page.tsx files) as well as Client Components, making it the preferred way to create navigation links throughout the app.
 
 ### useTypedRouter (Client Components)
 
@@ -146,7 +148,8 @@ That's it! TypeScript will automatically enforce type safety everywhere the rout
 src/lib/routes/
 ├── builder.ts      # Route builder utilities and types (internal)
 ├── index.ts        # All route definitions + main exports
-├── components.tsx  # TypedLink, useTypedRouter (client components)
+├── link.tsx        # TypedLink (works in Server & Client Components)
+├── hooks.tsx       # useTypedRouter (Client Components only)
 └── redirect.ts     # typedRedirect (server-side)
 ```
 

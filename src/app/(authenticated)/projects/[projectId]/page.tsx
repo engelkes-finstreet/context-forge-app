@@ -9,6 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
+import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
 import { PlusCircle, ArrowLeft } from 'lucide-react';
 
 interface ProjectDetailPageProps {
@@ -26,31 +29,30 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <div className="space-y-8">
-      <div>
-        <TypedLink route={routes.projects.list}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Projects
-          </Button>
-        </TypedLink>
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">{project.name}</h1>
-            {project.description && (
-              <p className="text-muted-foreground mt-2">{project.description}</p>
-            )}
-          </div>
+    <>
+      <TypedLink route={routes.projects.list} params={{}} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Projects
+        </Button>
+      </TypedLink>
+
+      <PageHeader>
+        <PageHeader.Title
+          title={project.name}
+          subtitle={project.description || undefined}
+        />
+        <PageHeader.Actions>
           <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
               New Task
             </Button>
           </TypedLink>
-        </div>
-      </div>
+        </PageHeader.Actions>
+      </PageHeader>
 
-      <div>
+      <PageContent>
         <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
         {project.tasks.length === 0 ? (
           <Card>
@@ -62,23 +64,25 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
+          <StaggeredContainer className="grid gap-4">
             {project.tasks.map((task) => (
-              <TypedLink key={task.id} route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
-                <Card className="hover:border-primary transition-colors cursor-pointer">
-                  <CardHeader>
-                    <CardTitle>{task.name}</CardTitle>
-                    <CardDescription>
-                      {task._count.subtasks}{' '}
-                      {task._count.subtasks === 1 ? 'subtask' : 'subtasks'}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              </TypedLink>
+              <StaggeredItem key={task.id}>
+                <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
+                  <Card interactive={true}>
+                    <CardHeader>
+                      <CardTitle>{task.name}</CardTitle>
+                      <CardDescription>
+                        {task._count.subtasks}{' '}
+                        {task._count.subtasks === 1 ? 'subtask' : 'subtasks'}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </TypedLink>
+              </StaggeredItem>
             ))}
-          </div>
+          </StaggeredContainer>
         )}
-      </div>
-    </div>
+      </PageContent>
+    </>
   );
 }

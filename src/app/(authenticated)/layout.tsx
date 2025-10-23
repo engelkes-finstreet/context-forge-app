@@ -2,6 +2,7 @@ import { headers } from 'next/headers';
 import { typedRedirect, routes } from '@/lib/routes';
 import { auth } from '@/lib/auth';
 import { MainNav } from '@/components/main-nav';
+import { Footer } from '@/components/footer';
 
 export default async function AuthenticatedLayout({
   children,
@@ -17,9 +18,12 @@ export default async function AuthenticatedLayout({
   }
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-gradient-subtle">
       <MainNav />
-      <main className="container mx-auto pt-8 px-4">{children}</main>
-    </>
+      <main className="flex-1 container mx-auto pt-8 px-4 pb-8">
+        <div className="space-y-8">{children}</div>
+      </main>
+      <Footer />
+    </div>
   );
 }

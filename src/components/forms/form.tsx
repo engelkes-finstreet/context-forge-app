@@ -105,7 +105,11 @@ export const Form = ({ formConfig, children }: Props) => {
             </div>
           )}
           {children}
-          {!formConfig.hideActions && formConfig.renderFormActions(isPending)}
+          {!formConfig.hideActions && (
+            <div className="mt-8">
+              {formConfig.renderFormActions(isPending)}
+            </div>
+          )}
         </form>
       </FormConfigProvider>
     </FormProvider>

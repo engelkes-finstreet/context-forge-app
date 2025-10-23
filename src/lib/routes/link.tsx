@@ -1,11 +1,11 @@
-'use client';
-
 /**
- * Type-safe routing components for client-side navigation
+ * Type-safe Link component for Server and Client Components
+ *
+ * This file contains the TypedLink component which can be used in both
+ * Server and Client Components since it doesn't use any client-side hooks.
  */
 
 import Link, { LinkProps } from 'next/link';
-import { useRouter } from 'next/navigation';
 import { type Route, type QueryParams, type RouteParams } from './builder';
 
 /**
@@ -18,6 +18,7 @@ interface TypedLinkPropsWithParams<TPath extends string>
   query?: QueryParams;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -30,6 +31,7 @@ interface TypedLinkPropsWithoutParams<TPath extends string>
   query?: QueryParams;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -42,6 +44,22 @@ type TypedLinkProps<TPath extends string> =
 
 /**
  * Type-safe Link component - drop-in replacement for Next.js Link
+ *
+ * Works in both Server and Client Components.
+ *
+ * @example
+ * // Static route
+ * <TypedLink route={routes.home}>Home</TypedLink>
+ *
+ * // With parameters
+ * <TypedLink route={routes.projects.detail} params={{ projectId: '123' }}>
+ *   View Project
+ * </TypedLink>
+ *
+ * // With query params
+ * <TypedLink route={routes.projects.list} query={{ view: 'grid' }}>
+ *   Grid View
+ * </TypedLink>
  */
 export function TypedLink<TPath extends string>({
   route,
@@ -49,6 +67,7 @@ export function TypedLink<TPath extends string>({
   query,
   children,
   className,
+  style,
   ...linkProps
 }: TypedLinkProps<TPath>) {
   const href = params
@@ -56,53 +75,8 @@ export function TypedLink<TPath extends string>({
     : (route.path as any)(query);
 
   return (
-    <Link href={href} className={className} {...linkProps}>
+    <Link href={href} className={className} style={style} {...linkProps}>
       {children}
     </Link>
   );
-}
-
-/**
- * Type-safe router hook - drop-in replacement for Next.js useRouter
- */
-export function useTypedRouter() {
-  const router = useRouter();
-
-  return {
-    push: <TPath extends string>(
-      route: Route<TPath>,
-      params?: RouteParams<Route<TPath>>,
-      query?: QueryParams
-    ) => {
-      const href = params
-        ? (route.path as any)(params, query)
-        : (route.path as any)(query);
-      router.push(href);
-    },
-
-    replace: <TPath extends string>(
-      route: Route<TPath>,
-      params?: RouteParams<Route<TPath>>,
-      query?: QueryParams
-    ) => {
-      const href = params
-        ? (route.path as any)(params, query)
-        : (route.path as any)(query);
-      router.replace(href);
-    },
-
-    back: () => router.back(),
-    forward: () => router.forward(),
-    refresh: () => router.refresh(),
-
-    prefetch: <TPath extends string>(
-      route: Route<TPath>,
-      params?: RouteParams<Route<TPath>>
-    ) => {
-      const href = params
-        ? (route.path as any)(params)
-        : (route.path as any)();
-      router.prefetch(href);
-    },
-  };
 }

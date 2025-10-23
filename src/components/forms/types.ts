@@ -29,6 +29,21 @@ export type FormConfig<
   formId?: string;
 };
 
+export type ClientFormConfig<
+  FormInput extends FieldValues,
+  FormOutput extends FieldValues = FormInput,
+  CustomFields = never,
+> = {
+  schema: ZodTypeAny;
+  fields: FormFieldsType<FormInput, CustomFields>;
+  fieldNames: FieldNamesType<FormFieldsType<FormInput, CustomFields>>;
+  defaultValues: DeepPartial<FormInput>;
+  onSubmit: (formValues: FormOutput) => Promise<void> | void;
+  renderFormActions: (isPending: boolean) => React.ReactNode;
+  hideActions?: boolean;
+  formId?: string;
+};
+
 export type ArrayFieldConfig<T, FormValues, CustomFields = never> = {
   type: 'array';
 } & {

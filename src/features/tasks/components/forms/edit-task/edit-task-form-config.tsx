@@ -1,9 +1,9 @@
 import { DeepPartial } from 'react-hook-form';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 import { useRouter } from 'next/navigation';
 import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
 import { Button } from '@/components/ui/button';
-import { updateTaskSchema, UpdateTaskInput } from '@/lib/validations/task-schema';
+import { updateTaskSchema, UpdateTaskInput } from './edit-task-form-schema';
 import { updateTaskAction, TaskFormState } from '@/lib/actions/task-actions';
 import { FormConfig, FormFieldsType } from '@/components/forms/types';
 import { z } from 'zod';
@@ -61,6 +61,9 @@ export function useEditTaskFormConfig({
       placeholder: 'Enter shared context for all subtasks (supports Markdown)',
       description: 'This context will be accessible by all subtasks within this task',
     },
+    order: {
+      type: 'hidden',
+    }
   };
 
   return {

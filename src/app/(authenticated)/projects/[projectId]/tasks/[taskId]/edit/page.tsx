@@ -3,6 +3,8 @@ import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { EditTaskForm } from '@/features/tasks/components/forms/edit-task/edit-task-form';
 import { ArrowLeft } from 'lucide-react';
 
@@ -22,21 +24,23 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
-      <div>
-        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to {task.name}
-          </Button>
-        </TypedLink>
-        <h1 className="text-3xl font-bold">Edit Task</h1>
-        <p className="text-muted-foreground mt-2">
-          Update task in {task.project.name}
-        </p>
-      </div>
+    <>
+      <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to {task.name}
+        </Button>
+      </TypedLink>
 
-      <Card>
+      <PageHeader>
+        <PageHeader.Title
+          title="Edit Task"
+          subtitle={`Update task in ${task.project.name}`}
+        />
+      </PageHeader>
+
+      <PageContent>
+        <Card>
         <CardHeader>
           <CardTitle>Task Details</CardTitle>
           <CardDescription>
@@ -54,6 +58,7 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
           />
         </CardContent>
       </Card>
-    </div>
+      </PageContent>
+    </>
   );
 }

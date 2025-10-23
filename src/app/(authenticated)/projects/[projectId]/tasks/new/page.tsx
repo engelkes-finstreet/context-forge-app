@@ -3,6 +3,8 @@ import { TypedLink, routes } from '@/lib/routes';
 import { ProjectService } from '@/lib/services/project-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { CreateTaskForm } from '@/features/tasks/components/forms/create-task/create-task-form';
 import { ArrowLeft } from 'lucide-react';
 
@@ -21,21 +23,23 @@ export default async function NewTaskPage({ params }: NewTaskPageProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
-      <div>
-        <TypedLink route={routes.projects.detail} params={{ projectId }}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to {project.name}
-          </Button>
-        </TypedLink>
-        <h1 className="text-3xl font-bold">Create New Task</h1>
-        <p className="text-muted-foreground mt-2">
-          Add a new task to {project.name}
-        </p>
-      </div>
+    <>
+      <TypedLink route={routes.projects.detail} params={{ projectId }} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to {project.name}
+        </Button>
+      </TypedLink>
 
-      <Card>
+      <PageHeader>
+        <PageHeader.Title
+          title="Create New Task"
+          subtitle={`Add a new task to ${project.name}`}
+        />
+      </PageHeader>
+
+      <PageContent>
+        <Card>
         <CardHeader>
           <CardTitle>Task Details</CardTitle>
           <CardDescription>
@@ -46,6 +50,7 @@ export default async function NewTaskPage({ params }: NewTaskPageProps) {
           <CreateTaskForm projectId={projectId} />
         </CardContent>
       </Card>
-    </div>
+      </PageContent>
+    </>
   );
 }

@@ -3,12 +3,14 @@ import { TypedLink, routes } from '@/lib/routes';
 import { TaskService } from '@/lib/services/task-service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page-header';
+import { PageContent } from '@/components/ui/page-content';
 import { CreateGenericSubtaskForm } from '@/features/subtasks/components/forms/generic-subtask/create-subtask-form';
 import { ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { getTypeConfig } from '@/features/subtasks/config/type-config';
-import { SubtaskType } from '@/features/subtasks/types/subtask-types';
 import { Badge } from '@/components/ui/badge';
+import { SubtaskType } from '@prisma/client';
 
 interface NewGenericSubtaskPageProps {
   params: Promise<{
@@ -33,26 +35,30 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
   const typeConfig = getTypeConfig(SubtaskType.GENERIC);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Type Selection
-          </Button>
-        </TypedLink>
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold">Create Generic Subtask</h1>
-          <Badge variant={typeConfig.badgeVariant}>
-            {typeConfig.icon} {typeConfig.label}
-          </Badge>
-        </div>
-        <p className="text-muted-foreground">
-          {typeConfig.description}
-        </p>
-      </div>
+    <>
+      <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }} data-transition-ignore>
+        <Button variant="ghost" size="sm" className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Type Selection
+        </Button>
+      </TypedLink>
 
-      {task.sharedContext && (
+      <PageHeader>
+        <div>
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-3xl font-bold text-gradient">Create Generic Subtask</h1>
+            <Badge variant={typeConfig.badgeVariant}>
+              {typeConfig.icon} {typeConfig.label}
+            </Badge>
+          </div>
+          <p className="text-muted-foreground">
+            {typeConfig.description}
+          </p>
+        </div>
+      </PageHeader>
+
+      <PageContent>
+        {task.sharedContext && (
         <Alert>
           <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
           <AlertDescription className="prose prose-sm max-w-none mt-2">
@@ -74,6 +80,7 @@ export default async function NewGenericSubtaskPage({ params }: NewGenericSubtas
           <CreateGenericSubtaskForm taskId={taskId} />
         </CardContent>
       </Card>
-    </div>
+      </PageContent>
+    </>
   );
 }
