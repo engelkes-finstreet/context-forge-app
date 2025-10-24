@@ -1,7 +1,13 @@
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { PageContent } from "@/components/ui/page-content";
 import { PageHeader } from "@/components/ui/page-header";
 import { CreateGenericSubtaskForm } from "@/features/subtasks/components/forms/generic-subtask/create-subtask-form";
@@ -16,60 +22,62 @@ import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 
 type Props = {
-    params: Promise<{
-        projectId: string;
-        taskId: string;
-    }>;
-}
+  params: Promise<{
+    projectId: string;
+    taskId: string;
+  }>;
+};
 
 export default async function NewRequestSubtaskPage({ params }: Props) {
-    const { projectId, taskId } = await params;
-    const project = await ProjectService.getProjectById(projectId);
-    const task = await TaskService.getTaskById(taskId);
+  const { projectId, taskId } = await params;
+  const project = await ProjectService.getProjectById(projectId);
+  const task = await TaskService.getTaskById(taskId);
 
-    const endpoints = await SwaggerService.getEndpointsFromGitHub(project.githubRepo!, project.swaggerPath!);
+  const endpoints = await SwaggerService.getEndpointsFromGitHub(
+    project.githubRepo!,
+    project.swaggerPath!,
+  );
 
-    if (!task || task.projectId !== projectId) {
-        notFound();
-    }
+  if (!task || task.projectId !== projectId) {
+    notFound();
+  }
 
-    const typeConfig = getTypeConfig(SubtaskType.REQUEST);  
+  const typeConfig = getTypeConfig(SubtaskType.REQUEST);
 
-    return (
-        <>
-
-            <PageHeader>
-            <PageHeader.Title
-              title="Create Request Subtask"
-              subtitle={typeConfig.description}
-              backLabel="Back to Type Selection"
-            />
+  return (
+    <>
+      <PageHeader>
+        <PageHeader.Title
+          title="Create Request Subtask"
+          subtitle={typeConfig.description}
+          backLabel="Back to Type Selection"
+        />
       </PageHeader>
 
       <PageContent>
         {task.sharedContext && (
-        <Alert>
-          <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-          <AlertDescription className="prose prose-sm max-w-none mt-2">
-            <pre className="whitespace-pre-wrap text-sm">
-              {task.sharedContext}
-            </pre>
-          </AlertDescription>
-        </Alert>
-      )}
+          <Alert>
+            <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
+            <AlertDescription className="prose prose-sm max-w-none mt-2">
+              <pre className="whitespace-pre-wrap text-sm">
+                {task.sharedContext}
+              </pre>
+            </AlertDescription>
+          </Alert>
+        )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Subtask Details</CardTitle>
-          <CardDescription>
-            Define the subtask name and content (supports Markdown)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Subtask Details</CardTitle>
+            <CardDescription>
+              Define the subtask name and content (supports Markdown)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
+          </CardContent>
+        </Card>
       </PageContent>
-        </>
-    )
+    </>
+  );
 }

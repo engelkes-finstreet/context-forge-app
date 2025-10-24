@@ -41,7 +41,7 @@ export interface InquiryProcessMetadata extends BaseSubtaskMetadata {
     description?: string;
     order: number;
   }>;
-  progressBarStyle?: 'linear' | 'circular' | 'steps';
+  progressBarStyle?: "linear" | "circular" | "steps";
   currentStep?: string; // ID of the current step
   allowBackNavigation?: boolean;
   saveProgressOnExit?: boolean;
@@ -55,7 +55,16 @@ export interface FormMetadata extends BaseSubtaskMetadata {
   type: typeof SubtaskType.FORM;
   fields: Array<{
     name: string;
-    type: 'text' | 'textarea' | 'email' | 'password' | 'number' | 'select' | 'checkbox' | 'radio' | 'date';
+    type:
+      | "text"
+      | "textarea"
+      | "email"
+      | "password"
+      | "number"
+      | "select"
+      | "checkbox"
+      | "radio"
+      | "date";
     label: string;
     placeholder?: string;
     description?: string;
@@ -75,8 +84,8 @@ export interface FormMetadata extends BaseSubtaskMetadata {
  */
 export interface ModalMetadata extends BaseSubtaskMetadata {
   type: typeof SubtaskType.MODAL;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  triggerType: 'button' | 'link' | 'automatic';
+  size?: "sm" | "md" | "lg" | "xl" | "full";
+  triggerType: "button" | "link" | "automatic";
   triggerText?: string; // Text for button/link trigger
   closeOnOutsideClick?: boolean;
   closeOnEscape?: boolean;
@@ -102,28 +111,36 @@ export type SubtaskMetadata =
 /**
  * Type guard to check if metadata is for a Generic subtask
  */
-export function isGenericMetadata(metadata: SubtaskMetadata | null): metadata is GenericMetadata {
+export function isGenericMetadata(
+  metadata: SubtaskMetadata | null,
+): metadata is GenericMetadata {
   return metadata?.type === SubtaskType.GENERIC;
 }
 
 /**
  * Type guard to check if metadata is for an Inquiry Process subtask
  */
-export function isInquiryProcessMetadata(metadata: SubtaskMetadata | null): metadata is InquiryProcessMetadata {
+export function isInquiryProcessMetadata(
+  metadata: SubtaskMetadata | null,
+): metadata is InquiryProcessMetadata {
   return metadata?.type === SubtaskType.INQUIRY_PROCESS;
 }
 
 /**
  * Type guard to check if metadata is for a Form subtask
  */
-export function isFormMetadata(metadata: SubtaskMetadata | null): metadata is FormMetadata {
+export function isFormMetadata(
+  metadata: SubtaskMetadata | null,
+): metadata is FormMetadata {
   return metadata?.type === SubtaskType.FORM;
 }
 
 /**
  * Type guard to check if metadata is for a Modal subtask
  */
-export function isModalMetadata(metadata: SubtaskMetadata | null): metadata is ModalMetadata {
+export function isModalMetadata(
+  metadata: SubtaskMetadata | null,
+): metadata is ModalMetadata {
   return metadata?.type === SubtaskType.MODAL;
 }
 
@@ -134,7 +151,9 @@ export function isModalMetadata(metadata: SubtaskMetadata | null): metadata is M
 /**
  * Create default metadata for a given subtask type
  */
-export function createDefaultMetadata(type: SubtaskType): SubtaskMetadata | null {
+export function createDefaultMetadata(
+  type: SubtaskType,
+): SubtaskMetadata | null {
   switch (type) {
     case SubtaskType.GENERIC:
       // Generic type doesn't need metadata
@@ -144,7 +163,7 @@ export function createDefaultMetadata(type: SubtaskType): SubtaskMetadata | null
       return {
         type: SubtaskType.INQUIRY_PROCESS,
         steps: [],
-        progressBarStyle: 'linear',
+        progressBarStyle: "linear",
         allowBackNavigation: true,
         saveProgressOnExit: true,
       };
@@ -154,14 +173,14 @@ export function createDefaultMetadata(type: SubtaskType): SubtaskMetadata | null
         type: SubtaskType.FORM,
         fields: [],
         showResetButton: false,
-        submitButtonText: 'Submit',
+        submitButtonText: "Submit",
       };
 
     case SubtaskType.MODAL:
       return {
         type: SubtaskType.MODAL,
-        size: 'md',
-        triggerType: 'button',
+        size: "md",
+        triggerType: "button",
         closeOnOutsideClick: true,
         closeOnEscape: true,
         showCloseButton: true,
@@ -175,12 +194,15 @@ export function createDefaultMetadata(type: SubtaskType): SubtaskMetadata | null
 /**
  * Validate metadata matches the subtask type
  */
-export function validateMetadata(type: SubtaskType, metadata: unknown): metadata is SubtaskMetadata {
+export function validateMetadata(
+  type: SubtaskType,
+  metadata: unknown,
+): metadata is SubtaskMetadata {
   if (type === SubtaskType.GENERIC) {
     return metadata === null || metadata === undefined;
   }
 
-  if (!metadata || typeof metadata !== 'object') {
+  if (!metadata || typeof metadata !== "object") {
     return false;
   }
 

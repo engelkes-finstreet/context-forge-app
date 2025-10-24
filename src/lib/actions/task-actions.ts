@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { typedRedirect, routes } from '@/lib/routes';
+import { typedRedirect, routes } from "@/lib/routes";
 import { TaskService } from "@/lib/services/task-service";
 import { Prisma } from "@prisma/client";
 
@@ -12,7 +12,7 @@ export type TaskFormState = {
 
 export async function createTaskAction(
   state: TaskFormState,
-  data: Prisma.TaskUncheckedCreateInput
+  data: Prisma.TaskUncheckedCreateInput,
 ): Promise<TaskFormState> {
   let task;
 
@@ -27,12 +27,15 @@ export async function createTaskAction(
   }
 
   revalidatePath(`/projects/${task.projectId}`);
-  typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
+  typedRedirect(routes.projects.tasks.detail, {
+    projectId: task.projectId,
+    taskId: task.id,
+  });
 }
 
 export async function updateTaskAction(
   state: TaskFormState,
-  data: Prisma.TaskUncheckedUpdateInput & { id: string; projectId: string }
+  data: Prisma.TaskUncheckedUpdateInput & { id: string; projectId: string },
 ): Promise<TaskFormState> {
   try {
     const { id, projectId, ...updateData } = data;
@@ -54,7 +57,9 @@ export async function updateTaskAction(
   }
 }
 
-export async function deleteTask(id: string): Promise<{ error: string | null }> {
+export async function deleteTask(
+  id: string,
+): Promise<{ error: string | null }> {
   let projectId: string;
 
   try {
@@ -80,7 +85,7 @@ export async function deleteTask(id: string): Promise<{ error: string | null }> 
 
 export async function reorderTasks(
   projectId: string,
-  taskIds: string[]
+  taskIds: string[],
 ): Promise<{ error: string | null }> {
   try {
     await TaskService.reorderTasks(projectId, taskIds);

@@ -77,9 +77,10 @@ export function SwaggerEndpointSelector({
   }, [endpoints]);
 
   const handleSelect = (endpoint: SwaggerEndpoint) => {
-    const newValue = value?.path === endpoint.path && value?.method === endpoint.method
-      ? null
-      : endpoint;
+    const newValue =
+      value?.path === endpoint.path && value?.method === endpoint.method
+        ? null
+        : endpoint;
     onValueChange?.(newValue);
     setOpen(false);
   };
@@ -112,7 +113,7 @@ export function SwaggerEndpointSelector({
               <Badge
                 className={cn(
                   "text-white",
-                  METHOD_COLORS[value.method] || "bg-gray-500"
+                  METHOD_COLORS[value.method] || "bg-gray-500",
                 )}
               >
                 {value.method}
@@ -125,7 +126,11 @@ export function SwaggerEndpointSelector({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0" align="start" style={{ width: 'var(--radix-popover-trigger-width)' }}>
+      <PopoverContent
+        className="p-0"
+        align="start"
+        style={{ width: "var(--radix-popover-trigger-width)" }}
+      >
         <Command>
           <CommandInput placeholder="Search endpoints..." />
           <CommandList>
@@ -147,13 +152,13 @@ export function SwaggerEndpointSelector({
                       <Check
                         className={cn(
                           "h-4 w-4",
-                          isSelected ? "opacity-100" : "opacity-0"
+                          isSelected ? "opacity-100" : "opacity-0",
                         )}
                       />
                       <Badge
                         className={cn(
                           "text-white text-xs",
-                          METHOD_COLORS[endpoint.method] || "bg-gray-500"
+                          METHOD_COLORS[endpoint.method] || "bg-gray-500",
                         )}
                       >
                         {endpoint.method}

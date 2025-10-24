@@ -17,7 +17,7 @@ export interface SubtaskTypeConfig {
   icon: string;
   route: string; // Route suffix for type-specific form (e.g., "generic", "form")
   enabled: boolean; // Whether this type is available for selection
-  badgeVariant?: 'default' | 'secondary' | 'destructive' | 'outline';
+  badgeVariant?: "default" | "secondary" | "destructive" | "outline";
 }
 
 /**
@@ -27,52 +27,52 @@ export interface SubtaskTypeConfig {
 export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
   [SubtaskType.GENERIC]: {
     type: SubtaskType.GENERIC,
-    label: 'Generic',
-    description: 'Standard subtask with name and content',
-    icon: '📝',
-    route: 'generic',
+    label: "Generic",
+    description: "Standard subtask with name and content",
+    icon: "📝",
+    route: "generic",
     enabled: true,
-    badgeVariant: 'default',
+    badgeVariant: "default",
   },
 
   [SubtaskType.REQUEST]: {
     type: SubtaskType.REQUEST,
-    label: 'Request',
-    description: 'Request to an external API',
-    icon: '🌐',
-    route: 'request',
+    label: "Request",
+    description: "Request to an external API",
+    icon: "🌐",
+    route: "request",
     enabled: true,
-    badgeVariant: 'default',
+    badgeVariant: "default",
   },
 
   [SubtaskType.INQUIRY_PROCESS]: {
     type: SubtaskType.INQUIRY_PROCESS,
-    label: 'Inquiry Process',
-    description: 'Multi-step form wizard with progress tracking',
-    icon: '🔄',
-    route: 'inquiry-process',
+    label: "Inquiry Process",
+    description: "Multi-step form wizard with progress tracking",
+    icon: "🔄",
+    route: "inquiry-process",
     enabled: false, // Disabled for now - will be implemented later
-    badgeVariant: 'secondary',
+    badgeVariant: "secondary",
   },
 
   [SubtaskType.FORM]: {
     type: SubtaskType.FORM,
-    label: 'Form',
-    description: 'Single form with field definitions and validation',
-    icon: '📋',
-    route: 'form',
+    label: "Form",
+    description: "Single form with field definitions and validation",
+    icon: "📋",
+    route: "form",
     enabled: false, // Disabled for now - will be implemented later
-    badgeVariant: 'outline',
+    badgeVariant: "outline",
   },
 
   [SubtaskType.MODAL]: {
     type: SubtaskType.MODAL,
-    label: 'Modal',
-    description: 'Dialog or popup component',
-    icon: '🪟',
-    route: 'modal',
+    label: "Modal",
+    description: "Dialog or popup component",
+    icon: "🪟",
+    route: "modal",
     enabled: false, // Disabled for now - will be implemented later
-    badgeVariant: 'secondary',
+    badgeVariant: "secondary",
   },
 };
 

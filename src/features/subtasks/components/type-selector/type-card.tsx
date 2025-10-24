@@ -1,8 +1,13 @@
-'use client';
+"use client";
 
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SubtaskTypeConfig } from '@/features/subtasks/config/type-config';
-import { cn } from '@/lib/utils';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { SubtaskTypeConfig } from "@/features/subtasks/config/type-config";
+import { cn } from "@/lib/utils";
 
 interface TypeCardProps {
   config: SubtaskTypeConfig;
@@ -20,9 +25,10 @@ export function TypeCard({ config, onClick, disabled = false }: TypeCardProps) {
   return (
     <Card
       className={cn(
-        'cursor-pointer transition-all hover:shadow-md hover:scale-105',
-        'border-2 hover:border-primary',
-        disabled && 'opacity-50 cursor-not-allowed hover:shadow-none hover:scale-100'
+        "cursor-pointer transition-all hover:shadow-md hover:scale-105",
+        "border-2 hover:border-primary",
+        disabled &&
+          "opacity-50 cursor-not-allowed hover:shadow-none hover:scale-100",
       )}
       onClick={() => !disabled && onClick()}
     >

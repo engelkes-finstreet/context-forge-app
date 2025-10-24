@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { TaskService } from '@/lib/services/task-service';
-import { SubtaskService } from '@/lib/services/subtask-service';
-import { parseResourceURI, generateMarkdownContent } from '@/lib/mcp/utils';
-import type { MCPReadResourceResponse } from '@/lib/mcp/types';
+import { NextRequest, NextResponse } from "next/server";
+import { TaskService } from "@/lib/services/task-service";
+import { SubtaskService } from "@/lib/services/subtask-service";
+import { parseResourceURI, generateMarkdownContent } from "@/lib/mcp/utils";
+import type { MCPReadResourceResponse } from "@/lib/mcp/types";
 
 /**
  * MCP Endpoint: Read a specific resource
@@ -15,8 +15,8 @@ export async function POST(request: NextRequest) {
 
     if (!uri) {
       return NextResponse.json(
-        { error: 'Missing required parameter: uri' },
-        { status: 400 }
+        { error: "Missing required parameter: uri" },
+        { status: 400 },
       );
     }
 
@@ -24,48 +24,49 @@ export async function POST(request: NextRequest) {
 
     if (!parsed) {
       return NextResponse.json(
-        { error: 'Invalid resource URI format' },
-        { status: 400 }
+        { error: "Invalid resource URI format" },
+        { status: 400 },
       );
     }
 
-    let markdown = '';
+    let markdown = "";
 
-    if (parsed.type === 'task' && parsed.taskId) {
+    if (parsed.type === "task" && parsed.taskId) {
       const task = await TaskService.getTaskById(parsed.taskId);
 
       if (!task || task.projectId !== parsed.projectId) {
-        return NextResponse.json(
-          { error: 'Task not found' },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: "Task not found" }, { status: 404 });
       }
 
       markdown = generateMarkdownContent({
-        type: 'task',
+        type: "task",
         name: task.name,
         sharedContext: task.sharedContext,
       });
-    } else if (parsed.type === 'subtask' && parsed.subtaskId) {
+    } else if (parsed.type === "subtask" && parsed.subtaskId) {
       const subtask = await SubtaskService.getSubtaskById(parsed.subtaskId);
 
-      if (!subtask || subtask.taskId !== parsed.taskId || subtask.task.projectId !== parsed.projectId) {
+      if (
+        !subtask ||
+        subtask.taskId !== parsed.taskId ||
+        subtask.task.projectId !== parsed.projectId
+      ) {
         return NextResponse.json(
-          { error: 'Subtask not found' },
-          { status: 404 }
+          { error: "Subtask not found" },
+          { status: 404 },
         );
       }
 
       markdown = generateMarkdownContent({
-        type: 'subtask',
+        type: "subtask",
         name: subtask.name,
         sharedContext: subtask.task.sharedContext,
         content: subtask.content,
       });
     } else {
       return NextResponse.json(
-        { error: 'Only task and subtask resources can be read' },
-        { status: 400 }
+        { error: "Only task and subtask resources can be read" },
+        { status: 400 },
       );
     }
 
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
       contents: [
         {
           uri,
-          mimeType: 'text/markdown',
+          mimeType: "text/markdown",
           text: markdown,
         },
       ],
@@ -81,10 +82,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Error reading MCP resource:', error);
+    console.error("Error reading MCP resource:", error);
     return NextResponse.json(
-      { error: 'Failed to read resource', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      {
+        error: "Failed to read resource",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
     );
   }
 }

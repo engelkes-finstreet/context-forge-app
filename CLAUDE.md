@@ -96,6 +96,7 @@ Tasks have a `sharedContext` field (markdown) that all subtasks can access. This
 ### Typed Subtask System
 
 Context Forge implements a **two-layer validation system**:
+
 - **Form Schemas**: Define user input (type-specific fields)
 - **Database Schemas**: Define what gets stored (unified structure)
 - **Server Actions**: Transform form data to database data
@@ -108,9 +109,15 @@ All business logic is encapsulated in service classes:
 
 ```typescript
 export class ProjectService {
-  static async getAll() { /* ... */ }
-  static async getById(id: string) { /* ... */ }
-  static async create(data: CreateInput) { /* ... */ }
+  static async getAll() {
+    /* ... */
+  }
+  static async getById(id: string) {
+    /* ... */
+  }
+  static async create(data: CreateInput) {
+    /* ... */
+  }
   // ...
 }
 ```
@@ -220,4 +227,5 @@ Having issues? Check the [Troubleshooting Guide](./docs/guides/troubleshooting.m
 ---
 
 **Note:** For detailed documentation on any topic, please refer to the files in the [`docs/`](./docs/) directory. This file serves as a quick reference and index to the full documentation.
+
 - Stop to write everything into some markdown files if I do not explicitly ask you. If you want to add a short explanation do it inside the console but stop creating markdown files

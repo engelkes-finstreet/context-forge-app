@@ -5,14 +5,14 @@
  * Server and Client Components since it doesn't use any client-side hooks.
  */
 
-import Link, { LinkProps } from 'next/link';
-import { type Route, type QueryParams, type RouteParams } from './builder';
+import Link, { LinkProps } from "next/link";
+import { type Route, type QueryParams, type RouteParams } from "./builder";
 
 /**
  * Props for TypedLink component when route has parameters
  */
 interface TypedLinkPropsWithParams<TPath extends string>
-  extends Omit<LinkProps, 'href'> {
+  extends Omit<LinkProps, "href"> {
   route: Route<TPath>;
   params: RouteParams<Route<TPath>>;
   query?: QueryParams;
@@ -25,7 +25,7 @@ interface TypedLinkPropsWithParams<TPath extends string>
  * Props for TypedLink component when route has no parameters
  */
 interface TypedLinkPropsWithoutParams<TPath extends string>
-  extends Omit<LinkProps, 'href'> {
+  extends Omit<LinkProps, "href"> {
   route: Route<TPath>;
   params?: never;
   query?: QueryParams;
@@ -37,10 +37,11 @@ interface TypedLinkPropsWithoutParams<TPath extends string>
 /**
  * Conditional props type based on whether route requires params
  */
-type TypedLinkProps<TPath extends string> =
-  keyof RouteParams<Route<TPath>> extends never
-    ? TypedLinkPropsWithoutParams<TPath>
-    : TypedLinkPropsWithParams<TPath>;
+type TypedLinkProps<TPath extends string> = keyof RouteParams<
+  Route<TPath>
+> extends never
+  ? TypedLinkPropsWithoutParams<TPath>
+  : TypedLinkPropsWithParams<TPath>;
 
 /**
  * Type-safe Link component - drop-in replacement for Next.js Link

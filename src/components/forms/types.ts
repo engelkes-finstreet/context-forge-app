@@ -1,7 +1,7 @@
-import { DeepPartial, FieldValues } from 'react-hook-form';
-import { ZodTypeAny } from 'zod';
+import { DeepPartial, FieldValues } from "react-hook-form";
+import { ZodTypeAny } from "zod";
 
-import { FormFieldConfig } from '@/components/forms/dynamic-form-field/types';
+import { FormFieldConfig } from "@/components/forms/dynamic-form-field/types";
 
 export type FormState = {
   error: string | null;
@@ -20,7 +20,7 @@ export type FormConfig<
   defaultValues: DeepPartial<FormInput>;
   serverAction: (
     prevState: State | null,
-    formValues: FormOutput
+    formValues: FormOutput,
   ) => Promise<State>;
   useErrorAction?: () => (state: State) => void;
   useSuccessAction?: () => (state: State) => void;
@@ -45,7 +45,7 @@ export type ClientFormConfig<
 };
 
 export type ArrayFieldConfig<T, FormValues, CustomFields = never> = {
-  type: 'array';
+  type: "array";
 } & {
   [field in keyof T]: FormFieldConfig<
     FormValues,
@@ -131,10 +131,10 @@ export type FormFieldsType<
 };
 
 export type FieldNamesType<F extends FormFieldsType<any, any>> = {
-  [K in keyof F]: F[K] extends { type: 'array' } // 1) Array field => { fieldName, fields }
+  [K in keyof F]: F[K] extends { type: "array" } // 1) Array field => { fieldName, fields }
     ? {
         fieldName: string;
-        fields: FieldNamesType<Omit<F[K], 'type'>>;
+        fields: FieldNamesType<Omit<F[K], "type">>;
       }
     : // 2) Normal field => string
       F[K] extends { type: unknown }

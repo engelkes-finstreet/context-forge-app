@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Form } from '@/components/forms/form';
-import { useEditProjectFormConfig } from '@/features/projects/components/forms/edit-project/edit-project-form-config';
-import { DynamicFormField } from '@/components/forms/dynamic-form-field/dynamic-form-field';
+import { Form } from "@/components/forms/form";
+import { useEditProjectFormConfig } from "@/features/projects/components/forms/edit-project/edit-project-form-config";
+import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 
 interface EditProjectFormProps {
   projectId: string;
@@ -14,7 +14,10 @@ interface EditProjectFormProps {
   };
 }
 
-export function EditProjectForm({ projectId, defaultValues }: EditProjectFormProps) {
+export function EditProjectForm({
+  projectId,
+  defaultValues,
+}: EditProjectFormProps) {
   const formConfig = useEditProjectFormConfig({ projectId, defaultValues });
   const { fieldNames } = formConfig;
 

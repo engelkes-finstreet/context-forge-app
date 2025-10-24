@@ -24,6 +24,7 @@ Tasks belong to projects and contain a shared context that all subtasks can acce
 The `sharedContext` field stores markdown content that provides common information to all subtasks within a task.
 
 **Use Cases:**
+
 - Requirements shared across subtasks
 - Background information
 - Constraints and guidelines

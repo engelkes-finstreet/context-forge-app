@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Type-safe routing hooks for Client Components
@@ -7,8 +7,8 @@
  * It must be marked with 'use client' since it uses Next.js useRouter hook.
  */
 
-import { useRouter } from 'next/navigation';
-import { type Route, type QueryParams, type RouteParams } from './builder';
+import { useRouter } from "next/navigation";
+import { type Route, type QueryParams, type RouteParams } from "./builder";
 
 /**
  * Type-safe router hook - drop-in replacement for Next.js useRouter
@@ -37,7 +37,7 @@ export function useTypedRouter() {
     push: <TPath extends string>(
       route: Route<TPath>,
       params?: RouteParams<Route<TPath>>,
-      query?: QueryParams
+      query?: QueryParams,
     ) => {
       const href = params
         ? (route.path as any)(params, query)
@@ -51,7 +51,7 @@ export function useTypedRouter() {
     replace: <TPath extends string>(
       route: Route<TPath>,
       params?: RouteParams<Route<TPath>>,
-      query?: QueryParams
+      query?: QueryParams,
     ) => {
       const href = params
         ? (route.path as any)(params, query)
@@ -79,11 +79,9 @@ export function useTypedRouter() {
      */
     prefetch: <TPath extends string>(
       route: Route<TPath>,
-      params?: RouteParams<Route<TPath>>
+      params?: RouteParams<Route<TPath>>,
     ) => {
-      const href = params
-        ? (route.path as any)(params)
-        : (route.path as any)();
+      const href = params ? (route.path as any)(params) : (route.path as any)();
       router.prefetch(href);
     },
   };

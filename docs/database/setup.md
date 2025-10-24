@@ -63,6 +63,7 @@ npx prisma migrate dev --name migration_name
 Creates a new migration file and applies it to the database.
 
 **Example:**
+
 ```bash
 npx prisma migrate dev --name add_subtask_type
 ```
@@ -103,6 +104,7 @@ Applies pending migrations to the production database. Use this in CI/CD pipelin
 ### TypeScript Errors After Schema Changes
 
 **Solution:**
+
 ```bash
 npm run db:generate
 ```
@@ -112,11 +114,13 @@ Then restart your TypeScript server in your IDE.
 ### Database Connection Errors
 
 **Check PostgreSQL is running:**
+
 ```bash
 npm run db:start
 ```
 
 **Verify DATABASE_URL:**
+
 ```bash
 echo $DATABASE_URL
 ```
@@ -124,11 +128,13 @@ echo $DATABASE_URL
 ### Migration Conflicts
 
 **Development - Reset Database:**
+
 ```bash
 npx prisma migrate reset
 ```
 
 **Production - Manual Fix:**
+
 ```bash
 # Pull current database state
 npx prisma db pull

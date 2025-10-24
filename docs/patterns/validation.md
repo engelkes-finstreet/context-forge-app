@@ -27,45 +27,45 @@ export type CreateEntityInput = z.infer<typeof createEntitySchema>;
 ### String Validation
 
 ```typescript
-z.string()                                    // Basic string
-z.string().min(1, "Required")                 // Non-empty string
-z.string().min(3, "At least 3 characters")    // Minimum length
-z.string().max(100, "Too long")               // Maximum length
-z.string().email("Invalid email")             // Email format
-z.string().url("Invalid URL")                 // URL format
-z.string().cuid("Invalid ID")                 // CUID format
+z.string(); // Basic string
+z.string().min(1, "Required"); // Non-empty string
+z.string().min(3, "At least 3 characters"); // Minimum length
+z.string().max(100, "Too long"); // Maximum length
+z.string().email("Invalid email"); // Email format
+z.string().url("Invalid URL"); // URL format
+z.string().cuid("Invalid ID"); // CUID format
 ```
 
 ### Number Validation
 
 ```typescript
-z.number()                                    // Basic number
-z.number().int("Must be integer")             // Integer only
-z.number().min(0, "Must be positive")         // Minimum value
-z.number().max(100, "Too large")              // Maximum value
+z.number(); // Basic number
+z.number().int("Must be integer"); // Integer only
+z.number().min(0, "Must be positive"); // Minimum value
+z.number().max(100, "Too large"); // Maximum value
 ```
 
 ### Boolean Validation
 
 ```typescript
-z.boolean()                                   // Boolean
-z.boolean().default(false)                    // With default
+z.boolean(); // Boolean
+z.boolean().default(false); // With default
 ```
 
 ### Optional Fields
 
 ```typescript
-z.string().optional()                         // Can be undefined
-z.string().nullable()                         // Can be null
-z.string().nullish()                          // Can be null or undefined
+z.string().optional(); // Can be undefined
+z.string().nullable(); // Can be null
+z.string().nullish(); // Can be null or undefined
 ```
 
 ### Default Values
 
 ```typescript
-z.string().default("default value")
-z.number().default(0)
-z.boolean().default(false)
+z.string().default("default value");
+z.number().default(0);
+z.boolean().default(false);
 ```
 
 ## Complex Schema Types
@@ -85,41 +85,40 @@ const addressSchema = z.object({
 ```typescript
 const tagsSchema = z.array(z.string()).min(1, "At least one tag required");
 
-const itemsSchema = z.array(z.object({
-  id: z.string(),
-  name: z.string(),
-}));
+const itemsSchema = z.array(
+  z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+);
 ```
 
 ### Enums
 
 ```typescript
-const statusSchema = z.enum(['pending', 'active', 'completed']);
+const statusSchema = z.enum(["pending", "active", "completed"]);
 
 // Or with const array
-const STATUSES = ['pending', 'active', 'completed'] as const;
+const STATUSES = ["pending", "active", "completed"] as const;
 const statusSchema = z.enum(STATUSES);
 ```
 
 ### Unions
 
 ```typescript
-const idSchema = z.union([
-  z.string().cuid(),
-  z.string().uuid(),
-]);
+const idSchema = z.union([z.string().cuid(), z.string().uuid()]);
 ```
 
 ### Discriminated Unions
 
 ```typescript
-const subtaskMetadataSchema = z.discriminatedUnion('type', [
+const subtaskMetadataSchema = z.discriminatedUnion("type", [
   z.object({
-    type: z.literal('GENERIC'),
+    type: z.literal("GENERIC"),
     // No additional fields
   }),
   z.object({
-    type: z.literal('FORM'),
+    type: z.literal("FORM"),
     fields: z.array(/* ... */),
     submitEndpoint: z.string().url(),
   }),
@@ -145,7 +144,7 @@ export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 ### Project Schema
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 export const createProjectSchema = z.object({
   name: z.string().min(1, "Project name is required"),
@@ -165,7 +164,7 @@ export type UpdateProjectInput = z.infer<typeof updateProjectSchema>;
 ### Task Schema
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 export const createTaskSchema = z.object({
   projectId: z.string().cuid(),
@@ -186,13 +185,13 @@ export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
 ### Subtask Schema (Database)
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 export const subtaskTypeSchema = z.enum([
-  'GENERIC',
-  'FORM',
-  'MODAL',
-  'INQUIRY_PROCESS',
+  "GENERIC",
+  "FORM",
+  "MODAL",
+  "INQUIRY_PROCESS",
 ]);
 
 export const createSubtaskSchema = z.object({
@@ -200,7 +199,11 @@ export const createSubtaskSchema = z.object({
   name: z.string().min(1, "Subtask name is required"),
   type: subtaskTypeSchema,
   content: z.string().min(1, "Content is required"),
-  metadata: z.union([/* type-specific schemas */]).nullable(),
+  metadata: z
+    .union([
+      /* type-specific schemas */
+    ])
+    .nullable(),
 });
 
 export type SubtaskType = z.infer<typeof subtaskTypeSchema>;
@@ -210,7 +213,7 @@ export type CreateSubtaskInput = z.infer<typeof createSubtaskSchema>;
 ### Form Schema (User Input)
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 export const createGenericSubtaskFormSchema = z.object({
   taskId: z.string().cuid(),
@@ -218,7 +221,9 @@ export const createGenericSubtaskFormSchema = z.object({
   content: z.string().min(1, "Content is required"),
 });
 
-export type CreateGenericSubtaskFormInput = z.infer<typeof createGenericSubtaskFormSchema>;
+export type CreateGenericSubtaskFormInput = z.infer<
+  typeof createGenericSubtaskFormSchema
+>;
 ```
 
 ## Schema Composition
@@ -270,13 +275,14 @@ Forms automatically validate using the schema:
 ```typescript
 export function useCreateProjectFormConfig() {
   return {
-    schema: createProjectSchema,  // Zod schema
+    schema: createProjectSchema, // Zod schema
     // ... other config
   };
 }
 ```
 
 React Hook Form uses the schema for:
+
 - Client-side validation
 - Type inference
 - Error messages
@@ -288,7 +294,7 @@ Server actions should re-validate:
 ```typescript
 export async function createProjectAction(
   state: ProjectFormState,
-  data: CreateProjectInput
+  data: CreateProjectInput,
 ): Promise<ProjectFormState> {
   // Optional: Re-validate on server
   const validated = createProjectSchema.parse(data);
@@ -309,16 +315,11 @@ export async function createProjectAction(
 Add custom validation logic:
 
 ```typescript
-const passwordSchema = z.string()
+const passwordSchema = z
+  .string()
   .min(8, "Password must be at least 8 characters")
-  .refine(
-    (val) => /[A-Z]/.test(val),
-    "Password must contain uppercase letter"
-  )
-  .refine(
-    (val) => /[0-9]/.test(val),
-    "Password must contain number"
-  );
+  .refine((val) => /[A-Z]/.test(val), "Password must contain uppercase letter")
+  .refine((val) => /[0-9]/.test(val), "Password must contain number");
 ```
 
 ### Superrefine
@@ -326,18 +327,20 @@ const passwordSchema = z.string()
 Complex validation with multiple errors:
 
 ```typescript
-const schema = z.object({
-  password: z.string(),
-  confirmPassword: z.string(),
-}).superrefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Passwords don't match",
-      path: ['confirmPassword'],
-    });
-  }
-});
+const schema = z
+  .object({
+    password: z.string(),
+    confirmPassword: z.string(),
+  })
+  .superrefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords don't match",
+        path: ["confirmPassword"],
+      });
+    }
+  });
 ```
 
 ## Best Practices
@@ -346,10 +349,10 @@ const schema = z.object({
 
 ```typescript
 // ✅ Good - clear error message
-z.string().min(1, "Project name is required")
+z.string().min(1, "Project name is required");
 
 // ❌ Bad - generic error
-z.string().min(1)
+z.string().min(1);
 ```
 
 ### 2. Use Type Inference
@@ -405,8 +408,8 @@ Only use defaults when there's a clear default:
 
 ```typescript
 // ✅ Good - clear default
-z.boolean().default(false)
+z.boolean().default(false);
 
 // ❌ Bad - unclear default
-z.string().default("")  // Better to make optional
+z.string().default(""); // Better to make optional
 ```

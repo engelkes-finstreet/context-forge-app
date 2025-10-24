@@ -1,10 +1,10 @@
-import { SignInCard } from '@/features/auth/components/cards/sign-in-card';
-import type { Metadata } from 'next';
-import { TypedLink, routes } from '@/lib/routes';
+import { SignInCard } from "@/features/auth/components/cards/sign-in-card";
+import type { Metadata } from "next";
+import { TypedLink, routes } from "@/lib/routes";
 
 export const metadata: Metadata = {
-  title: 'Sign In',
-  description: 'Sign in to your account',
+  title: "Sign In",
+  description: "Sign in to your account",
 };
 
 export default function SignInPage() {
@@ -12,7 +12,9 @@ export default function SignInPage() {
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-subtle">
       <div className="w-full max-w-lg space-y-6">
         <div className="flex flex-col items-center text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-gradient">Welcome back</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gradient">
+            Welcome back
+          </h1>
           <p className="text-muted-foreground">
             Sign in to continue to your account
           </p>
@@ -21,7 +23,7 @@ export default function SignInPage() {
         <SignInCard />
 
         <div className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{' '}
+          Don&apos;t have an account?{" "}
           <TypedLink
             route={routes.auth.signUp}
             params={{}}

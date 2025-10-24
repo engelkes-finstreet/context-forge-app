@@ -1,48 +1,57 @@
-import { DeepPartial } from 'react-hook-form';
-import { toast } from '@/lib/toast';
-import { useRouter } from 'next/navigation';
-import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
-import { Button } from '@/components/ui/button';
-import { createProjectSchema, CreateProjectInput } from './create-project-form-schema';
-import { createProjectAction, ProjectFormState } from '@/lib/actions/project-actions';
-import { FormConfig, FormFieldsType } from '@/components/forms/types';
-import { routes } from '@/lib/routes';
+import { DeepPartial } from "react-hook-form";
+import { toast } from "@/lib/toast";
+import { useRouter } from "next/navigation";
+import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
+import { Button } from "@/components/ui/button";
+import {
+  createProjectSchema,
+  CreateProjectInput,
+} from "./create-project-form-schema";
+import {
+  createProjectAction,
+  ProjectFormState,
+} from "@/lib/actions/project-actions";
+import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import { routes } from "@/lib/routes";
 
-const createProjectFormId = 'create-project-form';
+const createProjectFormId = "create-project-form";
 
-export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, CreateProjectInput> {
+export function useCreateProjectFormConfig(): FormConfig<
+  ProjectFormState,
+  CreateProjectInput
+> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateProjectInput> = {
-    name: '',
-    description: '',
-    githubRepo: '',
-    swaggerPath: '',
+    name: "",
+    description: "",
+    githubRepo: "",
+    swaggerPath: "",
   };
 
   const fields: FormFieldsType<CreateProjectInput> = {
     name: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Project Name',
-      placeholder: 'Enter project name',
+      type: "input",
+      inputType: "text",
+      label: "Project Name",
+      placeholder: "Enter project name",
     },
     description: {
-      type: 'textarea',
-      label: 'Description (optional)',
-      placeholder: 'Enter project description',
+      type: "textarea",
+      label: "Description (optional)",
+      placeholder: "Enter project description",
     },
     githubRepo: {
-      type: 'input',
-      inputType: 'text',
-      label: 'GitHub Repository (optional)',
-      placeholder: 'e.g., owner/repo-name',
+      type: "input",
+      inputType: "text",
+      label: "GitHub Repository (optional)",
+      placeholder: "e.g., owner/repo-name",
     },
     swaggerPath: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Swagger File Path (optional)',
-      placeholder: 'e.g., docs/swagger.yaml',
+      type: "input",
+      inputType: "text",
+      label: "Swagger File Path (optional)",
+      placeholder: "e.g., docs/swagger.yaml",
     },
   };
 
@@ -55,12 +64,12 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
     formId: createProjectFormId,
     useErrorAction: () => {
       return (state: ProjectFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
+        toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
       return (state: ProjectFormState) => {
-        toast.success(state?.message || 'Project created successfully');
+        toast.success(state?.message || "Project created successfully");
         router.push(routes.projects.list.path({}));
       };
     },
@@ -75,12 +84,8 @@ export function useCreateProjectFormConfig(): FormConfig<ProjectFormState, Creat
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            disabled={isPending}
-            form={createProjectFormId}
-          >
-            {isPending ? 'Creating...' : 'Create Project'}
+          <Button type="submit" disabled={isPending} form={createProjectFormId}>
+            {isPending ? "Creating..." : "Create Project"}
           </Button>
         </div>
       );

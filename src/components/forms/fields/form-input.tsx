@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Input } from '@/components/ui/input';
+import * as React from "react";
+import { Input } from "@/components/ui/input";
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { InputFieldConfig } from '@/components/forms/dynamic-form-field/types';
+} from "@/components/ui/form";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { InputFieldConfig } from "@/components/forms/dynamic-form-field/types";
 
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -35,7 +35,7 @@ export function FormInput<
             <Input
               {...field}
               placeholder={fieldConfig.placeholder}
-              type={fieldConfig.inputType || 'text'}
+              type={fieldConfig.inputType || "text"}
             />
           </FormControl>
           {fieldConfig.description && (

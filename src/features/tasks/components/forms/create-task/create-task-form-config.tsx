@@ -1,42 +1,45 @@
-import { DeepPartial } from 'react-hook-form';
-import { toast } from '@/lib/toast';
-import { useRouter } from 'next/navigation';
-import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
-import { Button } from '@/components/ui/button';
-import { createTaskSchema, CreateTaskInput } from './create-task-form-schema';
-import { createTaskAction, TaskFormState } from '@/lib/actions/task-actions';
-import { FormConfig, FormFieldsType } from '@/components/forms/types';
+import { DeepPartial } from "react-hook-form";
+import { toast } from "@/lib/toast";
+import { useRouter } from "next/navigation";
+import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
+import { Button } from "@/components/ui/button";
+import { createTaskSchema, CreateTaskInput } from "./create-task-form-schema";
+import { createTaskAction, TaskFormState } from "@/lib/actions/task-actions";
+import { FormConfig, FormFieldsType } from "@/components/forms/types";
 
-const createTaskFormId = 'create-task-form';
+const createTaskFormId = "create-task-form";
 
-export function useCreateTaskFormConfig(projectId: string): FormConfig<TaskFormState, CreateTaskInput> {
+export function useCreateTaskFormConfig(
+  projectId: string,
+): FormConfig<TaskFormState, CreateTaskInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateTaskInput> = {
     projectId,
-    name: '',
-    sharedContext: '',
+    name: "",
+    sharedContext: "",
   };
 
   const fields: FormFieldsType<CreateTaskInput> = {
     projectId: {
-      type: 'hidden',
+      type: "hidden",
     },
     name: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Task Name',
-      placeholder: 'Enter task name',
+      type: "input",
+      inputType: "text",
+      label: "Task Name",
+      placeholder: "Enter task name",
     },
     sharedContext: {
-      type: 'textarea',
-      label: 'Shared Context',
-      placeholder: 'Enter shared context for all subtasks (supports Markdown)',
-      description: 'This context will be accessible by all subtasks within this task',
+      type: "textarea",
+      label: "Shared Context",
+      placeholder: "Enter shared context for all subtasks (supports Markdown)",
+      description:
+        "This context will be accessible by all subtasks within this task",
     },
     order: {
-      type: 'hidden',
-    }
+      type: "hidden",
+    },
   };
 
   return {
@@ -48,12 +51,12 @@ export function useCreateTaskFormConfig(projectId: string): FormConfig<TaskFormS
     formId: createTaskFormId,
     useErrorAction: () => {
       return (state: TaskFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
+        toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
       return (state: TaskFormState) => {
-        toast.success(state?.message || 'Task created successfully');
+        toast.success(state?.message || "Task created successfully");
       };
     },
     renderFormActions: (isPending: boolean) => {
@@ -67,12 +70,8 @@ export function useCreateTaskFormConfig(projectId: string): FormConfig<TaskFormS
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            disabled={isPending}
-            form={createTaskFormId}
-          >
-            {isPending ? 'Creating...' : 'Create Task'}
+          <Button type="submit" disabled={isPending} form={createTaskFormId}>
+            {isPending ? "Creating..." : "Create Task"}
           </Button>
         </div>
       );

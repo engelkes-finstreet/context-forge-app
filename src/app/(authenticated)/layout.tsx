@@ -1,8 +1,8 @@
-import { headers } from 'next/headers';
-import { typedRedirect, routes } from '@/lib/routes';
-import { auth } from '@/lib/auth';
-import { MainNav } from '@/components/main-nav';
-import { Footer } from '@/components/footer';
+import { headers } from "next/headers";
+import { typedRedirect, routes } from "@/lib/routes";
+import { auth } from "@/lib/auth";
+import { MainNav } from "@/components/main-nav";
+import { Footer } from "@/components/footer";
 
 export default async function AuthenticatedLayout({
   children,

@@ -1,9 +1,9 @@
-import { notFound } from 'next/navigation';
-import { TypedLink, routes } from '@/lib/routes';
-import { TaskService } from '@/lib/services/task-service';
-import { Button } from '@/components/ui/button';
-import { TypeSelector } from '@/features/subtasks/components/type-selector/type-selector';
-import { ArrowLeft } from 'lucide-react';
+import { notFound } from "next/navigation";
+import { TypedLink, routes } from "@/lib/routes";
+import { TaskService } from "@/lib/services/task-service";
+import { Button } from "@/components/ui/button";
+import { TypeSelector } from "@/features/subtasks/components/type-selector/type-selector";
+import { ArrowLeft } from "lucide-react";
 
 interface NewSubtaskPageProps {
   params: Promise<{
@@ -29,7 +29,11 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   return (
     <>
       <div>
-        <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }} data-transition-ignore>
+        <TypedLink
+          route={routes.projects.tasks.detail}
+          params={{ projectId, taskId }}
+          data-transition-ignore
+        >
           <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to {task.name}

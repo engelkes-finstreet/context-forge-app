@@ -104,6 +104,7 @@ export default async function ProjectsPage() {
 ### When to Use Client Components
 
 Use `'use client'` directive when you need:
+
 - Event handlers (`onClick`, `onChange`, etc.)
 - React hooks (`useState`, `useEffect`, etc.)
 - Browser APIs (`window`, `localStorage`, etc.)
@@ -132,20 +133,20 @@ Server actions handle mutations from forms and other interactions.
 ### Basic Server Action
 
 ```typescript
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createProject(formData: FormData) {
-  const name = formData.get('name') as string;
-  const description = formData.get('description') as string;
+  const name = formData.get("name") as string;
+  const description = formData.get("description") as string;
 
   const project = await db.project.create({
-    data: { name, description }
+    data: { name, description },
   });
 
-  revalidatePath('/projects');
+  revalidatePath("/projects");
   redirect(`/projects/${project.id}`);
 }
 ```
@@ -155,9 +156,9 @@ export async function createProject(formData: FormData) {
 Using Zod for validation:
 
 ```typescript
-'use server';
+"use server";
 
-import { z } from 'zod';
+import { z } from "zod";
 
 const createProjectSchema = z.object({
   name: z.string().min(1),
@@ -171,17 +172,17 @@ export type ProjectFormState = {
 
 export async function createProjectAction(
   state: ProjectFormState,
-  data: z.infer<typeof createProjectSchema>
+  data: z.infer<typeof createProjectSchema>,
 ): Promise<ProjectFormState> {
   try {
     const validated = createProjectSchema.parse(data);
     const project = await db.project.create({ data: validated });
 
-    revalidatePath('/projects');
+    revalidatePath("/projects");
     redirect(`/projects/${project.id}`);
   } catch (error) {
     return {
-      error: error instanceof Error ? error.message : 'Failed to create',
+      error: error instanceof Error ? error.message : "Failed to create",
       message: null,
     };
   }
@@ -264,33 +265,33 @@ export default async function DashboardPage() {
 ### Path Revalidation
 
 ```typescript
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from "next/cache";
 
 // Revalidate specific page
-revalidatePath('/projects');
+revalidatePath("/projects");
 
 // Revalidate dynamic route
 revalidatePath(`/projects/${projectId}`);
 
 // Revalidate layout
-revalidatePath('/projects', 'layout');
+revalidatePath("/projects", "layout");
 
 // Revalidate all under path
-revalidatePath('/projects', 'page');
+revalidatePath("/projects", "page");
 ```
 
 ### Tag Revalidation
 
 ```typescript
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
 
 // Tag data when fetching
-fetch('https://api.example.com/data', {
-  next: { tags: ['projects'] }
+fetch("https://api.example.com/data", {
+  next: { tags: ["projects"] },
 });
 
 // Revalidate by tag
-revalidateTag('projects');
+revalidateTag("projects");
 ```
 
 ## Navigation
@@ -455,14 +456,16 @@ export default function ProjectsPage() {
 ### Dynamic Metadata
 
 ```typescript
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
   const project = await db.project.findUnique({ where: { id } });
 
   return {
-    title: project?.name || 'Project',
+    title: project?.name || "Project",
     description: project?.description,
   };
 }
@@ -515,7 +518,7 @@ async function Page() {
 ```typescript
 export async function createProject(data: CreateInput) {
   const project = await db.project.create({ data });
-  revalidatePath('/projects');
+  revalidatePath("/projects");
   revalidatePath(`/projects/${project.id}`);
   redirect(`/projects/${project.id}`);
 }

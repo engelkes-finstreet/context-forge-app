@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Calendar as CalendarIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import * as React from "react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   FormControl,
   FormDescription,
@@ -12,15 +12,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { DatePickerFieldConfig } from '@/components/forms/dynamic-form-field/types';
-import { format } from 'date-fns';
+} from "@/components/ui/popover";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { DatePickerFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { format } from "date-fns";
 
 interface FormDatePickerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -48,12 +48,12 @@ export function FormDatePicker<
                 <Button
                   variant="outline"
                   className={cn(
-                    'w-full pl-3 text-left font-normal',
-                    !field.value && 'text-muted-foreground'
+                    "w-full pl-3 text-left font-normal",
+                    !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value ? (
-                    format(field.value, 'PPP')
+                    format(field.value, "PPP")
                   ) : (
                     <span>Pick a date</span>
                   )}

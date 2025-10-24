@@ -38,7 +38,7 @@ routes.projects.detail.path({ id }); // ❌ Error: wrong parameter name
 ### Import Routes
 
 ```typescript
-import { routes, TypedLink, useTypedRouter, typedRedirect } from '@/lib/routes';
+import { routes, TypedLink, useTypedRouter, typedRedirect } from "@/lib/routes";
 ```
 
 ### Basic Usage
@@ -49,12 +49,12 @@ routes.home.path(); // '/'
 routes.projects.list.path(); // '/projects'
 
 // Routes with parameters (type-checked!)
-routes.projects.detail.path({ projectId: '123' }); // '/projects/123'
-routes.projects.tasks.detail.path({ projectId: '123', taskId: '456' });
+routes.projects.detail.path({ projectId: "123" }); // '/projects/123'
+routes.projects.tasks.detail.path({ projectId: "123", taskId: "456" });
 // '/projects/123/tasks/456'
 
 // With query parameters
-routes.projects.list.path({ view: 'grid', sort: 'name' });
+routes.projects.list.path({ view: "grid", sort: "name" });
 // '/projects?view=grid&sort=name'
 ```
 
@@ -107,9 +107,9 @@ export function MyComponent() {
 Type-safe redirect for server-side:
 
 ```typescript
-'use server';
+"use server";
 
-import { typedRedirect, routes } from '@/lib/routes';
+import { typedRedirect, routes } from "@/lib/routes";
 
 export async function createProjectAction(data: FormData) {
   const project = await db.project.create({ data });
@@ -129,13 +129,13 @@ export const routes = {
 
   settings: {
     /** User settings - /settings */
-    dashboard: route('/settings'),
+    dashboard: route("/settings"),
 
     /**
      * Profile settings - /settings/profile/[userId]
      * @param userId - User ID
      */
-    profile: route('/settings/profile/[userId]'),
+    profile: route("/settings/profile/[userId]"),
   },
 };
 ```
@@ -198,13 +198,13 @@ router.push(routes.projects.tasks.new, { projectId });
 ### Form Success Redirects
 
 ```typescript
-'use server';
+"use server";
 
 export async function createTaskAction(data: FormData) {
   const task = await db.task.create({ data });
   typedRedirect(routes.projects.tasks.detail, {
     projectId: task.projectId,
-    taskId: task.id
+    taskId: task.id,
   });
 }
 ```
@@ -225,8 +225,8 @@ function handleEdit() {
 
 ```typescript
 const breadcrumbs = [
-  { label: 'Home', href: routes.home.path() },
-  { label: 'Projects', href: routes.projects.list.path() },
+  { label: "Home", href: routes.home.path() },
+  { label: "Projects", href: routes.projects.list.path() },
   { label: project.name, href: routes.projects.detail.path({ projectId }) },
 ];
 ```

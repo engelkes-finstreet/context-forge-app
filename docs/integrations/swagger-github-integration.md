@@ -13,6 +13,7 @@ GITHUB_TOKEN=your_github_personal_access_token
 ```
 
 **Creating a token:**
+
 1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
 2. Generate new token with `repo` scope
 3. Copy the token and add to `.env`
@@ -20,6 +21,7 @@ GITHUB_TOKEN=your_github_personal_access_token
 ### Add Repository to Project
 
 When creating/editing a project:
+
 - **GitHub Repository**: Format `owner/repo` (e.g., `mycompany/backend-api`)
 - **Swagger Path**: Path to file (e.g., `docs/openapi.yaml`)
 
@@ -73,11 +75,13 @@ GET /api/swagger/{projectId}?search=users
 **Service:** `SwaggerService` - Fetches from GitHub, parses OpenAPI/Swagger
 
 **Actions:**
+
 - `fetchProjectSwaggerEndpoints(projectId)`
 - `fetchSwaggerEndpoints(repo, path, branch?)`
 - `searchProjectEndpoints(projectId, query)`
 
 **UI Components:**
+
 - `SwaggerEndpointSelector` - Standalone dropdown
 - `FormSwaggerEndpointSelector` - Form-integrated version
 

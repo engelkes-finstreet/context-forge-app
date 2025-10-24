@@ -1,15 +1,15 @@
-import { DeepPartial } from 'react-hook-form';
-import { toast } from '@/lib/toast';
-import { useRouter } from 'next/navigation';
-import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
-import { Button } from '@/components/ui/button';
-import { updateTaskSchema, UpdateTaskInput } from './edit-task-form-schema';
-import { updateTaskAction, TaskFormState } from '@/lib/actions/task-actions';
-import { FormConfig, FormFieldsType } from '@/components/forms/types';
-import { z } from 'zod';
-import { routes } from '@/lib/routes';
+import { DeepPartial } from "react-hook-form";
+import { toast } from "@/lib/toast";
+import { useRouter } from "next/navigation";
+import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
+import { Button } from "@/components/ui/button";
+import { updateTaskSchema, UpdateTaskInput } from "./edit-task-form-schema";
+import { updateTaskAction, TaskFormState } from "@/lib/actions/task-actions";
+import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import { z } from "zod";
+import { routes } from "@/lib/routes";
 
-const editTaskFormId = 'edit-task-form';
+const editTaskFormId = "edit-task-form";
 
 // Extended schema for the edit form that includes metadata
 const editTaskSchema = updateTaskSchema.extend({
@@ -44,26 +44,27 @@ export function useEditTaskFormConfig({
 
   const fields: FormFieldsType<EditTaskInput> = {
     id: {
-      type: 'hidden',
+      type: "hidden",
     },
     projectId: {
-      type: 'hidden',
+      type: "hidden",
     },
     name: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Task Name',
-      placeholder: 'Enter task name',
+      type: "input",
+      inputType: "text",
+      label: "Task Name",
+      placeholder: "Enter task name",
     },
     sharedContext: {
-      type: 'textarea',
-      label: 'Shared Context',
-      placeholder: 'Enter shared context for all subtasks (supports Markdown)',
-      description: 'This context will be accessible by all subtasks within this task',
+      type: "textarea",
+      label: "Shared Context",
+      placeholder: "Enter shared context for all subtasks (supports Markdown)",
+      description:
+        "This context will be accessible by all subtasks within this task",
     },
     order: {
-      type: 'hidden',
-    }
+      type: "hidden",
+    },
   };
 
   return {
@@ -75,12 +76,12 @@ export function useEditTaskFormConfig({
     formId: editTaskFormId,
     useErrorAction: () => {
       return (state: TaskFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
+        toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
       return (state: TaskFormState) => {
-        toast.success(state?.message || 'Task updated successfully');
+        toast.success(state?.message || "Task updated successfully");
         router.push(routes.projects.tasks.detail.path({ projectId, taskId }));
       };
     },
@@ -96,7 +97,7 @@ export function useEditTaskFormConfig({
             Cancel
           </Button>
           <Button type="submit" disabled={isPending} form={editTaskFormId}>
-            {isPending ? 'Saving...' : 'Save Changes'}
+            {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       );

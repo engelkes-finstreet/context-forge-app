@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Form } from '@/components/forms/form';
-import { useEditTaskFormConfig } from '@/features/tasks/components/forms/edit-task/edit-task-form-config';
-import { DynamicFormField } from '@/components/forms/dynamic-form-field/dynamic-form-field';
+import { Form } from "@/components/forms/form";
+import { useEditTaskFormConfig } from "@/features/tasks/components/forms/edit-task/edit-task-form-config";
+import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 
 interface EditTaskFormProps {
   taskId: string;
@@ -13,7 +13,11 @@ interface EditTaskFormProps {
   };
 }
 
-export function EditTaskForm({ taskId, projectId, defaultValues }: EditTaskFormProps) {
+export function EditTaskForm({
+  taskId,
+  projectId,
+  defaultValues,
+}: EditTaskFormProps) {
   const formConfig = useEditTaskFormConfig({
     taskId,
     projectId,

@@ -57,12 +57,12 @@ Context Forge implements a **two-layer validation system** that separates user i
 
 ## Subtask Types
 
-| Type | Status | Description |
-|------|--------|-------------|
-| `GENERIC` | ✅ Implemented | Standard subtask with name & content |
-| `INQUIRY_PROCESS` | 🔄 Planned | Multi-step form wizard |
-| `FORM` | 🔄 Planned | Single form with field definitions |
-| `MODAL` | 🔄 Planned | Modal dialog component |
+| Type              | Status         | Description                          |
+| ----------------- | -------------- | ------------------------------------ |
+| `GENERIC`         | ✅ Implemented | Standard subtask with name & content |
+| `INQUIRY_PROCESS` | 🔄 Planned     | Multi-step form wizard               |
+| `FORM`            | 🔄 Planned     | Single form with field definitions   |
+| `MODAL`           | 🔄 Planned     | Modal dialog component               |
 
 ## File Organization
 
@@ -113,6 +113,7 @@ See existing Generic type implementation for reference.
 ## Type Immutability
 
 Once created, a subtask's type **cannot be changed**. This ensures:
+
 - Metadata always matches the type
 - No invalid state combinations
 - Simpler migration logic
@@ -121,6 +122,7 @@ Once created, a subtask's type **cannot be changed**. This ensures:
 ## Metadata Storage
 
 Type-specific configuration is stored as JSON in the `metadata` field:
+
 - **GENERIC**: `null` (no metadata needed)
 - **FORM**: Field definitions, endpoints, button text (planned)
 - **MODAL**: Size, trigger behavior, close actions (planned)

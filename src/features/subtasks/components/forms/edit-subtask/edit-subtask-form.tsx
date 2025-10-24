@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Form } from '@/components/forms/form';
-import { useEditSubtaskFormConfig } from '@/features/subtasks/components/forms/edit-subtask/edit-subtask-form-config';
-import { DynamicFormField } from '@/components/forms/dynamic-form-field/dynamic-form-field';
+import { Form } from "@/components/forms/form";
+import { useEditSubtaskFormConfig } from "@/features/subtasks/components/forms/edit-subtask/edit-subtask-form-config";
+import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 
 interface EditSubtaskFormProps {
   subtaskId: string;

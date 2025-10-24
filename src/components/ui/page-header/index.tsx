@@ -1,6 +1,5 @@
-
-import { PageHeaderTitle } from '@/components/ui/page-header/page-header-title';
-import { ReactNode } from 'react';
+import { PageHeaderTitle } from "@/components/ui/page-header/page-header-title";
+import { ReactNode } from "react";
 
 interface PageHeaderProps {
   children: ReactNode;
@@ -11,11 +10,7 @@ interface PageHeaderActionsProps {
 }
 
 function PageHeaderRoot({ children }: PageHeaderProps) {
-  return (
-    <div className="flex items-center justify-between">
-      {children}
-    </div>
-  );
+  return <div className="flex items-center justify-between">{children}</div>;
 }
 
 function PageHeaderActions({ children }: PageHeaderActionsProps) {

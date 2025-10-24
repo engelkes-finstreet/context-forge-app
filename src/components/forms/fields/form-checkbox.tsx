@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Checkbox } from '@/components/ui/checkbox';
+import * as React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { CheckboxFieldConfig } from '@/components/forms/dynamic-form-field/types';
+} from "@/components/ui/form";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { CheckboxFieldConfig } from "@/components/forms/dynamic-form-field/types";
 
 interface FormCheckboxProps<
   TFieldValues extends FieldValues = FieldValues,

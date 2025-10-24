@@ -10,12 +10,24 @@ Services use static methods for standard CRUD operations:
 
 ```typescript
 export class EntityService {
-  static async getAll() { /* ... */ }
-  static async getById(id: string) { /* ... */ }
-  static async create(data: CreateInput) { /* ... */ }
-  static async update(id: string, data: UpdateInput) { /* ... */ }
-  static async delete(id: string) { /* ... */ }
-  static async entityExists(id: string): Promise<boolean> { /* ... */ }
+  static async getAll() {
+    /* ... */
+  }
+  static async getById(id: string) {
+    /* ... */
+  }
+  static async create(data: CreateInput) {
+    /* ... */
+  }
+  static async update(id: string, data: UpdateInput) {
+    /* ... */
+  }
+  static async delete(id: string) {
+    /* ... */
+  }
+  static async entityExists(id: string): Promise<boolean> {
+    /* ... */
+  }
 }
 ```
 
@@ -24,6 +36,7 @@ export class EntityService {
 ### Static Methods
 
 No need to instantiate service classes - call methods directly:
+
 ```typescript
 const project = await ProjectService.getById(id);
 ```

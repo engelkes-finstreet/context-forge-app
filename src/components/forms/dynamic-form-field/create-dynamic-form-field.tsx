@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
 import {
   BaseField,
   FormFieldConfig,
-} from '@/components/forms/dynamic-form-field/types';
-import { FormInput } from '@/components/forms/fields/form-input';
-import { FormPasswordInput } from '@/components/forms/fields/form-password-input';
-import { FormTextarea } from '@/components/forms/fields/form-textarea';
-import { FormSelect } from '@/components/forms/fields/form-select';
-import { FormCheckbox } from '@/components/forms/fields/form-checkbox';
-import { FormDatePicker } from '@/components/forms/fields/form-date-picker';
-import { FormDateRangePicker } from '@/components/forms/fields/form-date-range-picker';
-import { useFormConfig } from '@/components/forms/form';
-import { getFormFieldConfig } from '@/components/forms/utils/get-form-field-config';
-import React from 'react';
+} from "@/components/forms/dynamic-form-field/types";
+import { FormInput } from "@/components/forms/fields/form-input";
+import { FormPasswordInput } from "@/components/forms/fields/form-password-input";
+import { FormTextarea } from "@/components/forms/fields/form-textarea";
+import { FormSelect } from "@/components/forms/fields/form-select";
+import { FormCheckbox } from "@/components/forms/fields/form-checkbox";
+import { FormDatePicker } from "@/components/forms/fields/form-date-picker";
+import { FormDateRangePicker } from "@/components/forms/fields/form-date-range-picker";
+import { useFormConfig } from "@/components/forms/form";
+import { getFormFieldConfig } from "@/components/forms/utils/get-form-field-config";
+import React from "react";
 
-import { useWatch } from 'react-hook-form';
-import { FormSwaggerEndpointSelector } from '@/components/forms/fields';
+import { useWatch } from "react-hook-form";
+import { FormSwaggerEndpointSelector } from "@/components/forms/fields";
 
 type FieldComponentProps = {
   name: string;
@@ -43,7 +43,7 @@ const defaultComponents: Partial<
 
 // Factory function to create DynamicFormField with custom components
 export const createDynamicFormField = (
-  customComponents: CustomComponents = {}
+  customComponents: CustomComponents = {},
 ) => {
   const components = { ...defaultComponents, ...customComponents } as Record<
     string,
@@ -62,7 +62,7 @@ export const createDynamicFormField = (
       fieldConfig || getFormFieldConfig(fieldName, formConfig.fields);
     const formValues = useWatch();
 
-    if (!('type' in config)) {
+    if (!("type" in config)) {
       throw new Error(`Field ${fieldName} is not a FormFieldConfig`);
     }
 
@@ -73,7 +73,7 @@ export const createDynamicFormField = (
       throw new Error(`Unknown field type: ${formFieldConfig.type}`);
     }
 
-    if (formFieldConfig.type !== 'hidden') {
+    if (formFieldConfig.type !== "hidden") {
       if (formFieldConfig.renderCondition) {
         if (!formFieldConfig.renderCondition(formValues)) {
           return null;

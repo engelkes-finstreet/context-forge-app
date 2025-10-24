@@ -99,7 +99,7 @@ export class TaskService {
       db.task.update({
         where: { id: taskId },
         data: { order: index },
-      })
+      }),
     );
 
     await db.$transaction(updates);

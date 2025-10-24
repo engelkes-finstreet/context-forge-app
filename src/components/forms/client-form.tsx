@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useTransition } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-import { ClientFormConfig } from '@/components/forms/types';
-import { useFormIsPending } from '@/components/forms/form-state-store';
-import { FormConfigProvider } from '@/components/forms/form';
+import { useEffect, useState, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { ClientFormConfig } from "@/components/forms/types";
+import { useFormIsPending } from "@/components/forms/form-state-store";
+import { FormConfigProvider } from "@/components/forms/form";
 
 type Props = {
   formConfig: ClientFormConfig<any, any, any>;
@@ -19,7 +19,7 @@ export const ClientForm = ({ formConfig, children }: Props) => {
 
   const methods = useForm({
     resolver: zodResolver(formConfig.schema as any),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: formConfig.defaultValues,
   });
 
@@ -33,8 +33,8 @@ export const ClientForm = ({ formConfig, children }: Props) => {
       try {
         await formConfig.onSubmit(data);
       } catch (err: any) {
-        console.error('[ClientForm] Submit error:', err);
-        setError(err?.message || 'Something went wrong. Please try again.');
+        console.error("[ClientForm] Submit error:", err);
+        setError(err?.message || "Something went wrong. Please try again.");
       }
     });
   };
@@ -49,11 +49,7 @@ export const ClientForm = ({ formConfig, children }: Props) => {
             methods.handleSubmit(handleSubmit)(evt);
           }}
         >
-          {error && (
-            <div className="mb-8 text-destructive">
-              {error}
-            </div>
-          )}
+          {error && <div className="mb-8 text-destructive">{error}</div>}
           {children}
           {!formConfig.hideActions && (
             <div className="mt-8">

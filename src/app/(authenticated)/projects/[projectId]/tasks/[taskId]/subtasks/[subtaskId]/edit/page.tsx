@@ -1,15 +1,21 @@
-import { notFound } from 'next/navigation';
-import { TypedLink, routes } from '@/lib/routes';
-import { SubtaskService } from '@/lib/services/subtask-service';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageHeader } from '@/components/ui/page-header';
-import { PageContent } from '@/components/ui/page-content';
-import { EditSubtaskForm } from '@/features/subtasks/components/forms/edit-subtask/edit-subtask-form';
-import { ArrowLeft } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { getTypeConfig } from '@/features/subtasks/config/type-config';
+import { notFound } from "next/navigation";
+import { TypedLink, routes } from "@/lib/routes";
+import { SubtaskService } from "@/lib/services/subtask-service";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
+import { EditSubtaskForm } from "@/features/subtasks/components/forms/edit-subtask/edit-subtask-form";
+import { ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { getTypeConfig } from "@/features/subtasks/config/type-config";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -19,11 +25,17 @@ interface EditSubtaskPageProps {
   }>;
 }
 
-export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) {
+export default async function EditSubtaskPage({
+  params,
+}: EditSubtaskPageProps) {
   const { projectId, taskId, subtaskId } = await params;
   const subtask = await SubtaskService.getSubtaskById(subtaskId);
 
-  if (!subtask || subtask.taskId !== taskId || subtask.task.projectId !== projectId) {
+  if (
+    !subtask ||
+    subtask.taskId !== taskId ||
+    subtask.task.projectId !== projectId
+  ) {
     notFound();
   }
 
@@ -31,7 +43,11 @@ export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) 
 
   return (
     <>
-      <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }} data-transition-ignore>
+      <TypedLink
+        route={routes.projects.tasks.detail}
+        params={{ projectId, taskId }}
+        data-transition-ignore
+      >
         <Button variant="ghost" size="sm" className="mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to {subtask.task.name}
@@ -57,35 +73,35 @@ export default async function EditSubtaskPage({ params }: EditSubtaskPageProps) 
 
       <PageContent>
         {subtask.task.sharedContext && (
-        <Alert>
-          <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-          <AlertDescription className="prose prose-sm max-w-none mt-2">
-            <pre className="whitespace-pre-wrap text-sm">
-              {subtask.task.sharedContext}
-            </pre>
-          </AlertDescription>
-        </Alert>
-      )}
+          <Alert>
+            <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
+            <AlertDescription className="prose prose-sm max-w-none mt-2">
+              <pre className="whitespace-pre-wrap text-sm">
+                {subtask.task.sharedContext}
+              </pre>
+            </AlertDescription>
+          </Alert>
+        )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Subtask Details</CardTitle>
-          <CardDescription>
-            Update the subtask name and content (supports Markdown)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <EditSubtaskForm
-            subtaskId={subtaskId}
-            taskId={taskId}
-            projectId={projectId}
-            defaultValues={{
-              name: subtask.name,
-              content: subtask.content,
-            }}
-          />
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Subtask Details</CardTitle>
+            <CardDescription>
+              Update the subtask name and content (supports Markdown)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <EditSubtaskForm
+              subtaskId={subtaskId}
+              taskId={taskId}
+              projectId={projectId}
+              defaultValues={{
+                name: subtask.name,
+                content: subtask.content,
+              }}
+            />
+          </CardContent>
+        </Card>
       </PageContent>
     </>
   );

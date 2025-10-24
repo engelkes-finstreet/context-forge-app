@@ -7,14 +7,16 @@ Server actions handle form submissions and mutations in Context Forge using Next
 ## Action Structure
 
 Server actions follow a consistent pattern:
+
 ```typescript
 export async function createEntityAction(
   state: EntityFormState,
-  data: CreateEntityInput
-): Promise<EntityFormState>
+  data: CreateEntityInput,
+): Promise<EntityFormState>;
 ```
 
 **Parameters:**
+
 - `state` - Previous form state (for optimistic updates)
 - `data` - Form data (validated by Zod)
 
@@ -34,6 +36,7 @@ export type EntityFormState = {
 ### Revalidation
 
 Use `revalidatePath()` to update cached data after mutations:
+
 - Revalidate the list page (e.g., `/projects`)
 - Revalidate the detail page (e.g., `/projects/[id]`)
 - Revalidate parent pages when appropriate
@@ -54,6 +57,7 @@ Use `redirect()` to navigate after successful operations.
 ## Validation
 
 Input validation happens at two levels:
+
 1. **Client-side**: Form validates with Zod schema
 2. **Server-side**: Action can re-validate if needed
 

@@ -49,12 +49,14 @@ src/
 Contains all application pages and API routes using Next.js 15 App Router conventions.
 
 **Subdirectories:**
+
 - `(authenticated)/` - Protected routes requiring authentication
 - `api/` - API endpoints (MCP server)
 
 ### `/features` - Feature-based Components
 
 Organized by feature domain (projects, tasks, subtasks). Each feature contains:
+
 - Form components
 - Display components
 - Feature-specific utilities
@@ -62,6 +64,7 @@ Organized by feature domain (projects, tasks, subtasks). Each feature contains:
 ### `/lib` - Shared Libraries
 
 Core application logic and utilities:
+
 - **actions/** - Server actions for form handling
 - **services/** - Business logic layer
 - **validations/** - Zod schemas for input validation
