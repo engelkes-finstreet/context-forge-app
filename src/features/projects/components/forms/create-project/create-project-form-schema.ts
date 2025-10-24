@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { customFieldDefinitionSchema } from "@/lib/validations/custom-fields";
 
 /**
  * Create Project Form Schema
@@ -14,6 +15,11 @@ export const createProjectSchema = z.object({
   description: z.string().optional(),
   githubRepo: z.string().optional(),
   swaggerPath: z.string().optional(),
+  customFieldDefinitions: z
+    .object({
+      fields: z.array(customFieldDefinitionSchema),
+    })
+    .optional(),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;

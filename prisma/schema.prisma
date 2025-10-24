@@ -80,15 +80,16 @@ model Verification {
 // Context Forge Models
 
 model Project {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  githubRepo  String?
-  swaggerPath String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                     String   @id @default(cuid())
+  name                   String
+  description            String?
+  githubRepo             String?
+  swaggerPath            String?
+  customFieldDefinitions Json?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
-  tasks       Task[]
+  tasks                  Task[]
 
   @@map("projects")
 }

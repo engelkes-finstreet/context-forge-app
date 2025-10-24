@@ -31,11 +31,16 @@ export async function createGenericSubtaskAction(
   let task;
 
   try {
+    // Extract customFields and remove from main data
+    const { customFields, ...subtaskData } = formData;
+
     // Transform form input to database input
     const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
-      ...formData,
+      ...subtaskData,
       type: SubtaskType.GENERIC,
-      metadata: {}, // Generic type has no metadata
+      metadata: {
+        customFields: customFields || {}, // Store custom fields in metadata
+      },
     };
 
     subtask = await SubtaskService.createSubtask(subtaskInput);

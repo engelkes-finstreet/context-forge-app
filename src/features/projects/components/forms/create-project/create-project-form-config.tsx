@@ -27,6 +27,9 @@ export function useCreateProjectFormConfig(): FormConfig<
     description: "",
     githubRepo: "",
     swaggerPath: "",
+    customFieldDefinitions: {
+      fields: [],
+    },
   };
 
   const fields: FormFieldsType<CreateProjectInput> = {

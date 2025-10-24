@@ -4,10 +4,14 @@ import { Form } from "@/components/forms/form";
 import { useCreateGenericSubtaskFormConfig } from "@/features/subtasks/components/forms/generic-subtask/create-subtask-form-config";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
+import { CustomFieldDefinition } from "@/lib/types/custom-fields";
+import { DynamicCustomFields } from "@/components/forms/custom-fields";
+import { Separator } from "@/components/ui/separator";
 
 interface CreateGenericSubtaskFormProps {
   taskId: string;
   endpoints: SwaggerEndpoint[];
+  customFieldDefinitions?: CustomFieldDefinition[];
 }
 
 /**
@@ -19,6 +23,7 @@ interface CreateGenericSubtaskFormProps {
 export function CreateGenericSubtaskForm({
   taskId,
   endpoints,
+  customFieldDefinitions = [],
 }: CreateGenericSubtaskFormProps) {
   const formConfig = useCreateGenericSubtaskFormConfig(taskId, endpoints);
   const { fieldNames } = formConfig;
@@ -30,6 +35,14 @@ export function CreateGenericSubtaskForm({
         <DynamicFormField fieldName={fieldNames.name} />
         <DynamicFormField fieldName={fieldNames.content} />
         <DynamicFormField fieldName={fieldNames.endpoint} />
+
+        {/* Custom fields from project */}
+        {customFieldDefinitions.length > 0 && (
+          <>
+            <Separator />
+            <DynamicCustomFields fieldDefinitions={customFieldDefinitions} />
+          </>
+        )}
       </div>
     </Form>
   );

@@ -33,6 +33,7 @@ export function useCreateGenericSubtaskFormConfig(
     name: "",
     content: "",
     endpoint: undefined,
+    customFields: {},
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {

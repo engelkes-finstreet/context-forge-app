@@ -8,7 +8,7 @@ import { z } from "zod";
  *
  * The server action will transform this into CreateSubtaskInput by adding:
  * - type: SubtaskType.GENERIC
- * - metadata: null
+ * - metadata: { customFields: {...} }
  */
 export const createGenericSubtaskFormSchema = z.object({
   taskId: z.string().cuid("Invalid task ID"),
@@ -18,6 +18,7 @@ export const createGenericSubtaskFormSchema = z.object({
     .max(200, "Subtask name must be less than 200 characters"),
   endpoint: z.string().min(1, "Endpoint is required"),
   content: z.string().min(1, "Content is required"),
+  customFields: z.record(z.string()).optional(),
 });
 
 /**
