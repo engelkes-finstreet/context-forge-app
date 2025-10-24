@@ -11,6 +11,7 @@ context-forge://project/{projectId}/task/{taskId}/subtask/{subtaskId}
 ```
 
 **Examples:**
+
 - Task: `context-forge://project/cm123/task/cm456`
 - Subtask: `context-forge://project/cm123/task/cm456/subtask/cm789`
 
@@ -21,11 +22,13 @@ context-forge://project/{projectId}/task/{taskId}/subtask/{subtaskId}
 Discover all available resources (tasks and subtasks).
 
 **Endpoint:**
+
 ```
 GET /api/mcp/list-resources
 ```
 
 **Response:**
+
 ```json
 {
   "resources": [
@@ -53,12 +56,14 @@ Claude Code can discover all available contexts across all projects.
 Read the markdown content of a task or subtask.
 
 **Endpoint:**
+
 ```
 POST /api/mcp/read-resource
 Content-Type: application/json
 ```
 
 **Request:**
+
 ```json
 {
   "uri": "context-forge://project/{id}/task/{id}/subtask/{id}"
@@ -66,6 +71,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "contents": [
@@ -79,6 +85,7 @@ Content-Type: application/json
 ```
 
 **Markdown Format for Subtasks:**
+
 ```markdown
 # {Subtask Name}
 
@@ -92,6 +99,7 @@ Content-Type: application/json
 ```
 
 **Markdown Format for Tasks:**
+
 ```markdown
 # {Task Name}
 
@@ -105,12 +113,14 @@ Content-Type: application/json
 Update task shared context or subtask content.
 
 **Endpoint:**
+
 ```
 POST /api/mcp/update-resource
 Content-Type: application/json
 ```
 
 **Request:**
+
 ```json
 {
   "uri": "context-forge://project/{id}/task/{id}/subtask/{id}",
@@ -119,6 +129,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -127,6 +138,7 @@ Content-Type: application/json
 ```
 
 **What gets updated:**
+
 - **For tasks**: Updates the `sharedContext` field
 - **For subtasks**: Updates the `content` field
 
@@ -180,25 +192,23 @@ export function parseResourceUri(uri: string): {
   projectId: string;
   taskId: string;
   subtaskId?: string;
-} | null
+} | null;
 
 export function buildResourceUri(
   projectId: string,
   taskId: string,
-  subtaskId?: string
-): string
+  subtaskId?: string,
+): string;
 
-export function formatTaskAsMarkdown(task: Task): string
+export function formatTaskAsMarkdown(task: Task): string;
 
-export function formatSubtaskAsMarkdown(
-  subtask: Subtask,
-  task: Task
-): string
+export function formatSubtaskAsMarkdown(subtask: Subtask, task: Task): string;
 ```
 
 ### API Routes
 
 **Files:**
+
 - `src/app/api/mcp/list-resources/route.ts`
 - `src/app/api/mcp/read-resource/route.ts`
 - `src/app/api/mcp/update-resource/route.ts`
@@ -208,7 +218,7 @@ export function formatSubtaskAsMarkdown(
 ### List All Resources
 
 ```typescript
-const response = await fetch('/api/mcp/list-resources');
+const response = await fetch("/api/mcp/list-resources");
 const { resources } = await response.json();
 
 console.log(resources);
@@ -226,12 +236,12 @@ console.log(resources);
 ### Read a Subtask
 
 ```typescript
-const response = await fetch('/api/mcp/read-resource', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+const response = await fetch("/api/mcp/read-resource", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    uri: 'context-forge://project/cm1/task/cm2/subtask/cm3'
-  })
+    uri: "context-forge://project/cm1/task/cm2/subtask/cm3",
+  }),
 });
 
 const { contents } = await response.json();
@@ -248,13 +258,13 @@ console.log(contents[0].text);
 ### Update a Task
 
 ```typescript
-const response = await fetch('/api/mcp/update-resource', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+const response = await fetch("/api/mcp/update-resource", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    uri: 'context-forge://project/cm1/task/cm2',
-    text: '# Updated Task\n\n## Shared Context\n\nNew context...'
-  })
+    uri: "context-forge://project/cm1/task/cm2",
+    text: "# Updated Task\n\n## Shared Context\n\nNew context...",
+  }),
 });
 
 const result = await response.json();
@@ -267,7 +277,7 @@ console.log(result.message);
 The MCP server parses resource URIs to extract IDs:
 
 ```typescript
-const uri = 'context-forge://project/cm1/task/cm2/subtask/cm3';
+const uri = "context-forge://project/cm1/task/cm2/subtask/cm3";
 
 const parsed = parseResourceUri(uri);
 // {
@@ -341,6 +351,7 @@ const markdown = formatSubtaskAsMarkdown(subtask, task);
 ### Authentication
 
 Currently, the MCP server is unauthenticated. Consider adding:
+
 - API key authentication
 - Token-based authentication
 - IP whitelisting
@@ -348,6 +359,7 @@ Currently, the MCP server is unauthenticated. Consider adding:
 ### Rate Limiting
 
 Implement rate limiting to prevent abuse:
+
 - Per-IP limits
 - Per-API key limits
 - Global limits
@@ -355,6 +367,7 @@ Implement rate limiting to prevent abuse:
 ### Validation
 
 All inputs are validated:
+
 - URI format validation
 - Content validation
 - ID validation (CUID format)
@@ -380,6 +393,7 @@ Configure Claude Code to use Context Forge MCP server:
 ### Usage
 
 Claude Code can:
+
 1. **List resources** to discover available contexts
 2. **Read resources** to access task/subtask content
 3. **Update resources** to modify content during work

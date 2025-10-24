@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   FormControl,
   FormDescription,
@@ -8,11 +8,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { SwaggerEndpointSelector } from '@/components/swagger/swagger-endpoint-selector';
-import type { SwaggerEndpoint } from '@/lib/services/swagger-service';
-import { SwaggerEndpointSelectorFieldConfig } from '@/components/forms/dynamic-form-field/types';
+} from "@/components/ui/form";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { SwaggerEndpointSelector } from "@/components/swagger/swagger-endpoint-selector";
+import type { SwaggerEndpoint } from "@/lib/services/swagger-service";
+import { SwaggerEndpointSelectorFieldConfig } from "@/components/forms/dynamic-form-field/types";
 
 /**
  * Encodes a SwaggerEndpoint to a string for form storage
@@ -27,11 +27,11 @@ export function encodeEndpoint(endpoint: SwaggerEndpoint): string {
  */
 export function decodeEndpoint(
   value: string,
-  endpoints: SwaggerEndpoint[]
+  endpoints: SwaggerEndpoint[],
 ): SwaggerEndpoint | null {
   if (!value) return null;
 
-  const [method, path] = value.split(':', 2);
+  const [method, path] = value.split(":", 2);
   return endpoints.find((e) => e.method === method && e.path === path) || null;
 }
 
@@ -91,7 +91,7 @@ export function FormSwaggerEndpointSelector<
                 value={selectedEndpoint}
                 onValueChange={(endpoint) => {
                   // Encode the endpoint to a string for form storage
-                  field.onChange(endpoint ? encodeEndpoint(endpoint) : '');
+                  field.onChange(endpoint ? encodeEndpoint(endpoint) : "");
                 }}
                 placeholder={fieldConfig.placeholder}
                 emptyText={fieldConfig.emptyText}

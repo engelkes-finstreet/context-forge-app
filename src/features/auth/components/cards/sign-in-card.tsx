@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Card,
@@ -7,10 +7,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { useSignInFormConfig } from '@/features/auth/components/forms/sign-in/sign-in-form-config';
-import { useFormIsPending } from '@/components/forms/form-state-store';
-import { SignInForm } from '@/features/auth/components/forms/sign-in/sign-in-form';
+} from "@/components/ui/card";
+import { useSignInFormConfig } from "@/features/auth/components/forms/sign-in/sign-in-form-config";
+import { useFormIsPending } from "@/components/forms/form-state-store";
+import { SignInForm } from "@/features/auth/components/forms/sign-in/sign-in-form";
 
 export function SignInCard() {
   const formConfig = useSignInFormConfig();

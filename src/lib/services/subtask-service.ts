@@ -44,7 +44,8 @@ export class SubtaskService {
       select: { order: true },
     });
 
-    const order = data.order ?? (maxOrderSubtask ? maxOrderSubtask.order + 1 : 0);
+    const order =
+      data.order ?? (maxOrderSubtask ? maxOrderSubtask.order + 1 : 0);
 
     return db.subtask.create({
       data: {
@@ -57,7 +58,10 @@ export class SubtaskService {
   /**
    * Update an existing subtask
    */
-  static async updateSubtask(id: string, data: Prisma.SubtaskUncheckedUpdateInput) {
+  static async updateSubtask(
+    id: string,
+    data: Prisma.SubtaskUncheckedUpdateInput,
+  ) {
     return db.subtask.update({
       where: { id },
       data,
@@ -82,7 +86,7 @@ export class SubtaskService {
       db.subtask.update({
         where: { id: subtaskId },
         data: { order: index },
-      })
+      }),
     );
 
     await db.$transaction(updates);

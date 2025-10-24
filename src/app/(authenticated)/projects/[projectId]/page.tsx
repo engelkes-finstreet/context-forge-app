@@ -1,18 +1,21 @@
-import { notFound } from 'next/navigation';
-import { TypedLink, routes } from '@/lib/routes';
-import { ProjectService } from '@/lib/services/project-service';
-import { Button } from '@/components/ui/button';
+import { notFound } from "next/navigation";
+import { TypedLink, routes } from "@/lib/routes";
+import { ProjectService } from "@/lib/services/project-service";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { PageHeader } from '@/components/ui/page-header';
-import { PageContent } from '@/components/ui/page-content';
-import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
-import { PlusCircle, ArrowLeft, Pencil } from 'lucide-react';
+} from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
+import {
+  StaggeredContainer,
+  StaggeredItem,
+} from "@/components/ui/staggered-container";
+import { PlusCircle, ArrowLeft, Pencil } from "lucide-react";
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -20,7 +23,9 @@ interface ProjectDetailPageProps {
   }>;
 }
 
-export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+export default async function ProjectDetailPage({
+  params,
+}: ProjectDetailPageProps) {
   const { projectId } = await params;
   const project = await ProjectService.getProjectById(projectId);
 
@@ -30,7 +35,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   return (
     <>
-      <TypedLink route={routes.projects.list} params={{}} data-transition-ignore>
+      <TypedLink
+        route={routes.projects.list}
+        params={{}}
+        data-transition-ignore
+      >
         <Button variant="ghost" size="sm" className="mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
@@ -66,7 +75,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-16">
               <p className="text-muted-foreground mb-4">No tasks yet</p>
-              <TypedLink route={routes.projects.tasks.new} params={{ projectId }}>
+              <TypedLink
+                route={routes.projects.tasks.new}
+                params={{ projectId }}
+              >
                 <Button>Create Your First Task</Button>
               </TypedLink>
             </CardContent>
@@ -75,13 +87,16 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <StaggeredContainer className="grid gap-4">
             {project.tasks.map((task) => (
               <StaggeredItem key={task.id}>
-                <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId: task.id }}>
+                <TypedLink
+                  route={routes.projects.tasks.detail}
+                  params={{ projectId, taskId: task.id }}
+                >
                   <Card interactive={true}>
                     <CardHeader>
                       <CardTitle>{task.name}</CardTitle>
                       <CardDescription>
-                        {task._count.subtasks}{' '}
-                        {task._count.subtasks === 1 ? 'subtask' : 'subtasks'}
+                        {task._count.subtasks}{" "}
+                        {task._count.subtasks === 1 ? "subtask" : "subtasks"}
                       </CardDescription>
                     </CardHeader>
                   </Card>

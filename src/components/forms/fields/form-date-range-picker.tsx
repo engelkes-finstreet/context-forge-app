@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Calendar as CalendarIcon } from 'lucide-react';
-import { DateRange } from 'react-day-picker';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import * as React from "react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   FormControl,
   FormDescription,
@@ -13,15 +13,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { DateRangePickerFieldConfig } from '@/components/forms/dynamic-form-field/types';
-import { format } from 'date-fns';
+} from "@/components/ui/popover";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { DateRangePickerFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { format } from "date-fns";
 
 interface FormDateRangePickerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -49,19 +49,19 @@ export function FormDateRangePicker<
                 <Button
                   variant="outline"
                   className={cn(
-                    'w-full justify-start text-left font-normal',
-                    !field.value && 'text-muted-foreground'
+                    "w-full justify-start text-left font-normal",
+                    !field.value && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {field.value?.from ? (
                     field.value.to ? (
                       <>
-                        {format(field.value.from, 'LLL dd, y')} -{' '}
-                        {format(field.value.to, 'LLL dd, y')}
+                        {format(field.value.from, "LLL dd, y")} -{" "}
+                        {format(field.value.to, "LLL dd, y")}
                       </>
                     ) : (
-                      format(field.value.from, 'LLL dd, y')
+                      format(field.value.from, "LLL dd, y")
                     )
                   ) : (
                     <span>Pick a date range</span>

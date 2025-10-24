@@ -8,7 +8,10 @@ import { z } from "zod";
  */
 export const createTaskSchema = z.object({
   projectId: z.string().cuid("Invalid project ID"),
-  name: z.string().min(1, "Task name is required").max(200, "Task name must be less than 200 characters"),
+  name: z
+    .string()
+    .min(1, "Task name is required")
+    .max(200, "Task name must be less than 200 characters"),
   sharedContext: z.string().min(1, "Shared context is required"),
   order: z.number().int().min(0).default(0).optional(),
 });

@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { typedRedirect, routes } from '@/lib/routes';
+import { typedRedirect, routes } from "@/lib/routes";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import type { CreateGenericSubtaskFormInput } from "@/features/subtasks/components/forms/generic-subtask/create-generic-subtask-form-schema";
 import { Prisma, SubtaskType } from "@prisma/client";
@@ -25,7 +25,7 @@ export type SubtaskFormState = {
  */
 export async function createGenericSubtaskAction(
   state: SubtaskFormState,
-  formData: CreateGenericSubtaskFormInput
+  formData: CreateGenericSubtaskFormInput,
 ): Promise<SubtaskFormState> {
   let subtask;
   let task;
@@ -45,14 +45,18 @@ export async function createGenericSubtaskAction(
   } catch (error) {
     console.error("Failed to create subtask:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to create subtask",
+      error:
+        error instanceof Error ? error.message : "Failed to create subtask",
       message: null,
     };
   }
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-    typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
+    typedRedirect(routes.projects.tasks.detail, {
+      projectId: task.projectId,
+      taskId: task.id,
+    });
   }
 
   return {
@@ -66,7 +70,7 @@ export async function createGenericSubtaskAction(
  */
 export async function createSubtaskAction(
   state: SubtaskFormState,
-  data: Prisma.SubtaskUncheckedCreateInput
+  data: Prisma.SubtaskUncheckedCreateInput,
 ): Promise<SubtaskFormState> {
   let subtask;
   let task;
@@ -79,14 +83,18 @@ export async function createSubtaskAction(
   } catch (error) {
     console.error("Failed to create subtask:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to create subtask",
+      error:
+        error instanceof Error ? error.message : "Failed to create subtask",
       message: null,
     };
   }
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);
-    typedRedirect(routes.projects.tasks.detail, { projectId: task.projectId, taskId: task.id });
+    typedRedirect(routes.projects.tasks.detail, {
+      projectId: task.projectId,
+      taskId: task.id,
+    });
   }
 
   return {
@@ -97,7 +105,11 @@ export async function createSubtaskAction(
 
 export async function updateSubtaskAction(
   state: SubtaskFormState,
-  data: Prisma.SubtaskUncheckedUpdateInput & { id: string; taskId: string; projectId: string }
+  data: Prisma.SubtaskUncheckedUpdateInput & {
+    id: string;
+    taskId: string;
+    projectId: string;
+  },
 ): Promise<SubtaskFormState> {
   try {
     const { id, taskId, projectId, ...updateData } = data;
@@ -112,13 +124,16 @@ export async function updateSubtaskAction(
   } catch (error) {
     console.error("Failed to update subtask:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to update subtask",
+      error:
+        error instanceof Error ? error.message : "Failed to update subtask",
       message: null,
     };
   }
 }
 
-export async function deleteSubtask(id: string): Promise<{ error: string | null }> {
+export async function deleteSubtask(
+  id: string,
+): Promise<{ error: string | null }> {
   let projectId: string;
   let taskId: string;
 
@@ -136,7 +151,8 @@ export async function deleteSubtask(id: string): Promise<{ error: string | null 
   } catch (error) {
     console.error("Failed to delete subtask:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to delete subtask",
+      error:
+        error instanceof Error ? error.message : "Failed to delete subtask",
     };
   }
 
@@ -146,7 +162,7 @@ export async function deleteSubtask(id: string): Promise<{ error: string | null 
 
 export async function reorderSubtasks(
   taskId: string,
-  subtaskIds: string[]
+  subtaskIds: string[],
 ): Promise<{ error: string | null }> {
   let projectId: string | undefined;
 
@@ -154,7 +170,9 @@ export async function reorderSubtasks(
     await SubtaskService.reorderSubtasks(taskId, subtaskIds);
 
     // Get task to find projectId for revalidation
-    const subtask = await SubtaskService.getSubtasksByTaskId(taskId).then((s) => s[0]);
+    const subtask = await SubtaskService.getSubtasksByTaskId(taskId).then(
+      (s) => s[0],
+    );
     if (subtask) {
       const fullSubtask = await SubtaskService.getSubtaskById(subtask.id);
       if (fullSubtask?.task) {
@@ -164,7 +182,8 @@ export async function reorderSubtasks(
   } catch (error) {
     console.error("Failed to reorder subtasks:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to reorder subtasks",
+      error:
+        error instanceof Error ? error.message : "Failed to reorder subtasks",
     };
   }
 

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Moon, Sun, Monitor, Check } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { Moon, Sun, Monitor, Check } from "lucide-react";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
@@ -28,15 +28,15 @@ export function ModeToggle() {
     );
   }
 
-  const currentTheme = theme || 'system';
+  const currentTheme = theme || "system";
 
   const getThemeIcon = () => {
     switch (currentTheme) {
-      case 'light':
+      case "light":
         return <Sun className="h-4 w-4" />;
-      case 'dark':
+      case "dark":
         return <Moon className="h-4 w-4" />;
-      case 'system':
+      case "system":
         return <Monitor className="h-4 w-4" />;
       default:
         return <Sun className="h-4 w-4" />;
@@ -45,14 +45,14 @@ export function ModeToggle() {
 
   const getThemeLabel = () => {
     switch (currentTheme) {
-      case 'light':
-        return 'Light';
-      case 'dark':
-        return 'Dark';
-      case 'system':
-        return 'System';
+      case "light":
+        return "Light";
+      case "dark":
+        return "Dark";
+      case "system":
+        return "System";
       default:
-        return 'Theme';
+        return "Theme";
     }
   };
 
@@ -66,20 +66,20 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun className="mr-2 h-4 w-4" />
           <span>Light</span>
-          {currentTheme === 'light' && <Check className="ml-auto h-4 w-4" />}
+          {currentTheme === "light" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Moon className="mr-2 h-4 w-4" />
           <span>Dark</span>
-          {currentTheme === 'dark' && <Check className="ml-auto h-4 w-4" />}
+          {currentTheme === "dark" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
           <Monitor className="mr-2 h-4 w-4" />
           <span>System</span>
-          {currentTheme === 'system' && <Check className="ml-auto h-4 w-4" />}
+          {currentTheme === "system" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

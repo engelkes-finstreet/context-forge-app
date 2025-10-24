@@ -1,11 +1,14 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { TypeCard } from './type-card';
-import { getEnabledTypes } from '@/features/subtasks/config/type-config';
-import { Button } from '@/components/ui/button';
-import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
-import { routes } from '@/lib/routes';
+import { useRouter } from "next/navigation";
+import { TypeCard } from "./type-card";
+import { getEnabledTypes } from "@/features/subtasks/config/type-config";
+import { Button } from "@/components/ui/button";
+import {
+  StaggeredContainer,
+  StaggeredItem,
+} from "@/components/ui/staggered-container";
+import { routes } from "@/lib/routes";
 
 interface TypeSelectorProps {
   projectId: string;
@@ -24,10 +27,11 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
 
   // Map subtask type route strings to route objects
   const routeMap = {
-    'generic': routes.projects.tasks.subtasks.newGeneric,
-    'inquiry-process': routes.projects.tasks.subtasks.newInquiryProcess,
-    'form': routes.projects.tasks.subtasks.newForm,
-    'modal': routes.projects.tasks.subtasks.newModal,
+    generic: routes.projects.tasks.subtasks.newGeneric,
+    "inquiry-process": routes.projects.tasks.subtasks.newInquiryProcess,
+    form: routes.projects.tasks.subtasks.newForm,
+    modal: routes.projects.tasks.subtasks.newModal,
+    request: routes.projects.tasks.subtasks.newRequest,
   } as const;
 
   const handleTypeSelect = (route: string) => {
@@ -44,7 +48,9 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2 text-gradient">Create New Subtask</h2>
+        <h2 className="text-2xl font-bold mb-2 text-gradient">
+          Create New Subtask
+        </h2>
         <p className="text-muted-foreground">
           Select the type of subtask you want to create
         </p>

@@ -1,12 +1,18 @@
-import { notFound } from 'next/navigation';
-import { TypedLink, routes } from '@/lib/routes';
-import { TaskService } from '@/lib/services/task-service';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageHeader } from '@/components/ui/page-header';
-import { PageContent } from '@/components/ui/page-content';
-import { EditTaskForm } from '@/features/tasks/components/forms/edit-task/edit-task-form';
-import { ArrowLeft } from 'lucide-react';
+import { notFound } from "next/navigation";
+import { TypedLink, routes } from "@/lib/routes";
+import { TaskService } from "@/lib/services/task-service";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
+import { EditTaskForm } from "@/features/tasks/components/forms/edit-task/edit-task-form";
+import { ArrowLeft } from "lucide-react";
 
 interface EditTaskPageProps {
   params: Promise<{
@@ -25,7 +31,11 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
 
   return (
     <>
-      <TypedLink route={routes.projects.tasks.detail} params={{ projectId, taskId }} data-transition-ignore>
+      <TypedLink
+        route={routes.projects.tasks.detail}
+        params={{ projectId, taskId }}
+        data-transition-ignore
+      >
         <Button variant="ghost" size="sm" className="mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to {task.name}
@@ -41,23 +51,23 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
 
       <PageContent>
         <Card>
-        <CardHeader>
-          <CardTitle>Task Details</CardTitle>
-          <CardDescription>
-            Update the task name and shared context (supports Markdown)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <EditTaskForm
-            taskId={taskId}
-            projectId={projectId}
-            defaultValues={{
-              name: task.name,
-              sharedContext: task.sharedContext,
-            }}
-          />
-        </CardContent>
-      </Card>
+          <CardHeader>
+            <CardTitle>Task Details</CardTitle>
+            <CardDescription>
+              Update the task name and shared context (supports Markdown)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <EditTaskForm
+              taskId={taskId}
+              projectId={projectId}
+              defaultValues={{
+                name: task.name,
+                sharedContext: task.sharedContext,
+              }}
+            />
+          </CardContent>
+        </Card>
       </PageContent>
     </>
   );

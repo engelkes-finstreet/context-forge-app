@@ -15,22 +15,26 @@
  * Converts patterns like '/projects/[projectId]/tasks/[taskId]'
  * into { projectId: string; taskId: string }
  */
-export type ExtractRouteParams<T extends string> =
-  string extends T
-    ? Record<string, string>
-    : T extends `${infer _Start}[${infer Param}]${infer Rest}`
+export type ExtractRouteParams<T extends string> = string extends T
+  ? Record<string, string>
+  : T extends `${infer _Start}[${infer Param}]${infer Rest}`
     ? { [K in Param | keyof ExtractRouteParams<Rest>]: string }
     : Record<string, never>;
 
 /**
  * Checks if a route pattern has any dynamic parameters
  */
-type HasParams<T extends string> = keyof ExtractRouteParams<T> extends never ? false : true;
+type HasParams<T extends string> = keyof ExtractRouteParams<T> extends never
+  ? false
+  : true;
 
 /**
  * Query parameters type - allows string, number, boolean, or undefined values
  */
-export type QueryParams = Record<string, string | number | boolean | string[] | undefined>;
+export type QueryParams = Record<
+  string,
+  string | number | boolean | string[] | undefined
+>;
 
 /**
  * Route definition with pattern and type-safe path builder
@@ -85,24 +89,21 @@ export function route<TPath extends string>(pattern: TPath): Route<TPath> {
       // Determine if first argument is params or query
       // If route has params, first arg is params, second is query
       // If route has no params, first arg is query
-      const hasParams = path.includes('[');
+      const hasParams = path.includes("[");
       const params = hasParams ? paramsOrQuery : undefined;
       const queryParams = hasParams ? query : paramsOrQuery;
 
       // Replace dynamic segments [param] with actual values
-      if (params && typeof params === 'object') {
+      if (params && typeof params === "object") {
         Object.entries(params).forEach(([key, value]) => {
           if (value !== undefined && value !== null) {
-            path = path.replace(
-              `[${key}]`,
-              encodeURIComponent(String(value))
-            );
+            path = path.replace(`[${key}]`, encodeURIComponent(String(value)));
           }
         });
       }
 
       // Add query parameters
-      if (queryParams && typeof queryParams === 'object') {
+      if (queryParams && typeof queryParams === "object") {
         const searchParams = new URLSearchParams();
 
         Object.entries(queryParams).forEach(([key, value]) => {
@@ -136,9 +137,8 @@ export function route<TPath extends string>(pattern: TPath): Route<TPath> {
  * const taskRoute = route('/projects/[projectId]/tasks/[taskId]');
  * type TaskParams = RouteParams<typeof taskRoute>; // { projectId: string; taskId: string }
  */
-export type RouteParams<T> = T extends Route<infer TPath>
-  ? ExtractRouteParams<TPath>
-  : never;
+export type RouteParams<T> =
+  T extends Route<infer TPath> ? ExtractRouteParams<TPath> : never;
 
 /**
  * Type helper to check if a route requires parameters
@@ -149,6 +149,5 @@ export type RouteParams<T> = T extends Route<infer TPath>
  * type HomeNeedsParams = RouteRequiresParams<typeof home>; // false
  * type ProjectNeedsParams = RouteRequiresParams<typeof project>; // true
  */
-export type RouteRequiresParams<T> = T extends Route<infer TPath>
-  ? HasParams<TPath>
-  : false;
+export type RouteRequiresParams<T> =
+  T extends Route<infer TPath> ? HasParams<TPath> : false;

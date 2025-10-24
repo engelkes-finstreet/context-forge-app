@@ -15,6 +15,7 @@ const projects = await db.project.findMany();
 ```
 
 **Why?**
+
 - Centralized business logic
 - Easier to test
 - Consistent error handling
@@ -119,8 +120,8 @@ export const createProjectSchema = z.object({
 
 // ❌ Bad - no validation or unclear messages
 export const createProjectSchema = z.object({
-  name: z.string().min(1),  // Generic error message
-  description: z.any(),     // No type safety
+  name: z.string().min(1), // Generic error message
+  description: z.any(), // No type safety
 });
 ```
 
@@ -130,11 +131,11 @@ Make errors user-friendly:
 
 ```typescript
 // ✅ Good - helpful error messages
-z.string().min(8, "Password must be at least 8 characters")
-z.string().email("Please enter a valid email address")
+z.string().min(8, "Password must be at least 8 characters");
+z.string().email("Please enter a valid email address");
 
 // ❌ Bad - generic or technical errors
-z.string().min(8)  // Shows: "String must contain at least 8 character(s)"
+z.string().min(8); // Shows: "String must contain at least 8 character(s)"
 ```
 
 ### 4. Show Loading States
@@ -225,11 +226,11 @@ Handle errors gracefully:
 // ✅ Good - catching errors
 try {
   const project = await ProjectService.create(data);
-  revalidatePath('/projects');
+  revalidatePath("/projects");
   redirect(`/projects/${project.id}`);
 } catch (error) {
   return {
-    error: error instanceof Error ? error.message : 'Failed to create project',
+    error: error instanceof Error ? error.message : "Failed to create project",
     message: null,
   };
 }
@@ -246,13 +247,13 @@ Avoid technical jargon:
 ```typescript
 // ✅ Good - user-friendly message
 return {
-  error: 'Project name must be unique',
+  error: "Project name must be unique",
   message: null,
 };
 
 // ❌ Bad - technical error
 return {
-  error: 'Unique constraint failed on field: name',
+  error: "Unique constraint failed on field: name",
   message: null,
 };
 ```
@@ -265,9 +266,9 @@ Log errors but show friendly messages to users:
 try {
   // ... operation
 } catch (error) {
-  console.error('Failed to create project:', error);
+  console.error("Failed to create project:", error);
   return {
-    error: 'Failed to create project. Please try again.',
+    error: "Failed to create project. Please try again.",
     message: null,
   };
 }
@@ -287,7 +288,7 @@ if (!project) {
 // ❌ Bad - custom error handling
 const project = await ProjectService.getById(id);
 if (!project) {
-  throw new Error('Project not found');
+  throw new Error("Project not found");
 }
 ```
 
@@ -300,7 +301,7 @@ Update cache after creating, updating, or deleting:
 ```typescript
 // ✅ Good - revalidating after creation
 const project = await ProjectService.create(data);
-revalidatePath('/projects');
+revalidatePath("/projects");
 revalidatePath(`/projects/${project.id}`);
 
 // ❌ Bad - no revalidation
@@ -315,8 +316,8 @@ Update parent pages when child data changes:
 ```typescript
 // ✅ Good - revalidating parent
 const task = await TaskService.create(data);
-revalidatePath(`/projects/${task.projectId}`);  // Parent project page
-revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);  // Task page
+revalidatePath(`/projects/${task.projectId}`); // Parent project page
+revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`); // Task page
 
 // ❌ Bad - only revalidating current page
 const task = await TaskService.create(data);
@@ -329,12 +330,12 @@ Revalidate specific paths for better performance:
 
 ```typescript
 // ✅ Good - specific paths
-revalidatePath('/projects');
+revalidatePath("/projects");
 revalidatePath(`/projects/${projectId}`);
 
 // ❌ Bad - wildcards or overly broad
-revalidatePath('/projects/*');
-revalidatePath('/');
+revalidatePath("/projects/*");
+revalidatePath("/");
 ```
 
 ## Code Organization
@@ -559,16 +560,16 @@ Don't expose database operations to client:
 
 ```typescript
 // ✅ Good - server action
-'use server';
+"use server";
 export async function deleteProject(id: string) {
   await ProjectService.delete(id);
 }
 
 // ❌ Bad - client-side deletion
-'use client';
+("use client");
 export function DeleteButton({ id }: { id: string }) {
   const handleDelete = () => {
-    db.project.delete({ where: { id } });  // Exposing DB to client
+    db.project.delete({ where: { id } }); // Exposing DB to client
   };
 }
 ```

@@ -23,6 +23,7 @@ Subtasks are individual work items within a task. Each subtask has access to its
 ## Subtask Types
 
 Subtasks support different types with specialized behavior:
+
 - **GENERIC**: Standard subtask with name and content (implemented)
 - **FORM**: Form-based subtask (planned)
 - **MODAL**: Modal dialog subtask (planned)

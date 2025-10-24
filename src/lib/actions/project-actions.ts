@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { typedRedirect, routes } from '@/lib/routes';
+import { typedRedirect, routes } from "@/lib/routes";
 import { ProjectService } from "@/lib/services/project-service";
 import { Prisma } from "@prisma/client";
 import { CreateProjectInput } from "@/features/projects/components/forms/create-project/create-project-form-schema";
@@ -14,7 +14,7 @@ export type ProjectFormState = {
 
 export async function createProjectAction(
   state: ProjectFormState,
-  formData: CreateProjectInput
+  formData: CreateProjectInput,
 ): Promise<ProjectFormState> {
   let project;
 
@@ -23,7 +23,8 @@ export async function createProjectAction(
   } catch (error) {
     console.error("Failed to create project:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to create project",
+      error:
+        error instanceof Error ? error.message : "Failed to create project",
       message: null,
     };
   }
@@ -34,7 +35,7 @@ export async function createProjectAction(
 
 export async function updateProjectAction(
   state: ProjectFormState,
-  formData: UpdateProjectInput & { id: string }
+  formData: UpdateProjectInput & { id: string },
 ): Promise<ProjectFormState> {
   try {
     const { id, ...updateData } = formData;
@@ -47,19 +48,23 @@ export async function updateProjectAction(
   } catch (error) {
     console.error("Failed to update project:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to update project",
+      error:
+        error instanceof Error ? error.message : "Failed to update project",
       message: null,
     };
   }
 }
 
-export async function deleteProject(id: string): Promise<{ error: string | null }> {
+export async function deleteProject(
+  id: string,
+): Promise<{ error: string | null }> {
   try {
     await ProjectService.deleteProject(id);
   } catch (error) {
     console.error("Failed to delete project:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to delete project",
+      error:
+        error instanceof Error ? error.message : "Failed to delete project",
     };
   }
 

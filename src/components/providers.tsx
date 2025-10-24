@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ThemeProvider } from 'next-themes';
-import { TransitionRouter } from 'next-transition-router';
-import { animate } from 'framer-motion';
+import { ThemeProvider } from "next-themes";
+import { TransitionRouter } from "next-transition-router";
+import { animate } from "framer-motion";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,9 +12,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         leave={async (next) => {
           // Exit animation: opacity 1→0, y 0→-10 (faster and less movement)
           await animate(
-            'main',
+            "main",
             { opacity: 0, y: -10 },
-            { duration: 0.1, ease: 'easeOut' }
+            { duration: 0.1, ease: "easeOut" },
           );
           next();
         }}
@@ -24,9 +24,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
           // Entry animation: opacity 0→1, y 10→0 (faster and less movement)
           await animate(
-            'main',
+            "main",
             { opacity: [0, 1], y: [10, 0] },
-            { duration: 0.1, ease: 'easeOut' }
+            { duration: 0.1, ease: "easeOut" },
           );
         }}
       >

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
   FormControl,
   FormDescription,
@@ -15,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { FieldPath, FieldValues } from 'react-hook-form';
-import { SelectFieldConfig } from '@/components/forms/dynamic-form-field/types';
+} from "@/components/ui/form";
+import { FieldPath, FieldValues } from "react-hook-form";
+import { SelectFieldConfig } from "@/components/forms/dynamic-form-field/types";
 
 interface FormSelectProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -41,7 +41,7 @@ export function FormSelect<
             <FormControl>
               <SelectTrigger>
                 <SelectValue
-                  placeholder={fieldConfig.placeholder || 'Select an option'}
+                  placeholder={fieldConfig.placeholder || "Select an option"}
                 />
               </SelectTrigger>
             </FormControl>

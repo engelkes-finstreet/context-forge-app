@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Card,
@@ -7,10 +7,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { useSignUpFormConfig } from '@/features/auth/components/forms/sign-up/sign-up-form-config';
-import { useFormIsPending } from '@/components/forms/form-state-store';
-import { SignUpForm } from '@/features/auth/components/forms/sign-up/sign-up-form';
+} from "@/components/ui/card";
+import { useSignUpFormConfig } from "@/features/auth/components/forms/sign-up/sign-up-form-config";
+import { useFormIsPending } from "@/components/forms/form-state-store";
+import { SignUpForm } from "@/features/auth/components/forms/sign-up/sign-up-form";
 
 export function SignUpCard() {
   const formConfig = useSignUpFormConfig();

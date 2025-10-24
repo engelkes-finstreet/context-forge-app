@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useSignUpFormConfig } from '@/features/auth/components/forms/sign-up/sign-up-form-config';
-import { DynamicFormField } from '@/components/forms/dynamic-form-field/dynamic-form-field';
-import { ClientForm } from '@/components/forms/client-form';
+import { useSignUpFormConfig } from "@/features/auth/components/forms/sign-up/sign-up-form-config";
+import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
+import { ClientForm } from "@/components/forms/client-form";
 
 export function SignUpForm() {
   const formConfig = useSignUpFormConfig();

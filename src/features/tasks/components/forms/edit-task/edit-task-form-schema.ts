@@ -7,7 +7,11 @@ import { z } from "zod";
  * Used by the edit task form for runtime validation.
  */
 export const updateTaskSchema = z.object({
-  name: z.string().min(1, "Task name is required").max(200, "Task name must be less than 200 characters").optional(),
+  name: z
+    .string()
+    .min(1, "Task name is required")
+    .max(200, "Task name must be less than 200 characters")
+    .optional(),
   sharedContext: z.string().optional(),
   order: z.number().int().min(0).optional(),
 });

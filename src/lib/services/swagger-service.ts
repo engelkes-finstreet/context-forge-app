@@ -26,12 +26,14 @@ export class SwaggerService {
   static async fetchSwaggerFromGitHub(
     githubRepo: string,
     swaggerPath: string,
-    branch: string = "main"
+    branch: string = "main",
   ): Promise<string> {
     const [owner, repo] = githubRepo.split("/");
 
     if (!owner || !repo) {
-      throw new Error("Invalid GitHub repository format. Expected 'owner/repo'");
+      throw new Error(
+        "Invalid GitHub repository format. Expected 'owner/repo'",
+      );
     }
 
     try {
@@ -51,7 +53,9 @@ export class SwaggerService {
       throw new Error("File content not found in GitHub response");
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to fetch swagger file from GitHub: ${error.message}`);
+        throw new Error(
+          `Failed to fetch swagger file from GitHub: ${error.message}`,
+        );
       }
       throw error;
     }
@@ -61,7 +65,9 @@ export class SwaggerService {
    * Parse swagger/OpenAPI file and extract all endpoints
    * @param swaggerContent - Raw swagger/OpenAPI content (YAML or JSON)
    */
-  static async parseSwaggerEndpoints(swaggerContent: string): Promise<SwaggerEndpoint[]> {
+  static async parseSwaggerEndpoints(
+    swaggerContent: string,
+  ): Promise<SwaggerEndpoint[]> {
     try {
       // First, parse the YAML/JSON string into an object
       let apiObject: any;
@@ -85,7 +91,15 @@ export class SwaggerService {
           if (!pathItem) continue;
 
           // Iterate through HTTP methods
-          const methods = ["get", "post", "put", "patch", "delete", "options", "head"] as const;
+          const methods = [
+            "get",
+            "post",
+            "put",
+            "patch",
+            "delete",
+            "options",
+            "head",
+          ] as const;
 
           for (const method of methods) {
             const operation = pathItem[method] as
@@ -125,12 +139,12 @@ export class SwaggerService {
   static async getEndpointsFromGitHub(
     githubRepo: string,
     swaggerPath: string,
-    branch: string = "main"
+    branch: string = "main",
   ): Promise<SwaggerEndpoint[]> {
     const swaggerContent = await this.fetchSwaggerFromGitHub(
       githubRepo,
       swaggerPath,
-      branch
+      branch,
     );
 
     return this.parseSwaggerEndpoints(swaggerContent);
@@ -142,9 +156,7 @@ export class SwaggerService {
   static formatEndpoints(endpoints: SwaggerEndpoint[]): string {
     return endpoints
       .map((endpoint) => {
-        const parts = [
-          `${endpoint.method.padEnd(7)} ${endpoint.path}`,
-        ];
+        const parts = [`${endpoint.method.padEnd(7)} ${endpoint.path}`];
 
         if (endpoint.summary) {
           parts.push(`  Summary: ${endpoint.summary}`);
@@ -162,7 +174,9 @@ export class SwaggerService {
   /**
    * Group endpoints by tags for easier navigation
    */
-  static groupEndpointsByTag(endpoints: SwaggerEndpoint[]): Record<string, SwaggerEndpoint[]> {
+  static groupEndpointsByTag(
+    endpoints: SwaggerEndpoint[],
+  ): Record<string, SwaggerEndpoint[]> {
     const grouped: Record<string, SwaggerEndpoint[]> = {
       untagged: [],
     };
@@ -193,7 +207,7 @@ export class SwaggerService {
    */
   static searchEndpoints(
     endpoints: SwaggerEndpoint[],
-    query: string
+    query: string,
   ): SwaggerEndpoint[] {
     const lowerQuery = query.toLowerCase();
 

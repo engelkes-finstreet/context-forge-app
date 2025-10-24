@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Form } from '@/components/forms/form';
-import { useCreateTaskFormConfig } from '@/features/tasks/components/forms/create-task/create-task-form-config';
-import { DynamicFormField } from '@/components/forms/dynamic-form-field/dynamic-form-field';
+import { Form } from "@/components/forms/form";
+import { useCreateTaskFormConfig } from "@/features/tasks/components/forms/create-task/create-task-form-config";
+import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 
 interface CreateTaskFormProps {
   projectId: string;

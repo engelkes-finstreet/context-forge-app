@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 export class TaskService {
   /**
@@ -25,7 +26,7 @@ export class TaskService {
    * Get a single task by ID with all subtasks
    */
   static async getTaskById(id: string) {
-    return db.task.findUnique({
+    const task = await db.task.findUnique({
       where: { id },
       include: {
         project: {
@@ -41,6 +42,12 @@ export class TaskService {
         },
       },
     });
+
+    if (!task) {
+      notFound();
+    }
+
+    return task;
   }
 
   /**
@@ -92,7 +99,7 @@ export class TaskService {
       db.task.update({
         where: { id: taskId },
         data: { order: index },
-      })
+      }),
     );
 
     await db.$transaction(updates);

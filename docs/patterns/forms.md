@@ -19,6 +19,7 @@ src/features/{feature}/components/forms/{form-name}/
 ### 1. Form Configuration Hook
 
 Located in `*-form-config.tsx`, this hook defines:
+
 - **Field definitions** (types, labels, validation rules)
 - **Default values**
 - **Zod schema** for validation
@@ -29,6 +30,7 @@ Located in `*-form-config.tsx`, this hook defines:
 ### 2. Form Component
 
 Located in `*-form.tsx`, this component:
+
 - Uses the configuration hook
 - Renders form fields with `<DynamicFormField>`
 - Wraps fields in `<Form>` component
@@ -40,6 +42,7 @@ Located in `*-form.tsx`, this component:
 **IMPORTANT:** Do not render `DynamicFormField` for hidden fields. Hidden fields should only be defined in the form config but not rendered. They are automatically included in form submission through `defaultValues`.
 
 **Example:**
+
 ```typescript
 // Config defines hidden field
 fields: {
@@ -61,6 +64,7 @@ fields: {
 ### State Management
 
 Forms use:
+
 - **React Hook Form** for client-side state
 - **Zod** for validation
 - **Server Actions** for submission
@@ -77,6 +81,7 @@ Forms use:
 ## Examples
 
 See existing implementations in:
+
 - `src/features/projects/components/forms/create-project-form/`
 - `src/features/tasks/components/forms/create-task-form/`
 - `src/features/subtasks/components/forms/generic-subtask/`

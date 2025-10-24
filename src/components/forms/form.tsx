@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   createContext,
@@ -9,17 +9,17 @@ import {
   useEffect,
   useTransition,
   useRef,
-} from 'react';
+} from "react";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FieldValues, FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { FormConfig, FormState } from '@/components/forms/types';
-import { useFormIsPending } from '@/components/forms/form-state-store';
+import { FormConfig, FormState } from "@/components/forms/types";
+import { useFormIsPending } from "@/components/forms/form-state-store";
 
 function useServerAction<State extends FormState>(
-  formConfig: FormConfig<State, any>
+  formConfig: FormConfig<State, any>,
 ): { state: State | null; serverAction: (values: any) => void } {
   const { serverAction, useErrorAction, useSuccessAction } = formConfig;
   const errorAction = useErrorAction?.();
@@ -28,7 +28,7 @@ function useServerAction<State extends FormState>(
 
   const [state, formAction] = useActionState<State | null, any>(
     serverAction,
-    null
+    null,
   );
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const Form = ({ formConfig, children }: Props) => {
 
   const methods = useForm({
     resolver: zodResolver(formConfig.schema as any),
-    mode: 'onChange',
+    mode: "onBlur",
     defaultValues: formConfig.defaultValues,
   });
 
@@ -96,7 +96,7 @@ export const Form = ({ formConfig, children }: Props) => {
         >
           {state?.error && (
             <div className="mb-8">
-              {state.error.split('\n').map((line, index) => (
+              {state.error.split("\n").map((line, index) => (
                 <Fragment key={index}>
                   {line}
                   <br />
@@ -147,7 +147,7 @@ export function useFormConfig<
   const context = useContext(FormConfigContext);
 
   if (!context) {
-    throw new Error('useFormConfig must be used within a <FormConfigProvider>');
+    throw new Error("useFormConfig must be used within a <FormConfigProvider>");
   }
 
   return context.formConfig as FormConfig<

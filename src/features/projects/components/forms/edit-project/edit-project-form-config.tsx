@@ -1,15 +1,21 @@
-import { DeepPartial } from 'react-hook-form';
-import { toast } from '@/lib/toast';
-import { useRouter } from 'next/navigation';
-import { createFormFieldNames } from '@/components/forms/utils/create-form-field-names';
-import { Button } from '@/components/ui/button';
-import { updateProjectSchema, UpdateProjectInput } from './edit-project-form-schema';
-import { updateProjectAction, ProjectFormState } from '@/lib/actions/project-actions';
-import { FormConfig, FormFieldsType } from '@/components/forms/types';
-import { z } from 'zod';
-import { routes } from '@/lib/routes';
+import { DeepPartial } from "react-hook-form";
+import { toast } from "@/lib/toast";
+import { useRouter } from "next/navigation";
+import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
+import { Button } from "@/components/ui/button";
+import {
+  updateProjectSchema,
+  UpdateProjectInput,
+} from "./edit-project-form-schema";
+import {
+  updateProjectAction,
+  ProjectFormState,
+} from "@/lib/actions/project-actions";
+import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import { z } from "zod";
+import { routes } from "@/lib/routes";
 
-const editProjectFormId = 'edit-project-form';
+const editProjectFormId = "edit-project-form";
 
 // Extended schema for the edit form that includes metadata
 const editProjectSchema = updateProjectSchema.extend({
@@ -31,43 +37,46 @@ interface UseEditProjectFormConfigProps {
 export function useEditProjectFormConfig({
   projectId,
   defaultValues: initialValues,
-}: UseEditProjectFormConfigProps): FormConfig<ProjectFormState, EditProjectInput> {
+}: UseEditProjectFormConfigProps): FormConfig<
+  ProjectFormState,
+  EditProjectInput
+> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<EditProjectInput> = {
     id: projectId,
     name: initialValues.name,
-    description: initialValues.description || '',
-    githubRepo: initialValues.githubRepo || '',
-    swaggerPath: initialValues.swaggerPath || '',
+    description: initialValues.description || "",
+    githubRepo: initialValues.githubRepo || "",
+    swaggerPath: initialValues.swaggerPath || "",
   };
 
   const fields: FormFieldsType<EditProjectInput> = {
     id: {
-      type: 'hidden',
+      type: "hidden",
     },
     name: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Project Name',
-      placeholder: 'Enter project name',
+      type: "input",
+      inputType: "text",
+      label: "Project Name",
+      placeholder: "Enter project name",
     },
     description: {
-      type: 'textarea',
-      label: 'Description (optional)',
-      placeholder: 'Enter project description',
+      type: "textarea",
+      label: "Description (optional)",
+      placeholder: "Enter project description",
     },
     githubRepo: {
-      type: 'input',
-      inputType: 'text',
-      label: 'GitHub Repository (optional)',
-      placeholder: 'e.g., owner/repo-name',
+      type: "input",
+      inputType: "text",
+      label: "GitHub Repository (optional)",
+      placeholder: "e.g., owner/repo-name",
     },
     swaggerPath: {
-      type: 'input',
-      inputType: 'text',
-      label: 'Swagger File Path (optional)',
-      placeholder: 'e.g., docs/swagger.yaml',
+      type: "input",
+      inputType: "text",
+      label: "Swagger File Path (optional)",
+      placeholder: "e.g., docs/swagger.yaml",
     },
   };
 
@@ -80,12 +89,12 @@ export function useEditProjectFormConfig({
     formId: editProjectFormId,
     useErrorAction: () => {
       return (state: ProjectFormState) => {
-        toast.error(state?.error || 'Something went wrong. Please try again.');
+        toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
       return (state: ProjectFormState) => {
-        toast.success(state?.message || 'Project updated successfully');
+        toast.success(state?.message || "Project updated successfully");
         router.push(routes.projects.detail.path({ projectId }));
       };
     },
@@ -101,7 +110,7 @@ export function useEditProjectFormConfig({
             Cancel
           </Button>
           <Button type="submit" disabled={isPending} form={editProjectFormId}>
-            {isPending ? 'Saving...' : 'Save Changes'}
+            {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       );

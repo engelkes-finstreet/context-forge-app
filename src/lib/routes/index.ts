@@ -23,7 +23,7 @@
  * }) // '/projects/123/tasks/456'
  */
 
-import { route } from './builder';
+import { route } from "./builder";
 
 /**
  * All application routes organized by feature
@@ -38,9 +38,9 @@ export const routes = {
    */
   auth: {
     /** Sign in page - /sign-in */
-    signIn: route('/sign-in'),
+    signIn: route("/sign-in"),
     /** Sign up page - /sign-up */
-    signUp: route('/sign-up'),
+    signUp: route("/sign-up"),
   },
 
   // ========================================================================
@@ -51,29 +51,29 @@ export const routes = {
    * Home page - /
    * Requires authentication
    */
-  home: route('/'),
+  home: route("/"),
 
   /**
    * Project-related routes
    */
   projects: {
     /** Projects list page - /projects */
-    list: route('/projects'),
+    list: route("/projects"),
 
     /** Create new project page - /projects/new */
-    new: route('/projects/new'),
+    new: route("/projects/new"),
 
     /**
      * Project detail page - /projects/[projectId]
      * @param projectId - UUID of the project
      */
-    detail: route('/projects/[projectId]'),
+    detail: route("/projects/[projectId]"),
 
     /**
      * Edit project page - /projects/[projectId]/edit
      * @param projectId - UUID of the project
      */
-    edit: route('/projects/[projectId]/edit'),
+    edit: route("/projects/[projectId]/edit"),
 
     /**
      * Task-related routes (nested under projects)
@@ -83,21 +83,21 @@ export const routes = {
        * Create new task page - /projects/[projectId]/tasks/new
        * @param projectId - UUID of the parent project
        */
-      new: route('/projects/[projectId]/tasks/new'),
+      new: route("/projects/[projectId]/tasks/new"),
 
       /**
        * Task detail page - /projects/[projectId]/tasks/[taskId]
        * @param projectId - UUID of the parent project
        * @param taskId - UUID of the task
        */
-      detail: route('/projects/[projectId]/tasks/[taskId]'),
+      detail: route("/projects/[projectId]/tasks/[taskId]"),
 
       /**
        * Edit task page - /projects/[projectId]/tasks/[taskId]/edit
        * @param projectId - UUID of the parent project
        * @param taskId - UUID of the task
        */
-      edit: route('/projects/[projectId]/tasks/[taskId]/edit'),
+      edit: route("/projects/[projectId]/tasks/[taskId]/edit"),
 
       /**
        * Subtask-related routes (nested under tasks)
@@ -109,7 +109,9 @@ export const routes = {
          * @param projectId - UUID of the parent project
          * @param taskId - UUID of the parent task
          */
-        typeSelector: route('/projects/[projectId]/tasks/[taskId]/subtasks/new'),
+        typeSelector: route(
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new",
+        ),
 
         /**
          * Create new generic subtask page
@@ -118,7 +120,7 @@ export const routes = {
          * @param taskId - UUID of the parent task
          */
         newGeneric: route(
-          '/projects/[projectId]/tasks/[taskId]/subtasks/new/generic'
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new/generic",
         ),
 
         /**
@@ -128,7 +130,7 @@ export const routes = {
          * @param taskId - UUID of the parent task
          */
         newInquiryProcess: route(
-          '/projects/[projectId]/tasks/[taskId]/subtasks/new/inquiry-process'
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new/inquiry-process",
         ),
 
         /**
@@ -138,7 +140,7 @@ export const routes = {
          * @param taskId - UUID of the parent task
          */
         newForm: route(
-          '/projects/[projectId]/tasks/[taskId]/subtasks/new/form'
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new/form",
         ),
 
         /**
@@ -148,7 +150,17 @@ export const routes = {
          * @param taskId - UUID of the parent task
          */
         newModal: route(
-          '/projects/[projectId]/tasks/[taskId]/subtasks/new/modal'
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new/modal",
+        ),
+
+        /**
+         * Create new request subtask page
+         * /projects/[projectId]/tasks/[taskId]/subtasks/new/request
+         * @param projectId - UUID of the parent project
+         * @param taskId - UUID of the parent task
+         */
+        newRequest: route(
+          "/projects/[projectId]/tasks/[taskId]/subtasks/new/request",
         ),
 
         /**
@@ -159,7 +171,7 @@ export const routes = {
          * @param subtaskId - UUID of the subtask
          */
         edit: route(
-          '/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit'
+          "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit",
         ),
       },
     },
@@ -177,7 +189,7 @@ export const routes = {
      * Better Auth API routes - handles authentication
      * Catch-all route: /api/auth/*
      */
-    auth: route('/api/auth/[...all]'),
+    auth: route("/api/auth/[...all]"),
 
     /**
      * Model Context Protocol (MCP) API routes
@@ -185,13 +197,13 @@ export const routes = {
      */
     mcp: {
       /** List all tasks and subtasks - /api/mcp/list-resources */
-      listResources: route('/api/mcp/list-resources'),
+      listResources: route("/api/mcp/list-resources"),
 
       /** Read task or subtask content - /api/mcp/read-resource */
-      readResource: route('/api/mcp/read-resource'),
+      readResource: route("/api/mcp/read-resource"),
 
       /** Update task or subtask content - /api/mcp/update-resource */
-      updateResource: route('/api/mcp/update-resource'),
+      updateResource: route("/api/mcp/update-resource"),
     },
   },
 } as const;
@@ -232,13 +244,13 @@ export type RoutePattern =
 // ========================================================================
 
 // Type-safe Link component (works in Server and Client Components)
-export { TypedLink } from './link';
+export { TypedLink } from "./link";
 
 // Type-safe router hook (Client Components only)
-export { useTypedRouter } from './hooks';
+export { useTypedRouter } from "./hooks";
 
 // Server-side redirect
-export { typedRedirect } from './redirect';
+export { typedRedirect } from "./redirect";
 
 // Type utilities (for advanced usage)
-export type { Route, QueryParams, RouteParams } from './builder';
+export type { Route, QueryParams, RouteParams } from "./builder";

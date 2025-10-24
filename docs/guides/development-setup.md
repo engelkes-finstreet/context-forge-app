@@ -39,6 +39,7 @@ DATABASE_URL="postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE"
 ```
 
 **Example for local development:**
+
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/context-forge-dev"
 ```
@@ -225,6 +226,7 @@ PORT=3001 npm run dev
 ### Database Connection Failed
 
 Check:
+
 1. PostgreSQL is running
 2. `DATABASE_URL` is correct
 3. Database exists
@@ -327,6 +329,7 @@ Use React Developer Tools extension for debugging React components.
 ### Development Mode
 
 Development mode includes:
+
 - Hot module replacement
 - Detailed error messages
 - Source maps

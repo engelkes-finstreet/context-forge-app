@@ -14,7 +14,7 @@ export type SwaggerActionState = {
  * @param projectId - The ID of the project
  */
 export async function fetchProjectSwaggerEndpoints(
-  projectId: string
+  projectId: string,
 ): Promise<SwaggerActionState> {
   try {
     // Get the project
@@ -44,7 +44,7 @@ export async function fetchProjectSwaggerEndpoints(
     // Fetch and parse endpoints
     const endpoints = await SwaggerService.getEndpointsFromGitHub(
       project.githubRepo,
-      project.swaggerPath
+      project.swaggerPath,
     );
 
     // Log endpoints to console
@@ -75,7 +75,10 @@ export async function fetchProjectSwaggerEndpoints(
   } catch (error) {
     console.error("Failed to fetch swagger endpoints:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to fetch swagger endpoints",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch swagger endpoints",
       endpoints: null,
     };
   }
@@ -90,13 +93,13 @@ export async function fetchProjectSwaggerEndpoints(
 export async function fetchSwaggerEndpoints(
   githubRepo: string,
   swaggerPath: string,
-  branch?: string
+  branch?: string,
 ): Promise<SwaggerActionState> {
   try {
     const endpoints = await SwaggerService.getEndpointsFromGitHub(
       githubRepo,
       swaggerPath,
-      branch
+      branch,
     );
 
     // Log endpoints to console
@@ -116,7 +119,10 @@ export async function fetchSwaggerEndpoints(
   } catch (error) {
     console.error("Failed to fetch swagger endpoints:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to fetch swagger endpoints",
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch swagger endpoints",
       endpoints: null,
     };
   }
@@ -129,7 +135,7 @@ export async function fetchSwaggerEndpoints(
  */
 export async function searchProjectEndpoints(
   projectId: string,
-  query: string
+  query: string,
 ): Promise<SwaggerActionState> {
   try {
     const result = await fetchProjectSwaggerEndpoints(projectId);
@@ -140,10 +146,12 @@ export async function searchProjectEndpoints(
 
     const filteredEndpoints = SwaggerService.searchEndpoints(
       result.endpoints,
-      query
+      query,
     );
 
-    console.log(`\n🔍 Search results for "${query}": ${filteredEndpoints.length} endpoints found\n`);
+    console.log(
+      `\n🔍 Search results for "${query}": ${filteredEndpoints.length} endpoints found\n`,
+    );
     console.log(SwaggerService.formatEndpoints(filteredEndpoints));
 
     return {
@@ -153,7 +161,8 @@ export async function searchProjectEndpoints(
   } catch (error) {
     console.error("Failed to search endpoints:", error);
     return {
-      error: error instanceof Error ? error.message : "Failed to search endpoints",
+      error:
+        error instanceof Error ? error.message : "Failed to search endpoints",
       endpoints: null,
     };
   }

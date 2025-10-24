@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { ProjectService } from '@/lib/services/project-service';
-import { buildResourceURI } from '@/lib/mcp/utils';
-import type { MCPListResourcesResponse, MCPResource } from '@/lib/mcp/types';
+import { NextResponse } from "next/server";
+import { ProjectService } from "@/lib/services/project-service";
+import { buildResourceURI } from "@/lib/mcp/utils";
+import type { MCPListResourcesResponse, MCPResource } from "@/lib/mcp/types";
 
 /**
  * MCP Endpoint: List all available resources
@@ -24,7 +24,7 @@ export async function GET() {
           uri: buildResourceURI({ projectId: project.id, taskId: task.id }),
           name: `${project.name} / ${task.name}`,
           description: `Task in ${project.name} with ${task._count.subtasks} subtask(s)`,
-          mimeType: 'text/markdown',
+          mimeType: "text/markdown",
         });
 
         // Add subtasks as resources
@@ -37,7 +37,7 @@ export async function GET() {
             }),
             name: `${project.name} / ${task.name} / ${subtask.name}`,
             description: `Subtask in ${task.name}`,
-            mimeType: 'text/markdown',
+            mimeType: "text/markdown",
           });
         }
       }
@@ -49,10 +49,13 @@ export async function GET() {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Error listing MCP resources:', error);
+    console.error("Error listing MCP resources:", error);
     return NextResponse.json(
-      { error: 'Failed to list resources', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      {
+        error: "Failed to list resources",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
     );
   }
 }

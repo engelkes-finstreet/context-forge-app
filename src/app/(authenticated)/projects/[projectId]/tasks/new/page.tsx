@@ -1,12 +1,18 @@
-import { notFound } from 'next/navigation';
-import { TypedLink, routes } from '@/lib/routes';
-import { ProjectService } from '@/lib/services/project-service';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageHeader } from '@/components/ui/page-header';
-import { PageContent } from '@/components/ui/page-content';
-import { CreateTaskForm } from '@/features/tasks/components/forms/create-task/create-task-form';
-import { ArrowLeft } from 'lucide-react';
+import { notFound } from "next/navigation";
+import { TypedLink, routes } from "@/lib/routes";
+import { ProjectService } from "@/lib/services/project-service";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
+import { CreateTaskForm } from "@/features/tasks/components/forms/create-task/create-task-form";
+import { ArrowLeft } from "lucide-react";
 
 interface NewTaskPageProps {
   params: Promise<{
@@ -24,7 +30,11 @@ export default async function NewTaskPage({ params }: NewTaskPageProps) {
 
   return (
     <>
-      <TypedLink route={routes.projects.detail} params={{ projectId }} data-transition-ignore>
+      <TypedLink
+        route={routes.projects.detail}
+        params={{ projectId }}
+        data-transition-ignore
+      >
         <Button variant="ghost" size="sm" className="mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to {project.name}
@@ -40,16 +50,17 @@ export default async function NewTaskPage({ params }: NewTaskPageProps) {
 
       <PageContent>
         <Card>
-        <CardHeader>
-          <CardTitle>Task Details</CardTitle>
-          <CardDescription>
-            Define the task name and shared context that will be available to all subtasks
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CreateTaskForm projectId={projectId} />
-        </CardContent>
-      </Card>
+          <CardHeader>
+            <CardTitle>Task Details</CardTitle>
+            <CardDescription>
+              Define the task name and shared context that will be available to
+              all subtasks
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CreateTaskForm projectId={projectId} />
+          </CardContent>
+        </Card>
       </PageContent>
     </>
   );

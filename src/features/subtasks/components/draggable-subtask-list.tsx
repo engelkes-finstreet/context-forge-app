@@ -14,7 +14,7 @@
 import { useOptimistic, useTransition, useState } from "react";
 
 import {
-  DndContext,          
+  DndContext,
   closestCenter,
   KeyboardSensor,
   PointerSensor,
@@ -30,7 +30,12 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GripVertical } from "lucide-react";
 import { TypedLink } from "@/lib/routes";
@@ -51,7 +56,7 @@ interface SortableSubtaskItemProps {
   index: number;
   projectId: string;
   taskId: string;
-  isDragActive: boolean;  // Prevents clicks during/after drag operations
+  isDragActive: boolean; // Prevents clicks during/after drag operations
 }
 
 /**
@@ -63,7 +68,13 @@ interface SortableSubtaskItemProps {
  * - Apply transform animations (smooth movement)
  * - Handle accessibility (keyboard navigation)
  */
-function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }: SortableSubtaskItemProps) {
+function SortableSubtaskItem({
+  subtask,
+  index,
+  projectId,
+  taskId,
+  isDragActive,
+}: SortableSubtaskItemProps) {
   const {
     attributes,
     listeners,
@@ -89,7 +100,7 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
         className="block"
         style={{
           // Disable all pointer events during drag to prevent navigation
-          pointerEvents: isDragActive ? 'none' : 'auto'
+          pointerEvents: isDragActive ? "none" : "auto",
         }}
       >
         <Card interactive={true}>
@@ -99,13 +110,12 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
                 {...attributes}
                 {...listeners}
                 className="mt-1 cursor-grab active:cursor-grabbing touch-none flex-shrink-0 p-1 hover:bg-accent rounded transition-colors"
-                onClick={(e) => e.preventDefault()}  // Don't navigate when clicking drag handle
+                onClick={(e) => e.preventDefault()} // Don't navigate when clicking drag handle
                 aria-label="Drag to reorder"
               >
                 <GripVertical className="h-5 w-5 text-muted-foreground" />
               </button>
 
-              
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                 <span className="text-sm font-semibold text-primary">
                   {index + 1}
@@ -114,7 +124,9 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <CardTitle className="text-lg flex-1">{subtask.name}</CardTitle>
+                  <CardTitle className="text-lg flex-1">
+                    {subtask.name}
+                  </CardTitle>
                   <Badge variant={typeConfig.badgeVariant} className="shrink-0">
                     {typeConfig.icon} {typeConfig.label}
                   </Badge>
@@ -141,10 +153,14 @@ function SortableSubtaskItem({ subtask, index, projectId, taskId, isDragActive }
  * 3. Configures sensors for drag interactions (mouse, touch, keyboard)
  * 4. Wraps items in DndContext and SortableContext providers
  */
-export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableSubtaskListProps) {
+export function DraggableSubtaskList({
+  subtasks,
+  taskId,
+  projectId,
+}: DraggableSubtaskListProps) {
   const [optimisticItems, addOptimistic] = useOptimistic(
     subtasks,
-    (_currentState, newItems: Subtask[]) => newItems
+    (_currentState, newItems: Subtask[]) => newItems,
   );
 
   const [isPending, startTransition] = useTransition();
@@ -177,7 +193,7 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   /**
@@ -213,7 +229,7 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
 
       const result = await reorderSubtasks(
         taskId,
-        newItems.map((item) => item.id)
+        newItems.map((item) => item.id),
       );
 
       if (result.error) {
@@ -229,10 +245,10 @@ export function DraggableSubtaskList({ subtasks, taskId, projectId }: DraggableS
   return (
     <>
       <DndContext
-        sensors={sensors}                    // Mouse, touch, and keyboard sensors
-        collisionDetection={closestCenter}   // Drop on the closest item
-        onDragStart={handleDragStart}        // Track when drag starts
-        onDragEnd={handleDragEnd}            // Handle reordering when drag ends
+        sensors={sensors} // Mouse, touch, and keyboard sensors
+        collisionDetection={closestCenter} // Drop on the closest item
+        onDragStart={handleDragStart} // Track when drag starts
+        onDragEnd={handleDragEnd} // Handle reordering when drag ends
       >
         <SortableContext
           items={optimisticItems.map((item) => item.id)}

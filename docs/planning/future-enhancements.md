@@ -8,11 +8,13 @@
 Allow multiple users to have their own isolated projects.
 
 **Features:**
+
 - User registration and authentication
 - User-specific project lists
 - Private projects per user
 
 **Implementation:**
+
 ```prisma
 model User {
   id        String    @id @default(cuid())
@@ -35,12 +37,14 @@ model Project {
 Enable teams to collaborate on projects.
 
 **Features:**
+
 - Team creation and management
 - Project sharing with team members
 - Role-based permissions (owner, editor, viewer)
 - Activity logs
 
 **Implementation:**
+
 ```prisma
 model Team {
   id        String         @id @default(cuid())
@@ -71,11 +75,13 @@ enum Role {
 Fine-grained permissions for users.
 
 **Roles:**
+
 - **Owner**: Full access, can delete projects
 - **Editor**: Can create/edit tasks and subtasks
 - **Viewer**: Read-only access
 
 **Features:**
+
 - Permission checks in server actions
 - UI elements hidden based on role
 - Audit logs for sensitive operations
@@ -88,12 +94,14 @@ Fine-grained permissions for users.
 Keep a history of all changes to task contexts and subtask content.
 
 **Features:**
+
 - Automatic versioning on every save
 - View change history
 - Compare versions (diff view)
 - Track who made changes and when
 
 **Implementation:**
+
 ```prisma
 model TaskVersion {
   id            String   @id @default(cuid())
@@ -121,6 +129,7 @@ model SubtaskVersion {
 ### Restore Previous Versions
 
 **Features:**
+
 - Restore to any previous version
 - Preview before restoring
 - Keep current version in history
@@ -128,6 +137,7 @@ model SubtaskVersion {
 ### Audit Trail
 
 **Features:**
+
 - Complete activity log
 - Filter by user, date, action
 - Export audit logs
@@ -141,6 +151,7 @@ model SubtaskVersion {
 Replace plain textarea with rich editor.
 
 **Features:**
+
 - Live markdown preview
 - Toolbar for formatting
 - Syntax highlighting for code blocks
@@ -148,11 +159,13 @@ Replace plain textarea with rich editor.
 - Link preview
 
 **Possible Libraries:**
+
 - **Tiptap**: Modern rich text editor
 - **CodeMirror**: Code-focused editor
 - **MDX Editor**: React-based markdown editor
 
 **Example:**
+
 ```typescript
 import { Editor } from '@tiptap/react';
 
@@ -172,6 +185,7 @@ export function MarkdownEditor() {
 ### Live Preview
 
 **Features:**
+
 - Side-by-side editing and preview
 - Toggle between edit and preview modes
 - Synchronized scrolling
@@ -179,6 +193,7 @@ export function MarkdownEditor() {
 ### Syntax Highlighting
 
 **Features:**
+
 - Code block syntax highlighting
 - Language detection
 - Copy code button
@@ -192,34 +207,37 @@ export function MarkdownEditor() {
 Search across all projects, tasks, and subtasks.
 
 **Features:**
+
 - Search by keyword
 - Search in names, contexts, and content
 - Fuzzy matching
 - Search results ranking
 
 **Implementation:**
+
 ```typescript
 // Using Prisma full-text search
 const results = await db.subtask.findMany({
   where: {
     OR: [
-      { name: { contains: query, mode: 'insensitive' } },
-      { content: { contains: query, mode: 'insensitive' } },
-    ]
+      { name: { contains: query, mode: "insensitive" } },
+      { content: { contains: query, mode: "insensitive" } },
+    ],
   },
   include: {
     task: {
       include: {
-        project: true
-      }
-    }
-  }
+        project: true,
+      },
+    },
+  },
 });
 ```
 
 ### Advanced Filtering
 
 **Features:**
+
 - Filter by project
 - Filter by task
 - Filter by subtask type
@@ -227,6 +245,7 @@ const results = await db.subtask.findMany({
 - Combine multiple filters
 
 **UI:**
+
 ```typescript
 <SearchFilters>
   <ProjectFilter />
@@ -242,6 +261,7 @@ const results = await db.subtask.findMany({
 Tag projects, tasks, and subtasks for better organization.
 
 **Features:**
+
 - Create custom tags
 - Assign multiple tags to items
 - Filter by tags
@@ -249,6 +269,7 @@ Tag projects, tasks, and subtasks for better organization.
 - Tag colors
 
 **Implementation:**
+
 ```prisma
 model Tag {
   id        String    @id @default(cuid())
@@ -268,12 +289,14 @@ model Tag {
 Export projects and their contents to markdown files.
 
 **Features:**
+
 - Export single project
 - Export all projects
 - Hierarchical folder structure
 - Preserve formatting
 
 **Example Structure:**
+
 ```
 export/
 ├── Project 1/
@@ -294,12 +317,14 @@ export/
 Import markdown files as projects.
 
 **Features:**
+
 - Parse markdown files
 - Create projects from folders
 - Preserve structure
 - Validation and error handling
 
 **Format:**
+
 ```markdown
 # Project Name
 
@@ -317,6 +342,7 @@ Subtask content here.
 ### Bulk Operations
 
 **Features:**
+
 - Bulk export selected projects
 - Bulk import multiple projects
 - Bulk delete with confirmation
@@ -331,14 +357,15 @@ Subtask content here.
 Real-time updates when resources change.
 
 **Implementation:**
+
 ```typescript
 // WebSocket-based subscriptions
-const ws = new WebSocket('ws://localhost:3000/api/mcp/subscribe');
+const ws = new WebSocket("ws://localhost:3000/api/mcp/subscribe");
 
-ws.on('message', (event) => {
+ws.on("message", (event) => {
   const { uri, type, content } = JSON.parse(event.data);
 
-  if (type === 'update') {
+  if (type === "update") {
     // Handle resource update
   }
 });
@@ -350,6 +377,7 @@ ws.on('message', (event) => {
 Read or update multiple resources in one request.
 
 **Example:**
+
 ```typescript
 POST /api/mcp/batch-read
 {
@@ -374,6 +402,7 @@ Response:
 More powerful resource queries.
 
 **Features:**
+
 - Filter by project
 - Filter by task
 - Full-text search in MCP
@@ -381,6 +410,7 @@ More powerful resource queries.
 - Sorting
 
 **Example:**
+
 ```typescript
 POST /api/mcp/query-resources
 {
@@ -406,6 +436,7 @@ POST /api/mcp/query-resources
 Include additional metadata in MCP responses.
 
 **Example:**
+
 ```json
 {
   "uri": "context-forge://project/1/task/1/subtask/1",
@@ -430,6 +461,7 @@ Include additional metadata in MCP responses.
 Pre-defined project and task templates.
 
 **Features:**
+
 - Create custom templates
 - Apply templates to new projects
 - Template marketplace
@@ -441,6 +473,7 @@ Pre-defined project and task templates.
 Notify users of important events.
 
 **Features:**
+
 - Task assignment notifications
 - Comment notifications
 - Mention notifications
@@ -452,6 +485,7 @@ Notify users of important events.
 Discuss tasks and subtasks.
 
 **Features:**
+
 - Add comments to tasks/subtasks
 - @mention users
 - Threaded discussions
@@ -463,6 +497,7 @@ Discuss tasks and subtasks.
 Attach files to tasks and subtasks.
 
 **Features:**
+
 - File upload
 - Image preview
 - File versioning
@@ -474,6 +509,7 @@ Attach files to tasks and subtasks.
 RESTful API for external integrations.
 
 **Features:**
+
 - Full CRUD operations
 - API key authentication
 - Rate limiting
@@ -486,6 +522,7 @@ RESTful API for external integrations.
 Native mobile applications.
 
 **Features:**
+
 - iOS and Android apps
 - Offline support
 - Push notifications
@@ -497,6 +534,7 @@ Native mobile applications.
 Dark theme for the application.
 
 **Features:**
+
 - Toggle dark/light mode
 - System preference detection
 - Smooth transitions
@@ -508,6 +546,7 @@ Dark theme for the application.
 Power user keyboard shortcuts.
 
 **Examples:**
+
 - `Ctrl+K`: Quick search
 - `Ctrl+N`: New project
 - `Ctrl+/`: Show shortcuts

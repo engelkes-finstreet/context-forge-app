@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { TaskService } from '@/lib/services/task-service';
-import { SubtaskService } from '@/lib/services/subtask-service';
-import { parseResourceURI } from '@/lib/mcp/utils';
-import type { MCPUpdateResourceResponse } from '@/lib/mcp/types';
-import { revalidatePath } from 'next/cache';
+import { NextRequest, NextResponse } from "next/server";
+import { TaskService } from "@/lib/services/task-service";
+import { SubtaskService } from "@/lib/services/subtask-service";
+import { parseResourceURI } from "@/lib/mcp/utils";
+import type { MCPUpdateResourceResponse } from "@/lib/mcp/types";
+import { revalidatePath } from "next/cache";
 
 /**
  * MCP Endpoint: Update a specific resource
@@ -14,10 +14,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { uri, text } = body;
 
-    if (!uri || typeof text !== 'string') {
+    if (!uri || typeof text !== "string") {
       return NextResponse.json(
-        { error: 'Missing required parameters: uri and text' },
-        { status: 400 }
+        { error: "Missing required parameters: uri and text" },
+        { status: 400 },
       );
     }
 
@@ -25,20 +25,17 @@ export async function POST(request: NextRequest) {
 
     if (!parsed) {
       return NextResponse.json(
-        { error: 'Invalid resource URI format' },
-        { status: 400 }
+        { error: "Invalid resource URI format" },
+        { status: 400 },
       );
     }
 
-    if (parsed.type === 'task' && parsed.taskId && parsed.projectId) {
+    if (parsed.type === "task" && parsed.taskId && parsed.projectId) {
       // Update task shared context
       const task = await TaskService.getTaskById(parsed.taskId);
 
       if (!task || task.projectId !== parsed.projectId) {
-        return NextResponse.json(
-          { error: 'Task not found' },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: "Task not found" }, { status: 404 });
       }
 
       await TaskService.updateTask(parsed.taskId, {
@@ -50,18 +47,27 @@ export async function POST(request: NextRequest) {
 
       const response: MCPUpdateResourceResponse = {
         success: true,
-        message: 'Task shared context updated successfully',
+        message: "Task shared context updated successfully",
       };
 
       return NextResponse.json(response);
-    } else if (parsed.type === 'subtask' && parsed.subtaskId && parsed.taskId && parsed.projectId) {
+    } else if (
+      parsed.type === "subtask" &&
+      parsed.subtaskId &&
+      parsed.taskId &&
+      parsed.projectId
+    ) {
       // Update subtask content
       const subtask = await SubtaskService.getSubtaskById(parsed.subtaskId);
 
-      if (!subtask || subtask.taskId !== parsed.taskId || subtask.task.projectId !== parsed.projectId) {
+      if (
+        !subtask ||
+        subtask.taskId !== parsed.taskId ||
+        subtask.task.projectId !== parsed.projectId
+      ) {
         return NextResponse.json(
-          { error: 'Subtask not found' },
-          { status: 404 }
+          { error: "Subtask not found" },
+          { status: 404 },
         );
       }
 
@@ -73,21 +79,24 @@ export async function POST(request: NextRequest) {
 
       const response: MCPUpdateResourceResponse = {
         success: true,
-        message: 'Subtask content updated successfully',
+        message: "Subtask content updated successfully",
       };
 
       return NextResponse.json(response);
     } else {
       return NextResponse.json(
-        { error: 'Only task and subtask resources can be updated' },
-        { status: 400 }
+        { error: "Only task and subtask resources can be updated" },
+        { status: 400 },
       );
     }
   } catch (error) {
-    console.error('Error updating MCP resource:', error);
+    console.error("Error updating MCP resource:", error);
     return NextResponse.json(
-      { error: 'Failed to update resource', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      {
+        error: "Failed to update resource",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
     );
   }
 }

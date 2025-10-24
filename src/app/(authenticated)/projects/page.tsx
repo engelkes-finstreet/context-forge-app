@@ -1,17 +1,20 @@
-import { TypedLink, routes } from '@/lib/routes';
-import { ProjectService } from '@/lib/services/project-service';
-import { Button } from '@/components/ui/button';
+import { TypedLink, routes } from "@/lib/routes";
+import { ProjectService } from "@/lib/services/project-service";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { PageHeader } from '@/components/ui/page-header';
-import { PageContent } from '@/components/ui/page-content';
-import { StaggeredContainer, StaggeredItem } from '@/components/ui/staggered-container';
-import { PlusCircle } from 'lucide-react';
+} from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
+import {
+  StaggeredContainer,
+  StaggeredItem,
+} from "@/components/ui/staggered-container";
+import { PlusCircle } from "lucide-react";
 
 export default async function ProjectsPage() {
   const projects = await ProjectService.getAllProjects();
@@ -47,7 +50,10 @@ export default async function ProjectsPage() {
           <StaggeredContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <StaggeredItem key={project.id}>
-                <TypedLink route={routes.projects.detail} params={{ projectId: project.id }}>
+                <TypedLink
+                  route={routes.projects.detail}
+                  params={{ projectId: project.id }}
+                >
                   <Card interactive={true}>
                     <CardHeader>
                       <CardTitle>{project.name}</CardTitle>
@@ -57,7 +63,8 @@ export default async function ProjectsPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="text-sm text-muted-foreground">
-                        {project._count.tasks} {project._count.tasks === 1 ? 'task' : 'tasks'}
+                        {project._count.tasks}{" "}
+                        {project._count.tasks === 1 ? "task" : "tasks"}
                       </div>
                     </CardContent>
                   </Card>

@@ -13,6 +13,7 @@ Project (1) ──────< Task (n)
 ```
 
 **Hierarchy:**
+
 - Each **Project** can have multiple **Tasks**
 - Each **Task** belongs to one **Project** and can have multiple **Subtasks**
 - Each **Subtask** belongs to one **Task**
@@ -28,6 +29,7 @@ Tasks include a `sharedContext` field (markdown) that provides common informatio
 ### Cascading Deletes
 
 The schema uses cascading deletes to maintain referential integrity:
+
 - Deleting a **Project** → automatically deletes all its **Tasks** and **Subtasks**
 - Deleting a **Task** → automatically deletes all its **Subtasks**
 
