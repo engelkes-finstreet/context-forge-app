@@ -46,7 +46,6 @@ export function useCreateRequestSubtaskFormConfig(
       endpoint: {
         type: "swagger_endpoint_selector",
         label: "Endpoint",
-        description: "Select the API endpoint for this request",
         placeholder: "Select endpoint...",
         emptyText: "No endpoints found",
         endpoints,
@@ -54,7 +53,6 @@ export function useCreateRequestSubtaskFormConfig(
       requestType: {
         type: "select",
         label: "Request Type",
-        description: "Select the request type for this request",
         placeholder: "Select request type...",
         options: [
           { label: "Server", value: "server" },
@@ -63,8 +61,7 @@ export function useCreateRequestSubtaskFormConfig(
       },
       paginated: {
         type: "checkbox",
-        label: "Paginated",
-        description: "Is this request paginated?",
+        label: "Should this request be paginated?",
       },
     },
   };
@@ -77,7 +74,7 @@ export function useCreateRequestSubtaskFormConfig(
     serverAction: createRequestSubtaskFormAction,
     renderFormActions: (isPending: boolean) => {
       return (
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-full justify-between">
           <Button
             type="button"
             variant="outline"

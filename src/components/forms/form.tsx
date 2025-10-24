@@ -65,7 +65,7 @@ export const Form = ({ formConfig, children }: Props) => {
 
   const methods = useForm({
     resolver: zodResolver(formConfig.schema as any),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: formConfig.defaultValues,
   });
 

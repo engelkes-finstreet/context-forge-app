@@ -48,35 +48,14 @@ export default async function NewRequestSubtaskPage({ params }: Props) {
     <>
       <PageHeader>
         <PageHeader.Title
-          title="Create Request Subtask"
-          subtitle={typeConfig.description}
+          title="New Request Subtask"
+          subtitle="This task will define which requests to make for the given feature"
           backLabel="Back to Type Selection"
         />
       </PageHeader>
 
       <PageContent>
-        {task.sharedContext && (
-          <Alert>
-            <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-            <AlertDescription className="prose prose-sm max-w-none mt-2">
-              <pre className="whitespace-pre-wrap text-sm">
-                {task.sharedContext}
-              </pre>
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Subtask Details</CardTitle>
-            <CardDescription>
-              Define the subtask name and content (supports Markdown)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
-          </CardContent>
-        </Card>
+        <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
       </PageContent>
     </>
   );
