@@ -37,25 +37,13 @@ export default async function NewRequestSubtaskPage({ params }: Props) {
 
     return (
         <>
-            <TypedLink route={routes.projects.tasks.subtasks.typeSelector} params={{ projectId, taskId }} data-transition-ignore>
-                <Button variant="ghost" size="sm" className="mb-4">
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Type Selection
-                </Button>
-            </TypedLink>
 
             <PageHeader>
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-gradient">Create Request Subtask</h1>
-            <Badge variant={typeConfig.badgeVariant}>
-              {typeConfig.icon} {typeConfig.label}
-            </Badge>
-          </div>
-          <p className="text-muted-foreground">
-            {typeConfig.description}
-          </p>
-        </div>
+            <PageHeader.Title
+              title="Create Request Subtask"
+              subtitle={typeConfig.description}
+              backLabel="Back to Type Selection"
+            />
       </PageHeader>
 
       <PageContent>
