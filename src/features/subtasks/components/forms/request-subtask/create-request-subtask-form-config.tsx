@@ -27,6 +27,7 @@ export function useCreateRequestSubtaskFormConfig(
         endpoint: "",
         requestType: undefined,
         paginated: undefined,
+        protected: undefined,
       },
     ],
   };
@@ -61,7 +62,11 @@ export function useCreateRequestSubtaskFormConfig(
       },
       paginated: {
         type: "checkbox",
-        label: "Should this request be paginated?",
+        label: "Is this a paginated request?",
+      },
+      protected: {
+        type: "checkbox",
+        label: "Is this a protected request?",
       },
     },
   };

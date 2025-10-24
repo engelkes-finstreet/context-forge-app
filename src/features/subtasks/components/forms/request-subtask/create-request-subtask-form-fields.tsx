@@ -37,6 +37,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
         endpoint: "",
         requestType: undefined,
         paginated: undefined,
+        protected: undefined,
       });
     }
   }, [fieldsArray, append]);
@@ -47,6 +48,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
         endpoint: "",
         requestType: undefined,
         paginated: undefined,
+        protected: undefined,
       });
     }
 
@@ -58,6 +60,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
       endpoint: "",
       requestType: undefined,
       paginated: undefined,
+      protected: undefined,
     });
   };
 
@@ -89,6 +92,9 @@ export const RequestsFields = ({ fieldNames }: Props) => {
               />
               <DynamicFormField
                 fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.paginated}`}
+              />
+              <DynamicFormField
+                fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.protected}`}
               />
             </div>
           </div>
