@@ -229,6 +229,7 @@ export function DraggableSubtaskList({
 
       const result = await reorderSubtasks(
         taskId,
+        projectId,
         newItems.map((item) => item.id),
       );
 

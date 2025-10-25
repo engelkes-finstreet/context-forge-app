@@ -14,22 +14,20 @@ export async function createTaskAction(
   state: TaskFormState,
   data: Prisma.TaskUncheckedCreateInput,
 ): Promise<TaskFormState> {
-  let task;
+  const result = await TaskService.createTask(data);
 
-  try {
-    task = await TaskService.createTask(data);
-  } catch (error) {
-    console.error("Failed to create task:", error);
+  if (!result.success) {
+    console.error("Failed to create task:", result.errorMessage);
     return {
-      error: error instanceof Error ? error.message : "Failed to create task",
+      error: result.errorMessage,
       message: null,
     };
   }
 
-  revalidatePath(`/projects/${task.projectId}`);
+  revalidatePath(`/projects/${result.data.projectId}`);
   typedRedirect(routes.projects.tasks.detail, {
-    projectId: task.projectId,
-    taskId: task.id,
+    projectId: result.data.projectId,
+    taskId: result.data.id,
   });
 }
 
@@ -37,45 +35,36 @@ export async function updateTaskAction(
   state: TaskFormState,
   data: Prisma.TaskUncheckedUpdateInput & { id: string; projectId: string },
 ): Promise<TaskFormState> {
-  try {
-    const { id, projectId, ...updateData } = data;
-    await TaskService.updateTask(id, updateData);
+  const { id, projectId, ...updateData } = data;
+  const result = await TaskService.updateTask(id, updateData);
 
-    revalidatePath(`/projects/${projectId}/tasks/${id}`);
-    revalidatePath(`/projects/${projectId}`);
-
+  if (!result.success) {
+    console.error("Failed to update task:", result.errorMessage);
     return {
-      error: null,
-      message: "Task updated successfully",
-    };
-  } catch (error) {
-    console.error("Failed to update task:", error);
-    return {
-      error: error instanceof Error ? error.message : "Failed to update task",
+      error: result.errorMessage,
       message: null,
     };
   }
+
+  revalidatePath(`/projects/${projectId}/tasks/${id}`);
+  revalidatePath(`/projects/${projectId}`);
+
+  return {
+    error: null,
+    message: "Task updated successfully",
+  };
 }
 
 export async function deleteTask(
   id: string,
+  projectId: string,
 ): Promise<{ error: string | null }> {
-  let projectId: string;
+  const result = await TaskService.deleteTask(id);
 
-  try {
-    const task = await TaskService.getTaskById(id);
-    if (!task) {
-      return {
-        error: "Task not found",
-      };
-    }
-
-    projectId = task.projectId;
-    await TaskService.deleteTask(id);
-  } catch (error) {
-    console.error("Failed to delete task:", error);
+  if (!result.success) {
+    console.error("Failed to delete task:", result.errorMessage);
     return {
-      error: error instanceof Error ? error.message : "Failed to delete task",
+      error: result.errorMessage,
     };
   }
 
@@ -87,12 +76,12 @@ export async function reorderTasks(
   projectId: string,
   taskIds: string[],
 ): Promise<{ error: string | null }> {
-  try {
-    await TaskService.reorderTasks(projectId, taskIds);
-  } catch (error) {
-    console.error("Failed to reorder tasks:", error);
+  const result = await TaskService.reorderTasks(projectId, taskIds);
+
+  if (!result.success) {
+    console.error("Failed to reorder tasks:", result.errorMessage);
     return {
-      error: error instanceof Error ? error.message : "Failed to reorder tasks",
+      error: result.errorMessage,
     };
   }
 
