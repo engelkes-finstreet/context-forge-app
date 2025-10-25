@@ -24,6 +24,7 @@ interface NewGenericSubtaskPageProps {
   params: Promise<{
     projectId: string;
     taskId: string;
+    subtaskId: string;
   }>;
 }
 
@@ -35,7 +36,7 @@ interface NewGenericSubtaskPageProps {
 export default async function NewGenericSubtaskPage({
   params,
 }: NewGenericSubtaskPageProps) {
-  const { projectId, taskId } = await params;
+  const { projectId, taskId, subtaskId } = await params;
   const project = await ProjectService.getProjectById(projectId);
   const task = await TaskService.getTaskById(taskId);
 
@@ -97,7 +98,7 @@ export default async function NewGenericSubtaskPage({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateGenericSubtaskForm taskId={taskId} endpoints={endpoints} />
+            <CreateGenericSubtaskForm taskId={taskId} subtaskId={subtaskId} />
           </CardContent>
         </Card>
       </PageContent>

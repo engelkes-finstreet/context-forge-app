@@ -3,7 +3,7 @@
 import { CreateRequestSubtaskFormInput } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
 import { SubtaskFormState } from "@/lib/actions/subtask-actions";
 import { SubtaskService } from "@/lib/services/subtask-service";
-import { Prisma, SubtaskType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { typedRedirect } from "@/lib/routes";
 import { routes } from "@/lib/routes";
@@ -14,21 +14,12 @@ export async function createRequestSubtaskFormAction(
   formData: CreateRequestSubtaskFormInput,
 ): Promise<SubtaskFormState> {
   const task = await TaskService.getTaskById(formData.taskId);
-  const maxOrderSubtask = task.subtasks.reduce(
-    (max, subtask) => Math.max(max, subtask.order),
-    0,
-  );
 
-  const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
-    name: formData.name,
-    taskId: formData.taskId,
-    order: maxOrderSubtask + 1,
-    type: SubtaskType.REQUEST,
+  const subtaskInput: Prisma.SubtaskUncheckedUpdateInput = {
     metadata: JSON.stringify(formData.requests),
-    content: "",
   };
 
-  await SubtaskService.createSubtask(subtaskInput);
+  await SubtaskService.updateSubtask(formData.subtaskId, subtaskInput);
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);

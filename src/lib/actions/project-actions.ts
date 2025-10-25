@@ -37,14 +37,10 @@ export async function updateProjectAction(
   state: ProjectFormState,
   formData: UpdateProjectInput & { id: string },
 ): Promise<ProjectFormState> {
+  let project;
   try {
     const { id, ...updateData } = formData;
-    const project = await ProjectService.updateProject(id, updateData);
-
-    revalidatePath(`/projects/${id}`);
-    revalidatePath("/projects");
-
-    typedRedirect(routes.projects.detail, { projectId: project.id });
+    project = await ProjectService.updateProject(id, updateData);
   } catch (error) {
     console.error("Failed to update project:", error);
     return {
@@ -53,6 +49,11 @@ export async function updateProjectAction(
       message: null,
     };
   }
+
+  revalidatePath(`/projects/${project.id}`);
+  revalidatePath("/projects");
+
+  typedRedirect(routes.projects.detail, { projectId: project.id });
 }
 
 export async function deleteProject(

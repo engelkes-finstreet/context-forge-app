@@ -32,13 +32,14 @@ export async function createGenericSubtaskAction(
 
   try {
     // Transform form input to database input
-    const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
+    const subtaskInput: Prisma.SubtaskUncheckedUpdateInput = {
       ...formData,
-      type: SubtaskType.GENERIC,
-      metadata: {}, // Generic type has no metadata
     };
 
-    subtask = await SubtaskService.createSubtask(subtaskInput);
+    subtask = await SubtaskService.updateSubtask(
+      formData.subtaskId,
+      subtaskInput,
+    );
 
     // Get task to find projectId for revalidation
     task = await SubtaskService.getSubtaskById(subtask.id).then((s) => s?.task);

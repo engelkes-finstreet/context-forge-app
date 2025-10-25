@@ -2,35 +2,22 @@
 
 import { Form } from "@/components/forms/form";
 import { useCreateGenericSubtaskFormConfig } from "@/features/subtasks/components/forms/generic-subtask/create-subtask-form-config";
-import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
-import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 
 interface CreateGenericSubtaskFormProps {
   taskId: string;
-  endpoints: SwaggerEndpoint[];
+  subtaskId: string;
 }
 
-/**
- * CreateGenericSubtaskForm Component
- *
- * Form for creating a generic subtask (standard subtask with name and content).
- * This is the form displayed after selecting "Generic" type in the type selector.
- */
 export function CreateGenericSubtaskForm({
   taskId,
-  endpoints,
+  subtaskId,
 }: CreateGenericSubtaskFormProps) {
-  const formConfig = useCreateGenericSubtaskFormConfig(taskId, endpoints);
+  const formConfig = useCreateGenericSubtaskFormConfig(taskId, subtaskId);
   const { fieldNames } = formConfig;
 
   return (
     <Form formConfig={formConfig}>
-      <div className="space-y-6">
-        {/* Hidden fields (taskId, type) are not rendered - only in config */}
-        <DynamicFormField fieldName={fieldNames.name} />
-        <DynamicFormField fieldName={fieldNames.content} />
-        <DynamicFormField fieldName={fieldNames.endpoint} />
-      </div>
+      <></>
     </Form>
   );
 }

@@ -11,11 +11,20 @@ import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 
 type Props = {
   taskId: string;
+  subtaskId: string;
   endpoints: SwaggerEndpoint[];
 };
 
-export const CreateRequestSubtaskForm = ({ taskId, endpoints }: Props) => {
-  const formConfig = useCreateRequestSubtaskFormConfig(taskId, endpoints);
+export const CreateRequestSubtaskForm = ({
+  taskId,
+  subtaskId,
+  endpoints,
+}: Props) => {
+  const formConfig = useCreateRequestSubtaskFormConfig(
+    taskId,
+    subtaskId,
+    endpoints,
+  );
   const { fieldNames } = formConfig;
 
   return (

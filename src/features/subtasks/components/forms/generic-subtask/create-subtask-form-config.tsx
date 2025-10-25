@@ -24,40 +24,21 @@ const createSubtaskFormId = "create-generic-subtask-form";
  */
 export function useCreateGenericSubtaskFormConfig(
   taskId: string,
-  endpoints: SwaggerEndpoint[],
+  subtaskId: string,
 ): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
-    name: "",
-    content: "",
-    endpoint: undefined,
+    subtaskId,
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
     taskId: {
       type: "hidden",
     },
-    name: {
-      type: "input",
-      inputType: "text",
-      label: "Subtask Name",
-      placeholder: "Enter subtask name",
-    },
-    content: {
-      type: "textarea",
-      label: "Content",
-      placeholder: "Enter subtask content (supports Markdown)",
-      description: "This content is specific to this subtask",
-    },
-    endpoint: {
-      type: "swagger_endpoint_selector",
-      label: "Endpoint",
-      description: "Select the API endpoint for this request",
-      placeholder: "Select endpoint...",
-      emptyText: "No endpoints found",
-      endpoints,
+    subtaskId: {
+      type: "hidden",
     },
   };
 
