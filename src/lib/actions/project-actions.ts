@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { typedRedirect, routes } from "@/lib/routes";
 import { ProjectService } from "@/lib/services/project-service";
-import { Prisma } from "@prisma/client";
 import { CreateProjectInput } from "@/features/projects/components/forms/create-project/create-project-form-schema";
 import { UpdateProjectInput } from "@/features/projects/components/forms/edit-project/edit-project-form-schema";
 
@@ -16,56 +15,50 @@ export async function createProjectAction(
   state: ProjectFormState,
   formData: CreateProjectInput,
 ): Promise<ProjectFormState> {
-  let project;
+  const result = await ProjectService.createProject(formData);
 
-  try {
-    project = await ProjectService.createProject(formData);
-  } catch (error) {
-    console.error("Failed to create project:", error);
+  if (!result.success) {
+    console.error("Failed to create project:", result.errorMessage);
     return {
-      error:
-        error instanceof Error ? error.message : "Failed to create project",
+      error: result.errorMessage,
       message: null,
     };
   }
 
   revalidatePath("/projects");
-  typedRedirect(routes.projects.detail, { projectId: project.id });
+  typedRedirect(routes.projects.detail, { projectId: result.data.id });
 }
 
 export async function updateProjectAction(
   state: ProjectFormState,
   formData: UpdateProjectInput & { id: string },
 ): Promise<ProjectFormState> {
-  let project;
-  try {
-    const { id, ...updateData } = formData;
-    project = await ProjectService.updateProject(id, updateData);
-  } catch (error) {
-    console.error("Failed to update project:", error);
+  const { id, ...updateData } = formData;
+  const result = await ProjectService.updateProject(id, updateData);
+
+  if (!result.success) {
+    console.error("Failed to update project:", result.errorMessage);
     return {
-      error:
-        error instanceof Error ? error.message : "Failed to update project",
+      error: result.errorMessage,
       message: null,
     };
   }
 
-  revalidatePath(`/projects/${project.id}`);
+  revalidatePath(`/projects/${id}`);
   revalidatePath("/projects");
 
-  typedRedirect(routes.projects.detail, { projectId: project.id });
+  typedRedirect(routes.projects.detail, { projectId: result.data.id });
 }
 
 export async function deleteProject(
   id: string,
 ): Promise<{ error: string | null }> {
-  try {
-    await ProjectService.deleteProject(id);
-  } catch (error) {
-    console.error("Failed to delete project:", error);
+  const result = await ProjectService.deleteProject(id);
+
+  if (!result.success) {
+    console.error("Failed to delete project:", result.errorMessage);
     return {
-      error:
-        error instanceof Error ? error.message : "Failed to delete project",
+      error: result.errorMessage,
     };
   }
 
