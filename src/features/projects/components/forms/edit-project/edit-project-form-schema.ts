@@ -15,6 +15,7 @@ export const updateProjectSchema = z.object({
   description: z.string().optional(),
   githubRepo: z.string().optional(),
   swaggerPath: z.string().optional(),
+  projectId: z.cuid(),
 });
 
 export type UpdateProjectInput = z.infer<typeof updateProjectSchema>;

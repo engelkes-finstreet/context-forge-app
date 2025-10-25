@@ -3,19 +3,24 @@
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { Button } from "@/components/ui/button";
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
+import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useEffect } from "react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateRequestSubtaskFormInput>>;
 };
 
 export const CreateRequestSubtaskFormFields = ({ fieldNames }: Props) => {
+  // Get errors from react-hook-form context
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  console.log({ errors });
   return (
     <div className="space-y-6">
-      <DynamicFormField fieldName={fieldNames.name} />
       <RequestsFields fieldNames={fieldNames} />
     </div>
   );

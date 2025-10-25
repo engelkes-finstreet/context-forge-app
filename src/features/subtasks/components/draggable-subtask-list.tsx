@@ -41,9 +41,9 @@ import { GripVertical } from "lucide-react";
 import { TypedLink } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
-import { reorderSubtasks } from "@/lib/actions/subtask-actions";
 import { toast } from "@/lib/toast";
 import { Subtask } from "@prisma/client";
+import { reorderSubtasksAction } from "@/features/subtasks/actions/reorder-subtasks-action";
 
 interface DraggableSubtaskListProps {
   subtasks: Subtask[];
@@ -125,7 +125,7 @@ function SortableSubtaskItem({
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <CardTitle className="text-lg flex-1">
-                    {subtask.name}
+                    {subtask.featureName}
                   </CardTitle>
                   <Badge variant={typeConfig.badgeVariant} className="shrink-0">
                     {typeConfig.icon} {typeConfig.label}
@@ -227,7 +227,7 @@ export function DraggableSubtaskList({
     startTransition(async () => {
       addOptimistic(newItems);
 
-      const result = await reorderSubtasks(
+      const result = await reorderSubtasksAction(
         taskId,
         projectId,
         newItems.map((item) => item.id),

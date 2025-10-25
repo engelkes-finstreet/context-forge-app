@@ -1,34 +1,25 @@
 "use server";
 
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
-import { SubtaskFormState } from "@/lib/actions/subtask-actions";
+import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
 import { SubtaskService } from "@/lib/services/subtask-service";
-import { Prisma, SubtaskType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { typedRedirect } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { TaskService } from "@/lib/services/task-service";
+import { FormState } from "@/components/forms/types";
 
 export async function createRequestSubtaskFormAction(
-  state: SubtaskFormState,
+  state: FormState,
   formData: CreateRequestSubtaskFormInput,
-): Promise<SubtaskFormState> {
+): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
-  const maxOrderSubtask = task.subtasks.reduce(
-    (max, subtask) => Math.max(max, subtask.order),
-    0,
-  );
 
-  const subtaskInput: Prisma.SubtaskUncheckedCreateInput = {
-    name: formData.name,
-    taskId: formData.taskId,
-    order: maxOrderSubtask + 1,
-    type: SubtaskType.REQUEST,
+  const subtaskInput: Prisma.SubtaskUncheckedUpdateInput = {
     metadata: JSON.stringify(formData.requests),
-    content: "",
   };
 
-  await SubtaskService.createSubtask(subtaskInput);
+  await SubtaskService.updateSubtask(formData.subtaskId, subtaskInput);
 
   if (task) {
     revalidatePath(`/projects/${task.projectId}/tasks/${task.id}`);

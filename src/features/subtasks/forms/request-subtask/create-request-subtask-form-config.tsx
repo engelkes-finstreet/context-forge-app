@@ -1,27 +1,31 @@
 "use client";
 
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import {
+  FormConfig,
+  FormFieldsType,
+  FormState,
+} from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
 import {
   CreateRequestSubtaskFormInput,
   createRequestSubtaskFormSchema,
-} from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
-import { SubtaskFormState } from "@/lib/actions/subtask-actions";
+} from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { DeepPartial } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { createRequestSubtaskFormAction } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-action";
+import { createRequestSubtaskFormAction } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-action";
 
 export function useCreateRequestSubtaskFormConfig(
   taskId: string,
+  subtaskId: string,
   endpoints: SwaggerEndpoint[],
-): FormConfig<SubtaskFormState, CreateRequestSubtaskFormInput> {
+): FormConfig<FormState, CreateRequestSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateRequestSubtaskFormInput> = {
     taskId,
-    name: "",
+    subtaskId,
     requests: [
       {
         endpoint: "",
@@ -36,11 +40,8 @@ export function useCreateRequestSubtaskFormConfig(
     taskId: {
       type: "hidden",
     },
-    name: {
-      type: "input",
-      inputType: "text",
-      label: "Subtask Name",
-      placeholder: "Enter subtask name",
+    subtaskId: {
+      type: "hidden",
     },
     requests: {
       type: "array",

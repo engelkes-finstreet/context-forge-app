@@ -8,12 +8,13 @@ import {
   UpdateProjectInput,
 } from "./edit-project-form-schema";
 import {
-  updateProjectAction,
-  ProjectFormState,
-} from "@/lib/actions/project-actions";
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
+  FormConfig,
+  FormFieldsType,
+  FormState,
+} from "@/components/forms/types";
 import { z } from "zod";
 import { routes } from "@/lib/routes";
+import { editProjectFormAction } from "@/features/projects/components/forms/edit-project/edit-project-form-action";
 
 const editProjectFormId = "edit-project-form";
 
@@ -37,10 +38,7 @@ interface UseEditProjectFormConfigProps {
 export function useEditProjectFormConfig({
   projectId,
   defaultValues: initialValues,
-}: UseEditProjectFormConfigProps): FormConfig<
-  ProjectFormState,
-  EditProjectInput
-> {
+}: UseEditProjectFormConfigProps): FormConfig<FormState, EditProjectInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<EditProjectInput> = {
@@ -78,6 +76,9 @@ export function useEditProjectFormConfig({
       label: "Swagger File Path (optional)",
       placeholder: "e.g., docs/swagger.yaml",
     },
+    projectId: {
+      type: "hidden",
+    },
   };
 
   return {
@@ -85,15 +86,15 @@ export function useEditProjectFormConfig({
     defaultValues,
     schema: editProjectSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: updateProjectAction,
+    serverAction: editProjectFormAction,
     formId: editProjectFormId,
     useErrorAction: () => {
-      return (state: ProjectFormState) => {
+      return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
-      return (state: ProjectFormState) => {
+      return (state: FormState) => {
         toast.success(state?.message || "Project updated successfully");
         router.push(routes.projects.detail.path({ projectId }));
       };

@@ -4,6 +4,9 @@ import { TaskService } from "@/lib/services/task-service";
 import { Button } from "@/components/ui/button";
 import { TypeSelector } from "@/features/subtasks/components/type-selector/type-selector";
 import { ArrowLeft } from "lucide-react";
+import { NewSubtaskForm } from "@/features/subtasks/forms/new-subtask/new-subtask-form";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageContent } from "@/components/ui/page-content";
 
 interface NewSubtaskPageProps {
   params: Promise<{
@@ -28,20 +31,17 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
 
   return (
     <>
-      <div>
-        <TypedLink
-          route={routes.projects.tasks.detail}
-          params={{ projectId, taskId }}
-          data-transition-ignore
-        >
-          <Button variant="ghost" size="sm" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to {task.name}
-          </Button>
-        </TypedLink>
-      </div>
+      <PageHeader>
+        <PageHeader.Title
+          title="Create New Subtask"
+          subtitle={`Add a new subtask to ${task.name}`}
+          backLabel={`Back to ${task.name}`}
+        />
+      </PageHeader>
 
-      <TypeSelector projectId={projectId} taskId={taskId} />
+      <PageContent>
+        <NewSubtaskForm taskId={taskId} />
+      </PageContent>
     </>
   );
 }

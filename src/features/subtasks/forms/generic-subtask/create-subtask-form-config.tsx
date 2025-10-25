@@ -8,11 +8,11 @@ import {
   CreateGenericSubtaskFormInput,
 } from "./create-generic-subtask-form-schema";
 import {
-  createGenericSubtaskAction,
-  SubtaskFormState,
-} from "@/lib/actions/subtask-actions";
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
-import { SwaggerEndpoint } from "@/lib/services/swagger-service";
+  FormConfig,
+  FormFieldsType,
+  FormState,
+} from "@/components/forms/types";
+import { createGenericSubtaskFormAction } from "@/features/subtasks/forms/generic-subtask/create-generic-subtask-form-action";
 
 const createSubtaskFormId = "create-generic-subtask-form";
 
@@ -24,40 +24,21 @@ const createSubtaskFormId = "create-generic-subtask-form";
  */
 export function useCreateGenericSubtaskFormConfig(
   taskId: string,
-  endpoints: SwaggerEndpoint[],
-): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
+  subtaskId: string,
+): FormConfig<FormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
-    name: "",
-    content: "",
-    endpoint: undefined,
+    subtaskId,
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
     taskId: {
       type: "hidden",
     },
-    name: {
-      type: "input",
-      inputType: "text",
-      label: "Subtask Name",
-      placeholder: "Enter subtask name",
-    },
-    content: {
-      type: "textarea",
-      label: "Content",
-      placeholder: "Enter subtask content (supports Markdown)",
-      description: "This content is specific to this subtask",
-    },
-    endpoint: {
-      type: "swagger_endpoint_selector",
-      label: "Endpoint",
-      description: "Select the API endpoint for this request",
-      placeholder: "Select endpoint...",
-      emptyText: "No endpoints found",
-      endpoints,
+    subtaskId: {
+      type: "hidden",
     },
   };
 
@@ -66,15 +47,15 @@ export function useCreateGenericSubtaskFormConfig(
     defaultValues,
     schema: createGenericSubtaskFormSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: createGenericSubtaskAction,
+    serverAction: createGenericSubtaskFormAction,
     formId: createSubtaskFormId,
     useErrorAction: () => {
-      return (state: SubtaskFormState) => {
+      return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
-      return (state: SubtaskFormState) => {
+      return (state: FormState) => {
         toast.success(state?.message || "Subtask created successfully");
       };
     },
