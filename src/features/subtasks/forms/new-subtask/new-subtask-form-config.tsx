@@ -7,12 +7,12 @@ import {
   NewSubtaskFormInput,
   newSubtaskFormSchema,
   NewSubtaskFormState,
-} from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-schema";
+} from "@/features/subtasks/forms/new-subtask/new-subtask-form-schema";
 import { toast } from "@/lib/toast";
 import { SubtaskType } from "@prisma/client";
 import { DeepPartial } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { newSubtaskFormAction } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-action";
+import { newSubtaskFormAction } from "@/features/subtasks/forms/new-subtask/new-subtask-form-action";
 
 type Props = {
   taskId: string;

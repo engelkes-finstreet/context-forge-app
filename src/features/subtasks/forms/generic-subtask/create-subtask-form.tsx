@@ -1,7 +1,7 @@
 "use client";
 
 import { Form } from "@/components/forms/form";
-import { useCreateGenericSubtaskFormConfig } from "@/features/subtasks/components/forms/generic-subtask/create-subtask-form-config";
+import { useCreateGenericSubtaskFormConfig } from "@/features/subtasks/forms/generic-subtask/create-subtask-form-config";
 
 interface CreateGenericSubtaskFormProps {
   taskId: string;

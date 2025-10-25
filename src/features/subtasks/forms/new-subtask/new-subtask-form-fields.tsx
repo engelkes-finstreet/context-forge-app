@@ -2,7 +2,7 @@
 
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { NewSubtaskFormInput } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-schema";
+import { NewSubtaskFormInput } from "@/features/subtasks/forms/new-subtask/new-subtask-form-schema";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<NewSubtaskFormInput>>;

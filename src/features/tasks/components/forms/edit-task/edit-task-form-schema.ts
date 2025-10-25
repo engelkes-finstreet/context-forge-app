@@ -1,19 +1,10 @@
+import { createTaskSchema } from "@/features/tasks/components/forms/create-task/create-task-form-schema";
 import { z } from "zod";
 
-/**
- * Update Task Form Schema
- *
- * Validates user input for updating an existing task.
- * Used by the edit task form for runtime validation.
- */
-export const updateTaskSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Task name is required")
-    .max(200, "Task name must be less than 200 characters")
-    .optional(),
-  sharedContext: z.string().optional(),
-  order: z.number().int().min(0).optional(),
+// Extended schema for the edit form that includes metadata
+export const editTaskSchema = createTaskSchema.extend({
+  id: z.cuid(),
+  projectId: z.cuid(),
 });
 
-export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
+export type EditTaskInput = z.infer<typeof editTaskSchema>;

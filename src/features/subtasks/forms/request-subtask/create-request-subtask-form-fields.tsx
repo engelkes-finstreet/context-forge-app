@@ -3,7 +3,7 @@
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { Button } from "@/components/ui/button";
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
+import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";

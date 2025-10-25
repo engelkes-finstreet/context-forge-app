@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PageContent } from "@/components/ui/page-content";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageHeaderTitle } from "@/components/ui/page-header/page-header-title";
-import { CreateRequestSubtaskForm } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form";
+import { CreateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form";
 import { TypedLink, routes } from "@/lib/routes";
 import { ProjectService } from "@/lib/services/project-service";
 import { SwaggerService } from "@/lib/services/swagger-service";

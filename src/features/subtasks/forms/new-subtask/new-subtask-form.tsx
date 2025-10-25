@@ -1,8 +1,8 @@
 "use client";
 
 import { Form } from "@/components/forms/form";
-import { useNewSubtaskFormConfig } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-config";
-import { NewSubtaskFormFields } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-fields";
+import { useNewSubtaskFormConfig } from "@/features/subtasks/forms/new-subtask/new-subtask-form-config";
+import { NewSubtaskFormFields } from "@/features/subtasks/forms/new-subtask/new-subtask-form-fields";
 
 type Props = {
   taskId: string;

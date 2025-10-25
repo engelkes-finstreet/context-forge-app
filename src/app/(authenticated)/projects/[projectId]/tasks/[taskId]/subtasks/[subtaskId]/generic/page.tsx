@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { CreateGenericSubtaskForm } from "@/features/subtasks/components/forms/generic-subtask/create-subtask-form";
+import { CreateGenericSubtaskForm } from "@/features/subtasks/forms/generic-subtask/create-subtask-form";
 import { ArrowLeft } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";

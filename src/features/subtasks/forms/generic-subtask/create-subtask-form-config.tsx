@@ -8,11 +8,11 @@ import {
   CreateGenericSubtaskFormInput,
 } from "./create-generic-subtask-form-schema";
 import {
-  createGenericSubtaskAction,
-  SubtaskFormState,
-} from "@/lib/actions/subtask-actions";
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
-import { SwaggerEndpoint } from "@/lib/services/swagger-service";
+  FormConfig,
+  FormFieldsType,
+  FormState,
+} from "@/components/forms/types";
+import { createGenericSubtaskFormAction } from "@/features/subtasks/forms/generic-subtask/create-generic-subtask-form-action";
 
 const createSubtaskFormId = "create-generic-subtask-form";
 
@@ -25,7 +25,7 @@ const createSubtaskFormId = "create-generic-subtask-form";
 export function useCreateGenericSubtaskFormConfig(
   taskId: string,
   subtaskId: string,
-): FormConfig<SubtaskFormState, CreateGenericSubtaskFormInput> {
+): FormConfig<FormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
@@ -47,15 +47,15 @@ export function useCreateGenericSubtaskFormConfig(
     defaultValues,
     schema: createGenericSubtaskFormSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: createGenericSubtaskAction,
+    serverAction: createGenericSubtaskFormAction,
     formId: createSubtaskFormId,
     useErrorAction: () => {
-      return (state: SubtaskFormState) => {
+      return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
-      return (state: SubtaskFormState) => {
+      return (state: FormState) => {
         toast.success(state?.message || "Subtask created successfully");
       };
     },

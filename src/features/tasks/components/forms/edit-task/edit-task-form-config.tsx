@@ -3,21 +3,18 @@ import { toast } from "@/lib/toast";
 import { useRouter } from "next/navigation";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import { updateTaskSchema, UpdateTaskInput } from "./edit-task-form-schema";
-import { updateTaskAction, TaskFormState } from "@/lib/actions/task-actions";
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import {
+  FormConfig,
+  FormFieldsType,
+  FormState,
+} from "@/components/forms/types";
 import { z } from "zod";
 import { routes } from "@/lib/routes";
-
-const editTaskFormId = "edit-task-form";
-
-// Extended schema for the edit form that includes metadata
-const editTaskSchema = updateTaskSchema.extend({
-  id: z.string().cuid(),
-  projectId: z.string().cuid(),
-});
-
-type EditTaskInput = z.infer<typeof editTaskSchema>;
+import {
+  EditTaskInput,
+  editTaskSchema,
+} from "@/features/tasks/components/forms/edit-task/edit-task-form-schema";
+import { editTaskFormAction } from "@/features/tasks/components/forms/edit-task/edit-task-form-action";
 
 interface UseEditTaskFormConfigProps {
   taskId: string;
@@ -32,7 +29,7 @@ export function useEditTaskFormConfig({
   taskId,
   projectId,
   defaultValues: initialValues,
-}: UseEditTaskFormConfigProps): FormConfig<TaskFormState, EditTaskInput> {
+}: UseEditTaskFormConfigProps): FormConfig<FormState, EditTaskInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<EditTaskInput> = {
@@ -72,15 +69,14 @@ export function useEditTaskFormConfig({
     defaultValues,
     schema: editTaskSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: updateTaskAction,
-    formId: editTaskFormId,
+    serverAction: editTaskFormAction,
     useErrorAction: () => {
-      return (state: TaskFormState) => {
+      return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
-      return (state: TaskFormState) => {
+      return (state: FormState) => {
         toast.success(state?.message || "Task updated successfully");
         router.push(routes.projects.tasks.detail.path({ projectId, taskId }));
       };
@@ -96,7 +92,7 @@ export function useEditTaskFormConfig({
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isPending} form={editTaskFormId}>
+          <Button type="submit" disabled={isPending}>
             {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>

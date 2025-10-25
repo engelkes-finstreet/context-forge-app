@@ -1,16 +1,16 @@
 "use server";
 
-import { NewSubtaskFormInput } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form-schema";
-import { SubtaskFormState } from "@/lib/actions/subtask-actions";
+import { NewSubtaskFormInput } from "@/features/subtasks/forms/new-subtask/new-subtask-form-schema";
 import { routes, typedRedirect } from "@/lib/routes";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import { TaskService } from "@/lib/services/task-service";
 import { SubtaskType } from "@prisma/client";
+import { FormState } from "@/components/forms/types";
 
 export async function newSubtaskFormAction(
-  state: SubtaskFormState,
+  state: FormState,
   formData: NewSubtaskFormInput,
-): Promise<SubtaskFormState> {
+): Promise<FormState> {
   const { featureName, product, role, subtaskType, taskId } = formData;
 
   const task = await TaskService.getTaskById(taskId);
@@ -30,9 +30,16 @@ export async function newSubtaskFormAction(
     metadata: {},
   });
 
+  if (!subtask.success) {
+    return {
+      error: subtask.errorMessage,
+      message: null,
+    };
+  }
+
   typedRedirect(routes.projects.tasks.subtasks.newRequest, {
     projectId: task.projectId,
     taskId: task.id,
-    subtaskId: subtask.id,
+    subtaskId: subtask.data.id,
   });
 }

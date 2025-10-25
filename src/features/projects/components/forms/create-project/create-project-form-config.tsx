@@ -7,17 +7,15 @@ import {
   createProjectSchema,
   CreateProjectInput,
 } from "./create-project-form-schema";
-import {
-  createProjectAction,
-  ProjectFormState,
-} from "@/lib/actions/project-actions";
+import { FormState } from "@/components/forms/types";
 import { FormConfig, FormFieldsType } from "@/components/forms/types";
 import { routes } from "@/lib/routes";
+import { createProjectFormAction } from "@/features/projects/components/forms/create-project/create-project-form-action";
 
 const createProjectFormId = "create-project-form";
 
 export function useCreateProjectFormConfig(): FormConfig<
-  ProjectFormState,
+  FormState,
   CreateProjectInput
 > {
   const router = useRouter();
@@ -60,15 +58,15 @@ export function useCreateProjectFormConfig(): FormConfig<
     defaultValues,
     schema: createProjectSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: createProjectAction,
+    serverAction: createProjectFormAction,
     formId: createProjectFormId,
     useErrorAction: () => {
-      return (state: ProjectFormState) => {
+      return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
       };
     },
     useSuccessAction: () => {
-      return (state: ProjectFormState) => {
+      return (state: FormState) => {
         toast.success(state?.message || "Project created successfully");
         router.push(routes.projects.list.path({}));
       };

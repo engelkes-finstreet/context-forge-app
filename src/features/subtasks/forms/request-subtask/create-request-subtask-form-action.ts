@@ -1,18 +1,18 @@
 "use server";
 
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-schema";
-import { SubtaskFormState } from "@/lib/actions/subtask-actions";
+import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { typedRedirect } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { TaskService } from "@/lib/services/task-service";
+import { FormState } from "@/components/forms/types";
 
 export async function createRequestSubtaskFormAction(
-  state: SubtaskFormState,
+  state: FormState,
   formData: CreateRequestSubtaskFormInput,
-): Promise<SubtaskFormState> {
+): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
   const subtaskInput: Prisma.SubtaskUncheckedUpdateInput = {

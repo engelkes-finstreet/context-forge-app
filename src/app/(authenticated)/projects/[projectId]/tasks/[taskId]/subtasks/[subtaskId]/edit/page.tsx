@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { EditSubtaskForm } from "@/features/subtasks/components/forms/edit-subtask/edit-subtask-form";
 import { ArrowLeft } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -91,15 +90,7 @@ export default async function EditSubtaskPage({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <EditSubtaskForm
-              subtaskId={subtaskId}
-              taskId={taskId}
-              projectId={projectId}
-              defaultValues={{
-                name: subtask.name,
-                content: subtask.content,
-              }}
-            />
+            {/* TODO: Think about editing of subtasks */}
           </CardContent>
         </Card>
       </PageContent>

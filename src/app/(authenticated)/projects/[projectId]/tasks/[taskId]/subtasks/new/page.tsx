@@ -4,7 +4,7 @@ import { TaskService } from "@/lib/services/task-service";
 import { Button } from "@/components/ui/button";
 import { TypeSelector } from "@/features/subtasks/components/type-selector/type-selector";
 import { ArrowLeft } from "lucide-react";
-import { NewSubtaskForm } from "@/features/subtasks/components/forms/new-subtask/new-subtask-form";
+import { NewSubtaskForm } from "@/features/subtasks/forms/new-subtask/new-subtask-form";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
 

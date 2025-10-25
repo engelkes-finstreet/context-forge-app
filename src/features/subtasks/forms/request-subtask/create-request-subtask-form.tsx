@@ -2,11 +2,11 @@
 
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { Form } from "@/components/forms/form";
-import { useCreateRequestSubtaskFormConfig } from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-config";
+import { useCreateRequestSubtaskFormConfig } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-config";
 import {
   CreateRequestSubtaskFormFields,
   RequestsFields,
-} from "@/features/subtasks/components/forms/request-subtask/create-request-subtask-form-fields";
+} from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-fields";
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 
 type Props = {
