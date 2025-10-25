@@ -8,12 +8,7 @@
  * Usage in services:
  * ```typescript
  * static async createProject(data: CreateInput): Promise<Result<Project>> {
- *   try {
- *     const project = await db.project.create({ data });
- *     return success(project);
- *   } catch (error) {
- *     return failure(getErrorMessage(error));
- *   }
+ *   return toResult(() => db.project.create({ data }));
  * }
  * ```
  *
@@ -70,4 +65,36 @@ export function getErrorMessage(error: unknown): string {
     return error;
   }
   return "An unexpected error occurred";
+}
+
+/**
+ * Wrap an async operation in a Result type
+ *
+ * This helper eliminates try-catch boilerplate in service methods.
+ * It catches any errors thrown by the operation and converts them to failure results.
+ *
+ * @param operation - An async function that performs the database operation
+ * @returns A Promise that resolves to a Result containing either the operation's data or an error message
+ *
+ * @example
+ * // Simple operation
+ * return toResult(() => db.project.create({ data }));
+ *
+ * @example
+ * // Complex operation with multiple steps
+ * return toResult(async () => {
+ *   const maxOrder = await db.task.findFirst({ orderBy: { order: "desc" } });
+ *   const order = maxOrder ? maxOrder.order + 1 : 0;
+ *   return db.task.create({ data: { ...data, order } });
+ * });
+ */
+export async function toResult<T>(
+  operation: () => Promise<T>,
+): Promise<Result<T>> {
+  try {
+    const data = await operation();
+    return success(data);
+  } catch (error) {
+    return failure(getErrorMessage(error));
+  }
 }

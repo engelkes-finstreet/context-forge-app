@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
-import { Result, success, failure, getErrorMessage } from "@/lib/result";
+import { Result, toResult } from "@/lib/result";
 
 export class SubtaskService {
   /**
@@ -43,7 +43,7 @@ export class SubtaskService {
   static async createSubtask(
     data: Prisma.SubtaskUncheckedCreateInput,
   ): Promise<Result<Prisma.SubtaskGetPayload<object>>> {
-    try {
+    return toResult(async () => {
       // Get the max order for subtasks in this task
       const maxOrderSubtask = await db.subtask.findFirst({
         where: { taskId: data.taskId },
@@ -54,16 +54,13 @@ export class SubtaskService {
       const order =
         data.order ?? (maxOrderSubtask ? maxOrderSubtask.order + 1 : 0);
 
-      const subtask = await db.subtask.create({
+      return db.subtask.create({
         data: {
           ...data,
           order,
         },
       });
-      return success(subtask);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    });
   }
 
   /**
@@ -74,15 +71,7 @@ export class SubtaskService {
     id: string,
     data: Prisma.SubtaskUncheckedUpdateInput,
   ): Promise<Result<Prisma.SubtaskGetPayload<object>>> {
-    try {
-      const subtask = await db.subtask.update({
-        where: { id },
-        data,
-      });
-      return success(subtask);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.subtask.update({ where: { id }, data }));
   }
 
   /**
@@ -92,14 +81,7 @@ export class SubtaskService {
   static async deleteSubtask(
     id: string,
   ): Promise<Result<Prisma.SubtaskGetPayload<object>>> {
-    try {
-      const subtask = await db.subtask.delete({
-        where: { id },
-      });
-      return success(subtask);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.subtask.delete({ where: { id } }));
   }
 
   /**
@@ -110,7 +92,7 @@ export class SubtaskService {
     taskId: string,
     subtaskIds: string[],
   ): Promise<Result<void>> {
-    try {
+    return toResult(async () => {
       // Update each subtask's order based on its position in the array
       const updates = subtaskIds.map((subtaskId, index) =>
         db.subtask.update({
@@ -120,10 +102,7 @@ export class SubtaskService {
       );
 
       await db.$transaction(updates);
-      return success(undefined);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    });
   }
 
   /**

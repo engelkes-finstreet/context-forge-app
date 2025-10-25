@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { notFound } from "next/navigation";
-import { Result, success, failure, getErrorMessage } from "@/lib/result";
+import { Result, toResult } from "@/lib/result";
 
 export class TaskService {
   /**
@@ -60,7 +60,7 @@ export class TaskService {
   static async createTask(
     data: Prisma.TaskUncheckedCreateInput,
   ): Promise<Result<Prisma.TaskGetPayload<object>>> {
-    try {
+    return toResult(async () => {
       // Get the max order for tasks in this project
       const maxOrderTask = await db.task.findFirst({
         where: { projectId: data.projectId },
@@ -70,16 +70,13 @@ export class TaskService {
 
       const order = data.order ?? (maxOrderTask ? maxOrderTask.order + 1 : 0);
 
-      const task = await db.task.create({
+      return db.task.create({
         data: {
           ...data,
           order,
         },
       });
-      return success(task);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    });
   }
 
   /**
@@ -90,15 +87,7 @@ export class TaskService {
     id: string,
     data: Prisma.TaskUncheckedUpdateInput,
   ): Promise<Result<Prisma.TaskGetPayload<object>>> {
-    try {
-      const task = await db.task.update({
-        where: { id },
-        data,
-      });
-      return success(task);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.task.update({ where: { id }, data }));
   }
 
   /**
@@ -108,14 +97,7 @@ export class TaskService {
   static async deleteTask(
     id: string,
   ): Promise<Result<Prisma.TaskGetPayload<object>>> {
-    try {
-      const task = await db.task.delete({
-        where: { id },
-      });
-      return success(task);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.task.delete({ where: { id } }));
   }
 
   /**
@@ -126,7 +108,7 @@ export class TaskService {
     projectId: string,
     taskIds: string[],
   ): Promise<Result<void>> {
-    try {
+    return toResult(async () => {
       // Update each task's order based on its position in the array
       const updates = taskIds.map((taskId, index) =>
         db.task.update({
@@ -136,10 +118,7 @@ export class TaskService {
       );
 
       await db.$transaction(updates);
-      return success(undefined);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    });
   }
 
   /**

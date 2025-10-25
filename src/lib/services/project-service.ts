@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { notFound } from "next/navigation";
-import { Result, success, failure, getErrorMessage } from "@/lib/result";
+import { Result, toResult } from "@/lib/result";
 
 export class ProjectService {
   /**
@@ -61,14 +61,7 @@ export class ProjectService {
   static async createProject(
     data: Prisma.ProjectCreateInput,
   ): Promise<Result<Prisma.ProjectGetPayload<object>>> {
-    try {
-      const project = await db.project.create({
-        data,
-      });
-      return success(project);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.project.create({ data }));
   }
 
   /**
@@ -79,15 +72,7 @@ export class ProjectService {
     id: string,
     data: Prisma.ProjectUpdateInput,
   ): Promise<Result<Prisma.ProjectGetPayload<object>>> {
-    try {
-      const project = await db.project.update({
-        where: { id },
-        data,
-      });
-      return success(project);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.project.update({ where: { id }, data }));
   }
 
   /**
@@ -97,14 +82,7 @@ export class ProjectService {
   static async deleteProject(
     id: string,
   ): Promise<Result<Prisma.ProjectGetPayload<object>>> {
-    try {
-      const project = await db.project.delete({
-        where: { id },
-      });
-      return success(project);
-    } catch (error) {
-      return failure(getErrorMessage(error));
-    }
+    return toResult(() => db.project.delete({ where: { id } }));
   }
 
   /**
