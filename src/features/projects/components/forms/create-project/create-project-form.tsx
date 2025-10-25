@@ -13,6 +13,8 @@ export function CreateProjectForm() {
       <div className="space-y-6">
         <DynamicFormField fieldName={fieldNames.name} />
         <DynamicFormField fieldName={fieldNames.description} />
+        <DynamicFormField fieldName={fieldNames.githubRepo} />
+        <DynamicFormField fieldName={fieldNames.swaggerPath} />
       </div>
     </Form>
   );

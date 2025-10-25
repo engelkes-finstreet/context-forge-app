@@ -58,22 +58,20 @@ export class TaskService {
    * Returns Result type for use in server actions
    */
   static async createTask(
-    data: Prisma.TaskUncheckedCreateInput,
+    data: Omit<Prisma.TaskUncheckedCreateInput, "order" | "sharedContext">,
   ): Promise<Result<Prisma.TaskGetPayload<object>>> {
     return toResult(async () => {
-      // Get the max order for tasks in this project
       const maxOrderTask = await db.task.findFirst({
         where: { projectId: data.projectId },
         orderBy: { order: "desc" },
         select: { order: true },
       });
 
-      const order = data.order ?? (maxOrderTask ? maxOrderTask.order + 1 : 0);
-
       return db.task.create({
         data: {
           ...data,
-          order,
+          order: maxOrderTask ? maxOrderTask.order + 1 : 0,
+          sharedContext: "",
         },
       });
     });

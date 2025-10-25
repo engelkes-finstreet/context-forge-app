@@ -97,6 +97,9 @@ model Task {
   id            String   @id @default(cuid())
   projectId     String
   name          String
+  featureName String
+  product     String
+  role        String
   sharedContext String   @db.Text
   order         Int      @default(0)
   createdAt     DateTime @default(now())
@@ -120,9 +123,7 @@ enum SubtaskType {
 model Subtask {
   id          String      @id @default(cuid())
   taskId      String
-  featureName String
-  product     String
-  role        String
+  name        String
   type        SubtaskType @default(GENERIC)
   content     String      @db.Text
   metadata    Json?

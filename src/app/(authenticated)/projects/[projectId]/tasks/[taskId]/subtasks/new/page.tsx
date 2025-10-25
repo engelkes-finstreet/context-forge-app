@@ -1,10 +1,6 @@
 import { notFound } from "next/navigation";
-import { TypedLink, routes } from "@/lib/routes";
 import { TaskService } from "@/lib/services/task-service";
-import { Button } from "@/components/ui/button";
 import { TypeSelector } from "@/features/subtasks/components/type-selector/type-selector";
-import { ArrowLeft } from "lucide-react";
-import { NewSubtaskForm } from "@/features/subtasks/forms/new-subtask/new-subtask-form";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
 
@@ -40,7 +36,7 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
       </PageHeader>
 
       <PageContent>
-        <NewSubtaskForm taskId={taskId} />
+        <TypeSelector projectId={projectId} taskId={taskId} />
       </PageContent>
     </>
   );

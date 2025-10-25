@@ -47,15 +47,6 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2 text-gradient">
-          Create New Subtask
-        </h2>
-        <p className="text-muted-foreground">
-          Select the type of subtask you want to create
-        </p>
-      </div>
-
       {enabledTypes.length > 0 ? (
         <StaggeredContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {enabledTypes.map((config) => (
