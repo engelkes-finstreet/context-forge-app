@@ -101,14 +101,17 @@ model Task {
   product     String
   role        String
   sharedContext String   @db.Text
+  templateId    String?
   order         Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project  Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  template TaskTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
   subtasks Subtask[]
 
   @@index([projectId])
+  @@index([templateId])
   @@map("tasks")
 }
 
@@ -135,4 +138,36 @@ model Subtask {
 
   @@index([taskId])
   @@map("subtasks")
+}
+
+model TaskTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  usageCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subtaskTemplates SubtaskTemplate[]
+  tasks            Task[]
+
+  @@map("task_templates")
+}
+
+model SubtaskTemplate {
+  id         String      @id @default(cuid())
+  templateId String
+  name       String
+  type       SubtaskType
+  content    String      @db.Text
+  metadata   Json?
+  order      Int
+  required   Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  template TaskTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+  @@map("subtask_templates")
 }
