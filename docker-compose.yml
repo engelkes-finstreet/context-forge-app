@@ -3,7 +3,7 @@ version: "3.9"
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: fe-shadcn-postgres
+    container_name: context-forge-postgres_dev
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -18,10 +18,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - context-forge-network
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: fe-shadcn-pgadmin
+    container_name: context-forge-pgadmin_dev
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
@@ -33,9 +35,16 @@ services:
       - postgres
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - context-forge-network
 
 volumes:
   postgres_data:
     driver: local
   pgadmin_data:
     driver: local
+
+networks:
+  context-forge-network:
+    name: context-forge-network
+    driver: bridge

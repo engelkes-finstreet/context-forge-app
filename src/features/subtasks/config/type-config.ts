@@ -45,6 +45,16 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     badgeVariant: "default",
   },
 
+  [SubtaskType.PRESENTATION_LIST]: {
+    type: SubtaskType.PRESENTATION_LIST,
+    label: "Presentation List",
+    description: "List of presentations",
+    icon: "📊",
+    route: "presentation-list",
+    enabled: true,
+    badgeVariant: "default",
+  },
+
   [SubtaskType.INQUIRY_PROCESS]: {
     type: SubtaskType.INQUIRY_PROCESS,
     label: "Inquiry Process",

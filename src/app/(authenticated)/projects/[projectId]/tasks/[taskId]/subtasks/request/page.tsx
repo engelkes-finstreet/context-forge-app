@@ -44,11 +44,7 @@ export default async function NewRequestSubtaskPage({ params }: Props) {
         </PageHeader>
 
         <PageContent>
-          <CreateRequestSubtaskForm
-            taskId={taskId}
-            subtaskId={subtaskId}
-            endpoints={endpoints}
-          />
+          <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
         </PageContent>
       </>
     );

@@ -70,7 +70,10 @@ export const routes = {
           "/projects/[projectId]/tasks/[taskId]/subtasks/new/modal",
         ),
         newRequest: route(
-          "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/request",
+          "/projects/[projectId]/tasks/[taskId]/subtasks/request",
+        ),
+        newPresentationList: route(
+          "/projects/[projectId]/tasks/[taskId]/subtasks/presentation-list",
         ),
         edit: route(
           "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit",

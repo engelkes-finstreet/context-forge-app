@@ -18,20 +18,19 @@ import { createRequestSubtaskFormAction } from "@/features/subtasks/forms/reques
 
 export function useCreateRequestSubtaskFormConfig(
   taskId: string,
-  subtaskId: string,
   endpoints: SwaggerEndpoint[],
 ): FormConfig<FormState, CreateRequestSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateRequestSubtaskFormInput> = {
     taskId,
-    subtaskId,
+    subtaskName: "",
     requests: [
       {
         endpoint: "",
         requestType: undefined,
-        paginated: undefined,
-        protected: undefined,
+        paginated: false,
+        protected: false,
       },
     ],
   };
@@ -40,8 +39,10 @@ export function useCreateRequestSubtaskFormConfig(
     taskId: {
       type: "hidden",
     },
-    subtaskId: {
-      type: "hidden",
+    subtaskName: {
+      type: "input",
+      label: "Subtask Name",
+      placeholder: "Enter subtask name",
     },
     requests: {
       type: "array",

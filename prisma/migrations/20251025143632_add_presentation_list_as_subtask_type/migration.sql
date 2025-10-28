@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "SubtaskType" ADD VALUE 'PRESENTATION_LIST';

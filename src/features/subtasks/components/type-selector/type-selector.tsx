@@ -32,10 +32,12 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
     form: routes.projects.tasks.subtasks.newForm,
     modal: routes.projects.tasks.subtasks.newModal,
     request: routes.projects.tasks.subtasks.newRequest,
+    "presentation-list": routes.projects.tasks.subtasks.newPresentationList,
   } as const;
 
   const handleTypeSelect = (route: string) => {
     const routeObj = (routeMap as any)[route];
+    console.log(routeObj);
     if (routeObj) {
       router.push(routeObj.path({ projectId, taskId }));
     }

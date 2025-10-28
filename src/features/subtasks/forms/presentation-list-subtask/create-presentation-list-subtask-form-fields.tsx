@@ -1,43 +1,54 @@
-"use client";
-
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { Button } from "@/components/ui/button";
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
-import { PlusIcon, XIcon } from "lucide-react";
+import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-schema";
+import { XIcon, PlusIcon, AlertCircle } from "lucide-react";
 import { useEffect } from "react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormState } from "react-hook-form";
 
 type Props = {
-  fieldNames: FieldNamesType<FormFieldsType<CreateRequestSubtaskFormInput>>;
+  fieldNames: FieldNamesType<
+    FormFieldsType<CreatePresentationListSubtaskFormInput>
+  >;
 };
 
-export const CreateRequestSubtaskFormFields = ({ fieldNames }: Props) => {
+export const CreatePresentationListSubtaskFormFields = ({
+  fieldNames,
+}: Props) => {
+  const { errors } = useFormState();
+  const columnsError = errors.columns?.root?.message?.toString();
+
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
-      <RequestsFields fieldNames={fieldNames} />
+      {columnsError && (
+        <div className="flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+          <AlertCircle className="size-4 shrink-0" />
+          <span>{columnsError}</span>
+        </div>
+      )}
+      <ColumnsFields fieldNames={fieldNames} />
+      <DynamicFormField fieldName={fieldNames.noItemTranslation} />
     </div>
   );
 };
 
-export const RequestsFields = ({ fieldNames }: Props) => {
+const ColumnsFields = ({ fieldNames }: Props) => {
   const {
     fields: fieldsArray,
     append,
     remove,
     update,
   } = useFieldArray({
-    name: fieldNames.requests.fieldName,
+    name: fieldNames.columns.fieldName,
   });
 
   useEffect(() => {
     if (fieldsArray.length === 0) {
       append({
-        endpoint: "",
-        requestType: undefined,
-        paginated: false,
-        protected: false,
+        name: "",
+        translation: "",
+        gridTemplateColumns: undefined,
       });
     }
   }, [fieldsArray, append]);
@@ -45,22 +56,19 @@ export const RequestsFields = ({ fieldNames }: Props) => {
   const handleRemove = (index: number) => {
     if (fieldsArray.length === 1) {
       update(index, {
-        endpoint: "",
-        requestType: undefined,
-        paginated: false,
-        protected: false,
+        name: "",
+        translation: "",
+        gridTemplateColumns: undefined,
       });
     }
-
     remove(index);
   };
 
   const handleAdd = () => {
     append({
-      endpoint: "",
-      requestType: undefined,
-      paginated: false,
-      protected: false,
+      name: "",
+      translation: "",
+      gridTemplateColumns: undefined,
     });
   };
 
@@ -73,7 +81,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
             className="border border-primary/50 rounded-md overflow-hidden"
           >
             <div className="flex items-center justify-between bg-muted px-4 py-2">
-              <h3 className="text-sm font-medium">Request {index + 1}</h3>
+              <h3 className="text-sm font-medium">Column {index + 1}</h3>
               <Button
                 onClick={() => handleRemove(index)}
                 variant="ghost"
@@ -85,16 +93,13 @@ export const RequestsFields = ({ fieldNames }: Props) => {
             </div>
             <div className="flex flex-col gap-6 p-4">
               <DynamicFormField
-                fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.endpoint}`}
+                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.name}`}
               />
               <DynamicFormField
-                fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.requestType}`}
+                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.translation}`}
               />
               <DynamicFormField
-                fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.paginated}`}
-              />
-              <DynamicFormField
-                fieldName={`${fieldNames.requests.fieldName}.${index}.${fieldNames.requests.fields.protected}`}
+                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.gridTemplateColumns}`}
               />
             </div>
           </div>

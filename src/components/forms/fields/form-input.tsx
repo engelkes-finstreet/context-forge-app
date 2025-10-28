@@ -25,6 +25,9 @@ export function FormInput<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ name, fieldConfig }: FormInputProps<TFieldValues, TName>) {
+  const inputType = fieldConfig.inputType || "text";
+  const isNumberInput = inputType === "number";
+
   return (
     <FormField
       name={name}
@@ -35,7 +38,17 @@ export function FormInput<
             <Input
               {...field}
               placeholder={fieldConfig.placeholder}
-              type={fieldConfig.inputType || "text"}
+              type={inputType}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (isNumberInput) {
+                  // Convert to number if value exists, otherwise use empty string
+                  field.onChange(value === "" ? "" : Number(value));
+                } else {
+                  field.onChange(value);
+                }
+              }}
+              value={field.value ?? ""}
             />
           </FormControl>
           {fieldConfig.description && (

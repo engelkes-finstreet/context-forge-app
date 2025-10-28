@@ -1,28 +1,28 @@
 "use server";
 
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
+import { FormState } from "@/components/forms/types";
+import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-schema";
+import { routes, typedRedirect } from "@/lib/routes";
 import { SubtaskService } from "@/lib/services/subtask-service";
+import { TaskService } from "@/lib/services/task-service";
 import { SubtaskType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { typedRedirect } from "@/lib/routes";
-import { routes } from "@/lib/routes";
-import { TaskService } from "@/lib/services/task-service";
-import { FormState } from "@/components/forms/types";
 
-export async function createRequestSubtaskFormAction(
+export async function createPresentationListSubtaskFormAction(
   state: FormState,
-  formData: CreateRequestSubtaskFormInput,
+  formData: CreatePresentationListSubtaskFormInput,
 ): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
   const metadata = {
-    requests: formData.requests,
+    columns: formData.columns,
+    noItemTranslation: formData.noItemTranslation,
   };
 
   const result = await SubtaskService.createSubtask({
     taskId: formData.taskId,
     name: formData.subtaskName,
-    type: SubtaskType.REQUEST,
+    type: SubtaskType.PRESENTATION_LIST,
     content: JSON.stringify(metadata),
     metadata: JSON.stringify(metadata),
   });
