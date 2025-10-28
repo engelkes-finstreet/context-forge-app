@@ -61,14 +61,10 @@ export const routes = {
           "/projects/[projectId]/tasks/[taskId]/subtasks/new/generic",
         ),
         newInquiryProcess: route(
-          "/projects/[projectId]/tasks/[taskId]/subtasks/new/inquiry-process",
+          "/projects/[projectId]/tasks/[taskId]/subtasks/inquiry-process",
         ),
-        newForm: route(
-          "/projects/[projectId]/tasks/[taskId]/subtasks/new/form",
-        ),
-        newModal: route(
-          "/projects/[projectId]/tasks/[taskId]/subtasks/new/modal",
-        ),
+        newForm: route("/projects/[projectId]/tasks/[taskId]/subtasks/form"),
+        newModal: route("/projects/[projectId]/tasks/[taskId]/subtasks/modal"),
         newRequest: route(
           "/projects/[projectId]/tasks/[taskId]/subtasks/request",
         ),

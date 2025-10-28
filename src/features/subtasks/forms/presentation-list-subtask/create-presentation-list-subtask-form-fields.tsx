@@ -1,10 +1,9 @@
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { Button } from "@/components/ui/button";
+import { FieldArraySection } from "@/components/forms/field-array-section";
 import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-schema";
-import { XIcon, PlusIcon, AlertCircle } from "lucide-react";
-import { useEffect } from "react";
-import { useFieldArray, useFormState } from "react-hook-form";
+import { AlertCircle } from "lucide-react";
+import { useFormState } from "react-hook-form";
 
 type Props = {
   fieldNames: FieldNamesType<
@@ -34,86 +33,26 @@ export const CreatePresentationListSubtaskFormFields = ({
 };
 
 const ColumnsFields = ({ fieldNames }: Props) => {
-  const {
-    fields: fieldsArray,
-    append,
-    remove,
-    update,
-  } = useFieldArray({
-    name: fieldNames.columns.fieldName,
-  });
-
-  useEffect(() => {
-    if (fieldsArray.length === 0) {
-      append({
-        name: "",
-        translation: "",
-        gridTemplateColumns: undefined,
-      });
-    }
-  }, [fieldsArray, append]);
-
-  const handleRemove = (index: number) => {
-    if (fieldsArray.length === 1) {
-      update(index, {
-        name: "",
-        translation: "",
-        gridTemplateColumns: undefined,
-      });
-    }
-    remove(index);
-  };
-
-  const handleAdd = () => {
-    append({
-      name: "",
-      translation: "",
-      gridTemplateColumns: undefined,
-    });
-  };
-
   return (
-    <div className="space-y-4">
-      <div className="space-y-4">
-        {fieldsArray.map((field, index) => (
-          <div
-            key={field.id}
-            className="border border-primary/50 rounded-md overflow-hidden"
-          >
-            <div className="flex items-center justify-between bg-muted px-4 py-2">
-              <h3 className="text-sm font-medium">Column {index + 1}</h3>
-              <Button
-                onClick={() => handleRemove(index)}
-                variant="ghost"
-                size="icon"
-                type="button"
-              >
-                <XIcon className="size-4" />
-              </Button>
-            </div>
-            <div className="flex flex-col gap-6 p-4">
-              <DynamicFormField
-                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.name}`}
-              />
-              <DynamicFormField
-                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.translation}`}
-              />
-              <DynamicFormField
-                fieldName={`${fieldNames.columns.fieldName}.${index}.${fieldNames.columns.fields.gridTemplateColumns}`}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-      <Button
-        onClick={handleAdd}
-        variant="outline"
-        className="w-full border-dashed"
-        type="button"
-      >
-        <PlusIcon className="size-4 mr-2" />
-        Add Request
-      </Button>
-    </div>
+    <FieldArraySection
+      arrayFieldName={fieldNames.columns.fieldName}
+      arrayFieldConfig={fieldNames.columns}
+      defaultItem={{
+        name: "",
+        translation: "",
+        gridTemplateColumns: undefined,
+      }}
+      itemLabel="Column"
+    >
+      {({ buildFieldName, fieldNames: fields }) => (
+        <>
+          <DynamicFormField fieldName={buildFieldName(fields.name)} />
+          <DynamicFormField fieldName={buildFieldName(fields.translation)} />
+          <DynamicFormField
+            fieldName={buildFieldName(fields.gridTemplateColumns)}
+          />
+        </>
+      )}
+    </FieldArraySection>
   );
 };

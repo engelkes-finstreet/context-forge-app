@@ -61,7 +61,7 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     description: "Multi-step form wizard with progress tracking",
     icon: "🔄",
     route: "inquiry-process",
-    enabled: false, // Disabled for now - will be implemented later
+    enabled: true,
     badgeVariant: "secondary",
   },
 
