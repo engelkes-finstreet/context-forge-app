@@ -2,7 +2,7 @@ import type {
   FormFieldConfig,
   InputFieldConfig,
   SelectableCardFieldConfig,
-  NumberFieldConfig,
+  HiddenFieldConfig,
   CreateFormSubtaskFormInput,
 } from "../forms/form-subtask/create-form-subtask-form-schema";
 
@@ -11,7 +11,7 @@ export type {
   FormFieldConfig,
   InputFieldConfig,
   SelectableCardFieldConfig,
-  NumberFieldConfig,
+  HiddenFieldConfig,
   CreateFormSubtaskFormInput,
 };
 
@@ -28,10 +28,10 @@ export function isSelectableCardField(
   return field.fieldType === "selectable-card";
 }
 
-export function isNumberField(
+export function isHiddenField(
   field: FormFieldConfig,
-): field is NumberFieldConfig {
-  return field.fieldType === "number";
+): field is HiddenFieldConfig {
+  return field.fieldType === "hidden";
 }
 
 // Metadata structure for database storage

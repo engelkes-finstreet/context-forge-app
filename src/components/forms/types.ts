@@ -27,6 +27,7 @@ export type FormConfig<
   renderFormActions: (isPending: boolean) => React.ReactNode;
   hideActions?: boolean;
   formId?: string;
+  mode?: "onBlur" | "onChange" | "onSubmit" | "onTouched" | "all";
 };
 
 export type ClientFormConfig<
@@ -42,6 +43,7 @@ export type ClientFormConfig<
   renderFormActions: (isPending: boolean) => React.ReactNode;
   hideActions?: boolean;
   formId?: string;
+  mode?: "onBlur" | "onChange" | "onSubmit" | "onTouched" | "all";
 };
 
 export type ArrayFieldConfig<

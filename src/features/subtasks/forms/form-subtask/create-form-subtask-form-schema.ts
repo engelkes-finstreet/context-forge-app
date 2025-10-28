@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Base field schema with properties common to all field types
 const baseFieldSchema = z.object({
   name: z.string().min(1, "Field name is required"),
   label: z.string().min(1, "Label is required"),
@@ -8,14 +7,12 @@ const baseFieldSchema = z.object({
   validation: z.string().min(1, "Validation is required"),
 });
 
-// Input field type (text, email, url, tel)
 const inputFieldSchema = baseFieldSchema.extend({
   fieldType: z.literal("input"),
   placeholder: z.string().optional(),
-  inputType: z.enum(["text", "email", "url", "tel"]).default("text"),
+  inputType: z.enum(["text", "number"]).default("text"),
 });
 
-// Selectable card field type with options
 const selectableCardFieldSchema = baseFieldSchema.extend({
   fieldType: z.literal("selectable-card"),
   options: z
@@ -29,13 +26,17 @@ const selectableCardFieldSchema = baseFieldSchema.extend({
   multiSelect: z.boolean().default(false),
 });
 
-// Discriminated union of all field types
+const hiddenFieldSchema = z.object({
+  fieldType: z.literal("hidden"),
+  name: z.string().min(1, "Field name is required"),
+});
+
 const formFieldConfigSchema = z.discriminatedUnion("fieldType", [
   inputFieldSchema,
   selectableCardFieldSchema,
+  hiddenFieldSchema,
 ]);
 
-// Complete form schema with field array and validation
 export const createFormSubtaskFormSchema = z
   .object({
     taskId: z.string().cuid("Invalid task ID"),
@@ -72,6 +73,7 @@ export type InputFieldConfig = z.infer<typeof inputFieldSchema>;
 export type SelectableCardFieldConfig = z.infer<
   typeof selectableCardFieldSchema
 >;
+export type HiddenFieldConfig = z.infer<typeof hiddenFieldSchema>;
 export type CreateFormSubtaskFormInput = z.infer<
   typeof createFormSubtaskFormSchema
 >;

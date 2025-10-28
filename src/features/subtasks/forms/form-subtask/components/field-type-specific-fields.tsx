@@ -3,6 +3,7 @@ import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subta
 import { useWatch } from "react-hook-form";
 import { InputFields } from "./input-fields";
 import { SelectableCardFields } from "./selectable-card-fields";
+import { HiddenFields } from "./hidden-fields";
 
 type FieldTypeSpecificFieldsProps = {
   index: number;
@@ -25,6 +26,7 @@ export const FieldTypeSpecificFields = ({
       {watch === "selectable-card" && (
         <SelectableCardFields index={index} fieldNames={fieldNames} />
       )}
+      {watch === "hidden" && <HiddenFields />}
     </>
   );
 };

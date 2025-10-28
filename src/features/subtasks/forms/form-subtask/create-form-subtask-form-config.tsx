@@ -61,6 +61,7 @@ export function useCreateFormSubtaskFormConfig({
         options: [
           { label: "Input", value: "input" },
           { label: "Selectable Card", value: "selectable-card" },
+          { label: "Hidden", value: "hidden" },
         ],
       },
       name: {
@@ -140,5 +141,6 @@ export function useCreateFormSubtaskFormConfig({
         </div>
       );
     },
+    mode: "onSubmit",
   };
 }

@@ -38,7 +38,9 @@ export const Fields = ({ fieldNames }: Props) => {
         name: "",
         label: "",
         description: "",
-        options: [{ label: "", sublabel: "" }],
+        validation: "",
+        inputType: "text",
+        placeholder: "",
       });
     }
   }, [fieldsArray, append]);
@@ -57,7 +59,9 @@ export const Fields = ({ fieldNames }: Props) => {
       name: "",
       label: "",
       description: "",
-      options: [{ label: "", sublabel: "" }],
+      validation: "",
+      inputType: "text",
+      placeholder: "",
     });
   };
 
@@ -90,20 +94,9 @@ export const Fields = ({ fieldNames }: Props) => {
                 <DynamicFormField
                   fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.fieldType}`}
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <DynamicFormField
-                    fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.name}`}
-                  />
-                  <DynamicFormField
-                    fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.label}`}
-                  />
-                  <DynamicFormField
-                    fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.description}`}
-                  />
-                  <DynamicFormField
-                    fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.validation}`}
-                  />
-                </div>
+                <DynamicFormField
+                  fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.name}`}
+                />
               </FieldSet>
 
               <FieldTypeSpecificFields index={index} fieldNames={fieldNames} />
@@ -124,4 +117,3 @@ export const Fields = ({ fieldNames }: Props) => {
     </div>
   );
 };
-

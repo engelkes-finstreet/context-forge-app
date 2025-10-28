@@ -56,10 +56,10 @@ export const OptionsFields = ({ index, fieldNames }: OptionsFieldsProps) => {
             <div className="p-4 pt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
                 <DynamicFormField
-                  fieldName={`${fieldNames.fields.fieldName}.${index}.options.${optionIndex}.label`}
+                  fieldName={`${fieldNames.fields.fieldName}.${index}.options.${optionIndex}.label` as any}
                 />
                 <DynamicFormField
-                  fieldName={`${fieldNames.fields.fieldName}.${index}.options.${optionIndex}.sublabel`}
+                  fieldName={`${fieldNames.fields.fieldName}.${index}.options.${optionIndex}.sublabel` as any}
                 />
               </div>
             </div>
