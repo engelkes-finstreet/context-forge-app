@@ -71,7 +71,7 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     description: "Single form with field definitions and validation",
     icon: "📋",
     route: "form",
-    enabled: false, // Disabled for now - will be implemented later
+    enabled: true,
     badgeVariant: "outline",
   },
 

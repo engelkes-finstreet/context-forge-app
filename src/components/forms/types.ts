@@ -44,14 +44,30 @@ export type ClientFormConfig<
   formId?: string;
 };
 
-export type ArrayFieldConfig<T, FormValues, CustomFields = never> = {
+export type ArrayFieldConfig<
+  T,
+  RootFormValues,
+  CustomFields = never,
+> = {
   type: "array";
 } & {
-  [field in keyof T]: FormFieldConfig<
-    FormValues,
-    keyof FormValues & keyof T,
-    CustomFields
-  >;
+  [field in keyof T]: T[field] extends readonly any[]
+    ? // If this nested field is also an array of objects
+      T[field][number] extends object
+      ? // Check if it's a Date array
+        T[field][number] extends Date
+        ? FormFieldConfig<RootFormValues, keyof RootFormValues & string, CustomFields>
+        : ArrayFieldConfig<T[field][number], RootFormValues, CustomFields>
+      : // Array of primitives
+        FormFieldConfig<RootFormValues, keyof RootFormValues & string, CustomFields>
+    : // If it's a Date
+      T[field] extends Date
+      ? FormFieldConfig<RootFormValues, keyof RootFormValues & string, CustomFields>
+      : // If it's a nested object (not array or Date)
+        T[field] extends object
+        ? FormFieldsType<T[field], CustomFields, RootFormValues>
+        : // Otherwise, scalar field
+          FormFieldConfig<RootFormValues, keyof RootFormValues & string, CustomFields>;
 };
 
 type Strict<T> = {
@@ -97,11 +113,18 @@ export type FormFieldsType<
   [field in keyof Strict<FormValues>]: Strict<FormValues>[field] extends readonly any[] // 1. If `field` is an array
     ? // 1a. If array elements are objects => ArrayFieldConfig
       Strict<FormValues>[field][number] extends object
-      ? ArrayFieldConfig<
-          Strict<FormValues>[field][number],
-          RootFormValues,
-          CustomFields
-        >
+      ? // Check if it's a Date array
+        Strict<FormValues>[field][number] extends Date
+        ? FormFieldConfig<
+            RootFormValues,
+            keyof RootFormValues & string,
+            CustomFields
+          >
+        : ArrayFieldConfig<
+            Strict<FormValues>[field][number],
+            RootFormValues,
+            CustomFields
+          >
       : // 1b. Otherwise (array of primitives) => FormFieldConfig
         FormFieldConfig<
           RootFormValues,

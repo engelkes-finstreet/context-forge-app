@@ -55,6 +55,8 @@ export function FieldArraySection<TItem extends Record<string, any>>({
     name: arrayFieldName,
   });
 
+  console.log(fieldsArray);
+
   useEffect(() => {
     if (fieldsArray.length === 0 && minItems > 0) {
       append(defaultItem);

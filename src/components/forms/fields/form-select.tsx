@@ -39,7 +39,7 @@ export function FormSelect<
           {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue
                   placeholder={fieldConfig.placeholder || "Select an option"}
                 />
