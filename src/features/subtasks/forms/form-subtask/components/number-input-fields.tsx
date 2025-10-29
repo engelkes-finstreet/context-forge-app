@@ -4,12 +4,12 @@ import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-
 import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
 
-type InputFieldsProps = {
+type Props = {
   index: number;
   fieldNames: FieldNamesType<FormFieldsType<CreateFormSubtaskFormInput>>;
 };
 
-export const InputFields = ({ index, fieldNames }: InputFieldsProps) => {
+export const NumberInputFields = ({ index, fieldNames }: Props) => {
   return (
     <>
       <FieldSet>
@@ -25,6 +25,9 @@ export const InputFields = ({ index, fieldNames }: InputFieldsProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <DynamicFormField
             fieldName={`${fieldNames.fields.fieldName}.${index}.suffix` as any}
+          />
+          <DynamicFormField
+            fieldName={`${fieldNames.fields.fieldName}.${index}.decimal` as any}
           />
         </div>
       </FieldSet>

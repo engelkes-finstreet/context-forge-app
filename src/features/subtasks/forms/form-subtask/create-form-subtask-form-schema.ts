@@ -3,14 +3,65 @@ import { z } from "zod";
 const baseFieldSchema = z.object({
   name: z.string().min(1, "Field name is required"),
   label: z.string().min(1, "Label is required"),
-  description: z.string().optional(),
   validation: z.string().min(1, "Validation is required"),
+  placeholder: z.string().optional(),
+  renderCondition: z.string().optional(),
+  caption: z.string().optional(),
 });
 
 const inputFieldSchema = baseFieldSchema.extend({
   fieldType: z.literal("input"),
-  placeholder: z.string().optional(),
-  inputType: z.enum(["text", "number"]).default("text"),
+  suffix: z.string().optional(),
+});
+
+const passwordFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("password"),
+});
+
+const textareaFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("textarea"),
+});
+
+const numberFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("number"),
+  suffix: z.string().optional(),
+  decimal: z.number().optional(),
+});
+
+const dateFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("datepicker"),
+});
+
+const checkboxFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("checkbox"),
+});
+
+const radioFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("radio-group"),
+  radioItems: z.array(
+    z.object({
+      label: z.string().min(1, "Label is required"),
+      value: z.string().min(1, "Value is required"),
+    }),
+  ),
+});
+
+const yesNoRadioSchema = baseFieldSchema.extend({
+  fieldType: z.literal("yes-no-radio"),
+});
+
+const selectFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("select"),
+  selectItems: z.array(
+    z.object({
+      label: z.string().min(1, "Label is required"),
+      value: z.string().min(1, "Value is required"),
+    }),
+  ),
+});
+
+const comboboxFieldSchema = baseFieldSchema.extend({
+  fieldType: z.literal("combobox"),
 });
 
 const selectableCardFieldSchema = baseFieldSchema.extend({
@@ -18,12 +69,15 @@ const selectableCardFieldSchema = baseFieldSchema.extend({
   options: z
     .array(
       z.object({
+        name: z.string().min(1, "Name is required"),
         label: z.string().min(1, "Label is required"),
         sublabel: z.string().optional(),
       }),
     )
     .min(1, "At least one option is required"),
   multiSelect: z.boolean().default(false),
+  description: z.string().optional(),
+  validation: z.string().min(1, "Validation is required"),
 });
 
 const hiddenFieldSchema = z.object({
@@ -35,6 +89,15 @@ const formFieldConfigSchema = z.discriminatedUnion("fieldType", [
   inputFieldSchema,
   selectableCardFieldSchema,
   hiddenFieldSchema,
+  passwordFieldSchema,
+  textareaFieldSchema,
+  numberFieldSchema,
+  dateFieldSchema,
+  checkboxFieldSchema,
+  radioFieldSchema,
+  yesNoRadioSchema,
+  selectFieldSchema,
+  comboboxFieldSchema,
 ]);
 
 export const createFormSubtaskFormSchema = z

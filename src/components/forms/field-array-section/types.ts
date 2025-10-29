@@ -49,4 +49,15 @@ export interface FieldArraySectionProps<TItem extends Record<string, any>> {
 
   /** Additional CSS classes for the container */
   className?: string;
+
+  /**
+   * Visual variant for the array section
+   * - "standard": Full-width add button, muted header background, standard spacing
+   * - "compact": Right-aligned small add button, transparent header, tighter spacing
+   * @default "standard"
+   */
+  variant?: "standard" | "compact";
+
+  /** Optional section title to display above the array items */
+  sectionTitle?: string;
 }

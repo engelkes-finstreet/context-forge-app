@@ -5,15 +5,12 @@ import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
 import { FieldArraySection } from "@/components/forms/field-array-section";
 
-type SelectableCardFieldsProps = {
+type Props = {
   index: number;
   fieldNames: FieldNamesType<FormFieldsType<CreateFormSubtaskFormInput>>;
 };
 
-export const SelectableCardFields = ({
-  index,
-  fieldNames,
-}: SelectableCardFieldsProps) => {
+export const SelectFields = ({ index, fieldNames }: Props) => {
   return (
     <>
       <FieldSet>
@@ -24,42 +21,30 @@ export const SelectableCardFields = ({
       </FieldSet>
       <FieldSet>
         <FieldLegend className="text-base font-semibold mb-4">
-          Selectable Card Configuration
+          Select Configuration
         </FieldLegend>
-        <DynamicFormField
-          fieldName={
-            `${fieldNames.fields.fieldName}.${index}.multiSelect` as any
-          }
-        />
         <FieldArraySection
-          arrayFieldName={`${fieldNames.fields.fieldName}.${index}.options`}
+          arrayFieldName={`${fieldNames.fields.fieldName}.${index}.selectItems`}
           arrayFieldConfig={{
-            fieldName: `${fieldNames.fields.fieldName}.${index}.options`,
+            fieldName: `${fieldNames.fields.fieldName}.${index}.selectItems`,
             fields: {
-              name: "name",
               label: "label",
-              sublabel: "sublabel",
+              value: "value",
             },
           }}
-          defaultItem={{ name: "", label: "", sublabel: "" }}
+          defaultItem={{ label: "", value: "" }}
           itemLabel="Option"
           variant="compact"
           sectionTitle="Options"
-          minItems={1}
         >
           {({ buildFieldName, fieldNames: fields }) => (
             <>
               <DynamicFormField
-                fieldName={buildFieldName(fields.name) as any}
+                fieldName={buildFieldName(fields.label) as any}
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
-                <DynamicFormField
-                  fieldName={buildFieldName(fields.label) as any}
-                />
-                <DynamicFormField
-                  fieldName={buildFieldName(fields.sublabel) as any}
-                />
-              </div>
+              <DynamicFormField
+                fieldName={buildFieldName(fields.value) as any}
+              />
             </>
           )}
         </FieldArraySection>

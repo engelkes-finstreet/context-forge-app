@@ -31,8 +31,21 @@ export function useCreateFormSubtaskFormConfig({
         description: "",
         options: [
           {
+            name: "",
             label: "",
             sublabel: "",
+          },
+        ],
+        radioItems: [
+          {
+            label: "",
+            value: "",
+          },
+        ],
+        selectItems: [
+          {
+            label: "",
+            value: "",
           },
         ],
         multiSelect: false,
@@ -60,6 +73,15 @@ export function useCreateFormSubtaskFormConfig({
         placeholder: "Select field type",
         options: [
           { label: "Input", value: "input" },
+          { label: "Password", value: "password" },
+          { label: "Textarea", value: "textarea" },
+          { label: "Number", value: "number" },
+          { label: "Date", value: "datepicker" },
+          { label: "Checkbox", value: "checkbox" },
+          { label: "Radio Group", value: "radio-group" },
+          { label: "Yes No Radio", value: "yes-no-radio" },
+          { label: "Select", value: "select" },
+          { label: "Combobox", value: "combobox" },
           { label: "Selectable Card", value: "selectable-card" },
           { label: "Hidden", value: "hidden" },
         ],
@@ -84,15 +106,6 @@ export function useCreateFormSubtaskFormConfig({
         label: "Validation",
         placeholder: "Enter validation",
       },
-      inputType: {
-        type: "select",
-        label: "Input Type",
-        placeholder: "Select input type",
-        options: [
-          { label: "Text", value: "text" },
-          { label: "Number", value: "number" },
-        ],
-      },
       placeholder: {
         type: "input",
         label: "Placeholder",
@@ -104,6 +117,11 @@ export function useCreateFormSubtaskFormConfig({
       },
       options: {
         type: "array",
+        name: {
+          type: "input",
+          label: "Name",
+          placeholder: "Enter name",
+        },
         label: {
           type: "input",
           label: "Label",
@@ -114,6 +132,52 @@ export function useCreateFormSubtaskFormConfig({
           label: "Sublabel",
           placeholder: "Enter sublabel",
         },
+      },
+      radioItems: {
+        type: "array",
+        label: {
+          type: "input",
+          label: "Label",
+          placeholder: "Enter label",
+        },
+        value: {
+          type: "input",
+          label: "Value",
+          placeholder: "Enter value",
+        },
+      },
+      selectItems: {
+        type: "array",
+        label: {
+          type: "input",
+          label: "Label",
+          placeholder: "Enter label",
+        },
+        value: {
+          type: "input",
+          label: "Value",
+          placeholder: "Enter value",
+        },
+      },
+      suffix: {
+        type: "input",
+        label: "Suffix",
+        placeholder: "Enter suffix",
+      },
+      decimal: {
+        type: "input",
+        label: "Decimal",
+        placeholder: "Enter decimal",
+      },
+      renderCondition: {
+        type: "input",
+        label: "Render Condition",
+        placeholder: "Enter render condition",
+      },
+      caption: {
+        type: "input",
+        label: "Caption",
+        placeholder: "Enter caption",
       },
     },
   };

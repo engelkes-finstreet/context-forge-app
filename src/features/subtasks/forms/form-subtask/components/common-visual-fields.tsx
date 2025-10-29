@@ -12,16 +12,30 @@ export const CommonVisualFields = ({
   fieldNames,
 }: CommonVisualFieldsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <DynamicFormField
+          fieldName={`${fieldNames.fields.fieldName}.${index}.label` as any}
+        />
+        <DynamicFormField
+          fieldName={
+            `${fieldNames.fields.fieldName}.${index}.validation` as any
+          }
+        />
+        <DynamicFormField
+          fieldName={`${fieldNames.fields.fieldName}.${index}.caption` as any}
+        />
+        <DynamicFormField
+          fieldName={
+            `${fieldNames.fields.fieldName}.${index}.placeholder` as any
+          }
+        />
+      </div>
       <DynamicFormField
-        fieldName={`${fieldNames.fields.fieldName}.${index}.label` as any}
+        fieldName={
+          `${fieldNames.fields.fieldName}.${index}.renderCondition` as any
+        }
       />
-      <DynamicFormField
-        fieldName={`${fieldNames.fields.fieldName}.${index}.description` as any}
-      />
-      <DynamicFormField
-        fieldName={`${fieldNames.fields.fieldName}.${index}.validation` as any}
-      />
-    </div>
+    </>
   );
 };

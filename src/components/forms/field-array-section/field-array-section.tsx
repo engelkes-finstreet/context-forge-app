@@ -45,6 +45,8 @@ export function FieldArraySection<TItem extends Record<string, any>>({
   addButtonText,
   showItemNumber = true,
   className,
+  variant = "standard",
+  sectionTitle,
 }: FieldArraySectionProps<TItem>) {
   const {
     fields: fieldsArray,
@@ -54,8 +56,6 @@ export function FieldArraySection<TItem extends Record<string, any>>({
   } = useFieldArray({
     name: arrayFieldName,
   });
-
-  console.log(fieldsArray);
 
   useEffect(() => {
     if (fieldsArray.length === 0 && minItems > 0) {
@@ -82,15 +82,27 @@ export function FieldArraySection<TItem extends Record<string, any>>({
   const canAddMore = maxItems === undefined || fieldsArray.length < maxItems;
   const finalAddButtonText = addButtonText || `Add ${itemLabel}`;
 
+  const isCompact = variant === "compact";
+  const containerSpacing = isCompact ? "space-y-3" : "space-y-4";
+  const itemBorder = isCompact
+    ? "border border-primary/30"
+    : "border border-primary/50";
+  const headerBg = isCompact ? "" : "bg-muted";
+  const contentPadding = isCompact ? "p-4 pt-0" : "p-4";
+  const contentGap = isCompact ? "gap-4" : "gap-6";
+
   return (
-    <div className={cn("space-y-4", className)}>
-      <div className="space-y-4">
+    <div className={cn(isCompact ? "space-y-4" : "space-y-4", className)}>
+      {sectionTitle && (
+        <div className="text-sm font-semibold">{sectionTitle}</div>
+      )}
+      <div className={containerSpacing}>
         {fieldsArray.map((field, index) => (
           <div
             key={field.id}
-            className="border border-primary/50 rounded-md overflow-hidden"
+            className={cn(itemBorder, "rounded-md overflow-hidden")}
           >
-            <div className="flex items-center justify-between bg-muted px-4 py-2">
+            <div className={cn("flex items-center justify-between px-4 py-2", headerBg)}>
               <h3 className="text-sm font-medium">
                 {itemLabel}
                 {showItemNumber && ` ${index + 1}`}
@@ -106,7 +118,7 @@ export function FieldArraySection<TItem extends Record<string, any>>({
               </Button>
             </div>
 
-            <div className="flex flex-col gap-6 p-4">
+            <div className={cn("flex flex-col", contentGap, contentPadding)}>
               {children({
                 index,
                 fieldNames: arrayFieldConfig.fields,
@@ -119,15 +131,21 @@ export function FieldArraySection<TItem extends Record<string, any>>({
       </div>
 
       {canAddMore && (
-        <Button
-          onClick={handleAdd}
-          variant="outline"
-          className="w-full border-dashed"
-          type="button"
-        >
-          <PlusIcon className="size-4 mr-2" />
-          {finalAddButtonText}
-        </Button>
+        <div className={isCompact ? "flex justify-end" : ""}>
+          <Button
+            onClick={handleAdd}
+            variant="outline"
+            size={isCompact ? "sm" : "default"}
+            className={cn(
+              "border-dashed",
+              isCompact ? "" : "w-full"
+            )}
+            type="button"
+          >
+            <PlusIcon className="size-4 mr-2" />
+            {finalAddButtonText}
+          </Button>
+        </div>
       )}
     </div>
   );
