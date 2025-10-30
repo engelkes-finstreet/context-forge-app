@@ -78,6 +78,13 @@ export const routes = {
     },
   },
 
+  templates: {
+    list: route("/templates"),
+    new: route("/templates/new"),
+    detail: route("/templates/[templateId]"),
+    edit: route("/templates/[templateId]/edit"),
+  },
+
   // ========================================================================
   // API ROUTES
   // ========================================================================
@@ -111,6 +118,10 @@ export type RoutePattern =
   | typeof routes.projects.tasks.subtasks.newForm.pattern
   | typeof routes.projects.tasks.subtasks.newModal.pattern
   | typeof routes.projects.tasks.subtasks.edit.pattern
+  | typeof routes.templates.list.pattern
+  | typeof routes.templates.new.pattern
+  | typeof routes.templates.detail.pattern
+  | typeof routes.templates.edit.pattern
   | typeof routes.api.auth.pattern
   | typeof routes.api.mcp.listResources.pattern
   | typeof routes.api.mcp.readResource.pattern
