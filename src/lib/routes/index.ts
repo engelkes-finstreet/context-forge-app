@@ -71,6 +71,9 @@ export const routes = {
         newPresentationList: route(
           "/projects/[projectId]/tasks/[taskId]/subtasks/presentation-list",
         ),
+        detail: route(
+          "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]",
+        ),
         edit: route(
           "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit",
         ),
@@ -110,6 +113,7 @@ export type RoutePattern =
   | typeof routes.projects.tasks.subtasks.newInquiryProcess.pattern
   | typeof routes.projects.tasks.subtasks.newForm.pattern
   | typeof routes.projects.tasks.subtasks.newModal.pattern
+  | typeof routes.projects.tasks.subtasks.detail.pattern
   | typeof routes.projects.tasks.subtasks.edit.pattern
   | typeof routes.api.auth.pattern
   | typeof routes.api.mcp.listResources.pattern
