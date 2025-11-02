@@ -47,6 +47,7 @@ export function FormSubtaskDisplay({
   content,
   metadata,
 }: FormSubtaskDisplayProps) {
+  console.log({ metadata });
   return (
     <div className="space-y-6">
       {/* Content */}
@@ -82,7 +83,9 @@ export function FormSubtaskDisplay({
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2 flex-1">
                       <div className="text-primary">
-                        {fieldTypeIcons[field.type] || <Type className="h-4 w-4" />}
+                        {fieldTypeIcons[field.type] || (
+                          <Type className="h-4 w-4" />
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="font-semibold">{field.label}</div>
@@ -109,14 +112,18 @@ export function FormSubtaskDisplay({
 
                   {field.placeholder && (
                     <div className="pl-6 text-sm">
-                      <span className="text-muted-foreground">Placeholder:</span>{" "}
+                      <span className="text-muted-foreground">
+                        Placeholder:
+                      </span>{" "}
                       <span className="italic">{field.placeholder}</span>
                     </div>
                   )}
 
                   {field.options && field.options.length > 0 && (
                     <div className="pl-6 space-y-1">
-                      <div className="text-sm text-muted-foreground">Options:</div>
+                      <div className="text-sm text-muted-foreground">
+                        Options:
+                      </div>
                       <div className="flex flex-wrap gap-2">
                         {field.options.map((option, optIdx) => (
                           <Badge key={optIdx} variant="secondary">

@@ -29,7 +29,6 @@ export function EditTaskForm({
     <Form formConfig={formConfig}>
       <div className="space-y-6">
         <DynamicFormField fieldName={fieldNames.name} />
-        <DynamicFormField fieldName={fieldNames.sharedContext} />
       </div>
     </Form>
   );

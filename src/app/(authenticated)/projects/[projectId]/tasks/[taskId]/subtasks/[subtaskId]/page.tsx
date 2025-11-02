@@ -7,7 +7,6 @@ import { PageContent } from "@/components/ui/page-content";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
-import { SubtaskType } from "@prisma/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   GenericSubtaskDisplay,
@@ -25,6 +24,7 @@ import {
   type InquiryProcessMetadata,
   type ModalMetadata,
 } from "@/features/subtasks/types/subtask-types";
+import { SubtaskType } from "@prisma/client";
 
 interface SubtaskDetailPageProps {
   params: Promise<{
@@ -46,7 +46,11 @@ export default async function SubtaskDetailPage({
   const { projectId, taskId, subtaskId } = await params;
   const subtask = await SubtaskService.getSubtaskById(subtaskId);
 
-  if (!subtask || subtask.taskId !== taskId || subtask.task.projectId !== projectId) {
+  if (
+    !subtask ||
+    subtask.taskId !== taskId ||
+    subtask.task.projectId !== projectId
+  ) {
     notFound();
   }
 
@@ -72,59 +76,44 @@ export default async function SubtaskDetailPage({
         return <GenericSubtaskDisplay content={subtask.content} />;
 
       case SubtaskType.FORM:
-        if (isFormMetadata(parsedMetadata)) {
-          return (
-            <FormSubtaskDisplay
-              content={subtask.content}
-              metadata={parsedMetadata as FormMetadata}
-            />
-          );
-        }
-        return <GenericSubtaskDisplay content={subtask.content} />;
+        return (
+          <FormSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as FormMetadata}
+          />
+        );
 
       case SubtaskType.INQUIRY_PROCESS:
-        if (isInquiryProcessMetadata(parsedMetadata)) {
-          return (
-            <InquiryProcessSubtaskDisplay
-              content={subtask.content}
-              metadata={parsedMetadata as InquiryProcessMetadata}
-            />
-          );
-        }
-        return <GenericSubtaskDisplay content={subtask.content} />;
+        return (
+          <InquiryProcessSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as InquiryProcessMetadata}
+          />
+        );
 
       case SubtaskType.MODAL:
-        if (isModalMetadata(parsedMetadata)) {
-          return (
-            <ModalSubtaskDisplay
-              content={subtask.content}
-              metadata={parsedMetadata as ModalMetadata}
-            />
-          );
-        }
-        return <GenericSubtaskDisplay content={subtask.content} />;
+        return (
+          <ModalSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as ModalMetadata}
+          />
+        );
 
       case SubtaskType.REQUEST:
-        if (parsedMetadata && "requests" in parsedMetadata) {
-          return (
-            <RequestSubtaskDisplay
-              content={subtask.content}
-              metadata={parsedMetadata as any}
-            />
-          );
-        }
-        return <GenericSubtaskDisplay content={subtask.content} />;
+        return (
+          <RequestSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as any}
+          />
+        );
 
       case SubtaskType.PRESENTATION_LIST:
-        if (parsedMetadata && "columns" in parsedMetadata) {
-          return (
-            <PresentationListSubtaskDisplay
-              content={subtask.content}
-              metadata={parsedMetadata as any}
-            />
-          );
-        }
-        return <GenericSubtaskDisplay content={subtask.content} />;
+        return (
+          <PresentationListSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as any}
+          />
+        );
 
       default:
         return <GenericSubtaskDisplay content={subtask.content} />;
@@ -152,9 +141,7 @@ export default async function SubtaskDetailPage({
               {typeConfig.icon} {typeConfig.label}
             </Badge>
           </div>
-          <p className="text-muted-foreground">
-            Task: {subtask.task.name}
-          </p>
+          <p className="text-muted-foreground">Task: {subtask.task.name}</p>
         </div>
         <PageHeader.Actions>
           <TypedLink
