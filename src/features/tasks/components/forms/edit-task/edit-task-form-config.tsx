@@ -36,7 +36,6 @@ export function useEditTaskFormConfig({
     id: taskId,
     projectId,
     name: initialValues.name,
-    sharedContext: initialValues.sharedContext,
   };
 
   const fields: FormFieldsType<EditTaskInput> = {
@@ -52,15 +51,29 @@ export function useEditTaskFormConfig({
       label: "Task Name",
       placeholder: "Enter task name",
     },
-    sharedContext: {
-      type: "textarea",
-      label: "Shared Context",
-      placeholder: "Enter shared context for all subtasks (supports Markdown)",
-      description:
-        "This context will be accessible by all subtasks within this task",
+    featureName: {
+      type: "input",
+      inputType: "text",
+      label: "Feature Name",
+      placeholder: "Enter feature name",
     },
-    order: {
-      type: "hidden",
+    product: {
+      type: "select",
+      label: "Product",
+      placeholder: "Enter product",
+      options: [
+        { label: "Hoa Loan", value: "hoa-loan" },
+        { label: "Hoa Account", value: "hoa-account" },
+      ],
+    },
+    role: {
+      type: "select",
+      label: "Role",
+      placeholder: "Enter role",
+      options: [
+        { label: "PM (Property Manager)", value: "pm" },
+        { label: "FSP (Financial Service Provider)", value: "fsp" },
+      ],
     },
   };
 

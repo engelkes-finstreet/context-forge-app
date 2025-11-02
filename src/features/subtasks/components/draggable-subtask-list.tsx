@@ -95,7 +95,7 @@ function SortableSubtaskItem({
   return (
     <div ref={setNodeRef} style={style} className="relative group">
       <TypedLink
-        route={routes.projects.tasks.subtasks.edit}
+        route={routes.projects.tasks.subtasks.detail}
         params={{ projectId, taskId, subtaskId: subtask.id }}
         className="block"
         style={{
@@ -125,7 +125,7 @@ function SortableSubtaskItem({
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <CardTitle className="text-lg flex-1">
-                    {subtask.featureName}
+                    {subtask.name}
                   </CardTitle>
                   <Badge variant={typeConfig.badgeVariant} className="shrink-0">
                     {typeConfig.icon} {typeConfig.label}
