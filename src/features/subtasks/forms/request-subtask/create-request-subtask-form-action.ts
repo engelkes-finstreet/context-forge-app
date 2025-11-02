@@ -16,14 +16,25 @@ export async function createRequestSubtaskFormAction(
   const task = await TaskService.getTaskById(formData.taskId);
 
   const metadata = {
-    requests: formData.requests,
+    requests: formData.requests.map((request) => {
+      // Parse endpoint format: "GET:/api/internal/financing_inquiries/hoa_account/{id}"
+      const [httpMethod, endpoint] = request.endpoint.split(':', 2);
+
+      return {
+        endpoint: endpoint || request.endpoint, // Fallback to original if no colon found
+        httpMethod: httpMethod || 'GET', // Default to GET if parsing fails
+        requestType: request.requestType,
+        paginated: request.paginated,
+        protected: request.protected,
+      }
+    }),
   };
 
   const result = await SubtaskService.createSubtask({
     taskId: formData.taskId,
     name: formData.subtaskName,
     type: SubtaskType.REQUEST,
-    content: JSON.stringify(metadata),
+    content: "",
     metadata: JSON.stringify(metadata),
   });
 
