@@ -9,6 +9,7 @@ export const createRequestSubtaskFormSchema = z.object({
       requestType: z.string().min(1, "Request type is required"),
       paginated: z.boolean(),
       protected: z.boolean(),
+      resultSchema: z.boolean()
     }),
   ),
 });

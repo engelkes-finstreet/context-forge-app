@@ -31,6 +31,7 @@ export function useCreateRequestSubtaskFormConfig(
         requestType: undefined,
         paginated: false,
         protected: false,
+        resultSchema: false,
       },
     ],
   };
@@ -69,6 +70,10 @@ export function useCreateRequestSubtaskFormConfig(
       protected: {
         type: "checkbox",
         label: "Is this a protected request?",
+      },
+      resultSchema: {
+        type: "checkbox",
+        label: "Does this request return a result schema?",
       },
     },
   };

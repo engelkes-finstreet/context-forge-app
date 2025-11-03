@@ -35,8 +35,11 @@ export const RequestsFields = ({ fieldNames }: Props) => {
         <>
           <DynamicFormField fieldName={buildFieldName(fields.endpoint)} />
           <DynamicFormField fieldName={buildFieldName(fields.requestType)} />
-          <DynamicFormField fieldName={buildFieldName(fields.paginated)} />
-          <DynamicFormField fieldName={buildFieldName(fields.protected)} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+            <DynamicFormField fieldName={buildFieldName(fields.paginated)} />
+            <DynamicFormField fieldName={buildFieldName(fields.protected)} />
+            <DynamicFormField fieldName={buildFieldName(fields.resultSchema)} />
+          </div>
         </>
       )}
     </FieldArraySection>
