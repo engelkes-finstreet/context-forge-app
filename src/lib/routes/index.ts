@@ -77,6 +77,9 @@ export const routes = {
         edit: route(
           "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/edit",
         ),
+        editRequest: route(
+          "/projects/[projectId]/tasks/[taskId]/subtasks/[subtaskId]/request/edit",
+        ),
       },
     },
   },

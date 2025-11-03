@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import { Result, toResult } from "@/lib/result";
+import { notFound } from "next/navigation";
 
 export class SubtaskService {
   /**
@@ -21,7 +22,7 @@ export class SubtaskService {
    * Note: This method still throws for consistency with Next.js data fetching patterns
    */
   static async getSubtaskById(id: string) {
-    return db.subtask.findUnique({
+    const subtask = await db.subtask.findUnique({
       where: { id },
       include: {
         task: {
@@ -34,6 +35,12 @@ export class SubtaskService {
         },
       },
     });
+
+    if (!subtask) {
+      notFound();
+    }
+
+    return subtask;
   }
 
   /**

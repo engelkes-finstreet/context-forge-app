@@ -10,17 +10,19 @@ import { Button } from "@/components/ui/button";
 import {
   CreateRequestSubtaskFormInput,
   createRequestSubtaskFormSchema,
-} from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
+} from "@/features/subtasks/forms/request-subtask/request-subtask-form-schema";
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { DeepPartial } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { createRequestSubtaskFormAction } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-action";
+import { createRequestSubtaskFormAction } from "@/features/subtasks/forms/request-subtask/request-subtask-form-action";
+import { useCreateRequestSubtaskFormFields } from "@/features/subtasks/forms/request-subtask/use-request-subtask-form-fields";
 
 export function useCreateRequestSubtaskFormConfig(
   taskId: string,
   endpoints: SwaggerEndpoint[],
 ): FormConfig<FormState, CreateRequestSubtaskFormInput> {
   const router = useRouter();
+  const fields = useCreateRequestSubtaskFormFields({ endpoints });
 
   const defaultValues: DeepPartial<CreateRequestSubtaskFormInput> = {
     taskId,
@@ -34,48 +36,6 @@ export function useCreateRequestSubtaskFormConfig(
         resultSchema: false,
       },
     ],
-  };
-
-  const fields: FormFieldsType<CreateRequestSubtaskFormInput> = {
-    taskId: {
-      type: "hidden",
-    },
-    subtaskName: {
-      type: "input",
-      label: "Subtask Name",
-      placeholder: "Enter subtask name",
-    },
-    requests: {
-      type: "array",
-      endpoint: {
-        type: "swagger_endpoint_selector",
-        label: "Endpoint",
-        placeholder: "Select endpoint...",
-        emptyText: "No endpoints found",
-        endpoints,
-      },
-      requestType: {
-        type: "select",
-        label: "Request Type",
-        placeholder: "Select request type...",
-        options: [
-          { label: "Server", value: "server" },
-          { label: "Client", value: "client" },
-        ],
-      },
-      paginated: {
-        type: "checkbox",
-        label: "Is this a paginated request?",
-      },
-      protected: {
-        type: "checkbox",
-        label: "Is this a protected request?",
-      },
-      resultSchema: {
-        type: "checkbox",
-        label: "Does this request return a result schema?",
-      },
-    },
   };
 
   return {

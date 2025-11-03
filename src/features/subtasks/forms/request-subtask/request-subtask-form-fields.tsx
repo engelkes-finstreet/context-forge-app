@@ -3,13 +3,13 @@
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { FieldArraySection } from "@/components/forms/field-array-section";
-import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/create-request-subtask-form-schema";
+import { CreateRequestSubtaskFormInput } from "@/features/subtasks/forms/request-subtask/request-subtask-form-schema";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateRequestSubtaskFormInput>>;
 };
 
-export const CreateRequestSubtaskFormFields = ({ fieldNames }: Props) => {
+export const RequestSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
@@ -28,6 +28,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
         requestType: undefined,
         paginated: false,
         protected: false,
+        resultSchema: false,
       }}
       itemLabel="Request"
     >

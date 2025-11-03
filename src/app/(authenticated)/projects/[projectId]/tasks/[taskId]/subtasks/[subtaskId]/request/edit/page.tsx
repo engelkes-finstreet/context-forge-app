@@ -2,13 +2,11 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { PageContent } from "@/components/ui/page-content";
 import { PageHeader } from "@/components/ui/page-header";
-import { PageHeaderTitle } from "@/components/ui/page-header/page-header-title";
-import { CreateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/create/create-request-subtask-form";
+import { UpdateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/update/update-request-subtask-form";
 import { TypedLink, routes } from "@/lib/routes";
 import { ProjectService } from "@/lib/services/project-service";
+import { SubtaskService } from "@/lib/services/subtask-service";
 import { SwaggerService } from "@/lib/services/swagger-service";
-import { TaskService } from "@/lib/services/task-service";
-import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -18,14 +16,10 @@ type Props = {
   }>;
 };
 
-export default async function NewRequestSubtaskPage({ params }: Props) {
+export default async function RequestSubtaskEditPage({ params }: Props) {
   const { projectId, taskId, subtaskId } = await params;
   const project = await ProjectService.getProjectById(projectId);
-  const task = await TaskService.getTaskById(taskId);
-
-  if (task.projectId !== projectId) {
-    notFound();
-  }
+  const subtask = await SubtaskService.getSubtaskById(subtaskId);
 
   if (project.githubRepo && project.swaggerPath) {
     const endpoints = await SwaggerService.getEndpointsFromGitHub(
@@ -37,14 +31,14 @@ export default async function NewRequestSubtaskPage({ params }: Props) {
       <>
         <PageHeader>
           <PageHeader.Title
-            title="New Request Subtask"
-            subtitle="This task will define which requests to make for the given feature"
+            title="Edit Request Subtask"
+            subtitle="Update the requests for the given feature"
             backLabel="Back to Type Selection"
           />
         </PageHeader>
 
         <PageContent>
-          <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />
+          <UpdateRequestSubtaskForm subtask={subtask} endpoints={endpoints} />
         </PageContent>
       </>
     );
@@ -53,7 +47,7 @@ export default async function NewRequestSubtaskPage({ params }: Props) {
   return (
     <>
       <PageHeader>
-        <PageHeaderTitle
+        <PageHeader.Title
           title="Swagger path not configured"
           subtitle="Go back to the project and add a GitHub repository and Swagger path"
         />

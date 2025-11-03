@@ -69,6 +69,7 @@ export default async function SubtaskDetailPage({
     console.error("Failed to parse subtask metadata:", error);
   }
 
+  console.log({ parsedMetadata });
   // Render the appropriate display component based on type
   const renderContent = () => {
     switch (subtask.type) {
@@ -144,15 +145,17 @@ export default async function SubtaskDetailPage({
           <p className="text-muted-foreground">Task: {subtask.task.name}</p>
         </div>
         <PageHeader.Actions>
-          <TypedLink
-            route={routes.projects.tasks.subtasks.edit}
-            params={{ projectId, taskId, subtaskId }}
-          >
-            <Button variant="outline">
-              <Pencil className="mr-2 h-4 w-4" />
-              Edit Subtask
-            </Button>
-          </TypedLink>
+          {subtask.type === SubtaskType.REQUEST && (
+            <TypedLink
+              route={routes.projects.tasks.subtasks.editRequest}
+              params={{ projectId, taskId, subtaskId }}
+            >
+              <Button variant="outline">
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Requests
+              </Button>
+            </TypedLink>
+          )}
         </PageHeader.Actions>
       </PageHeader>
 
