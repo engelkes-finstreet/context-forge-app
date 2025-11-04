@@ -15,6 +15,13 @@ import { ArrowLeft } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
+import { SubtaskType } from "@prisma/client";
+import { UpdateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/update/update-request-subtask-form";
+import { ProjectService } from "@/lib/services/project-service";
+import {
+  SwaggerEndpoint,
+  SwaggerService,
+} from "@/lib/services/swagger-service";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -28,6 +35,16 @@ export default async function EditSubtaskPage({
   params,
 }: EditSubtaskPageProps) {
   const { projectId, taskId, subtaskId } = await params;
+  const project = await ProjectService.getProjectById(projectId);
+  let endpoints: SwaggerEndpoint[] = [];
+
+  if (project.githubRepo && project.swaggerPath) {
+    endpoints = await SwaggerService.getEndpointsFromGitHub(
+      project.githubRepo!,
+      project.swaggerPath!,
+    );
+  }
+
   const subtask = await SubtaskService.getSubtaskById(subtaskId);
 
   if (
@@ -39,6 +56,17 @@ export default async function EditSubtaskPage({
   }
 
   const typeConfig = getTypeConfig(subtask.type);
+
+  const renderContent = () => {
+    switch (subtask.type) {
+      case SubtaskType.REQUEST:
+        return (
+          <UpdateRequestSubtaskForm subtask={subtask} endpoints={endpoints} />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -71,17 +99,6 @@ export default async function EditSubtaskPage({
       </PageHeader>
 
       <PageContent>
-        {subtask.task.sharedContext && (
-          <Alert>
-            <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-            <AlertDescription className="prose prose-sm max-w-none mt-2">
-              <pre className="whitespace-pre-wrap text-sm">
-                {subtask.task.sharedContext}
-              </pre>
-            </AlertDescription>
-          </Alert>
-        )}
-
         <Card>
           <CardHeader>
             <CardTitle>Subtask Details</CardTitle>
@@ -89,9 +106,7 @@ export default async function EditSubtaskPage({
               Update the subtask name and content (supports Markdown)
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* TODO: Think about editing of subtasks */}
-          </CardContent>
+          <CardContent>{renderContent()}</CardContent>
         </Card>
       </PageContent>
     </>

@@ -145,17 +145,15 @@ export default async function SubtaskDetailPage({
           <p className="text-muted-foreground">Task: {subtask.task.name}</p>
         </div>
         <PageHeader.Actions>
-          {subtask.type === SubtaskType.REQUEST && (
-            <TypedLink
-              route={routes.projects.tasks.subtasks.editRequest}
-              params={{ projectId, taskId, subtaskId }}
-            >
-              <Button variant="outline">
-                <Pencil className="mr-2 h-4 w-4" />
-                Edit Requests
-              </Button>
-            </TypedLink>
-          )}
+          <TypedLink
+            route={routes.projects.tasks.subtasks.edit}
+            params={{ projectId, taskId, subtaskId }}
+          >
+            <Button variant="outline">
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit Subtask
+            </Button>
+          </TypedLink>
         </PageHeader.Actions>
       </PageHeader>
 
