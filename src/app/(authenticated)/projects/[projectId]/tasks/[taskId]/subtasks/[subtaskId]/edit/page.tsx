@@ -22,6 +22,9 @@ import {
   SwaggerEndpoint,
   SwaggerService,
 } from "@/lib/services/swagger-service";
+import { UpdateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inquiry-process-subtask/update/update-inquiry-process-subtask-form";
+import { UpdateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/update/update-form-subtask-form";
+import { UpdatePresentationListSubtaskForm } from "@/features/subtasks/forms/presentation-list-subtask/update/update-presentation-list-subtask-form";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -63,6 +66,13 @@ export default async function EditSubtaskPage({
         return (
           <UpdateRequestSubtaskForm subtask={subtask} endpoints={endpoints} />
         );
+      case SubtaskType.INQUIRY_PROCESS:
+        return <UpdateInquiryProcessSubtaskForm subtask={subtask} />;
+      case SubtaskType.FORM:
+        return <UpdateFormSubtaskForm subtask={subtask} />;
+      case SubtaskType.PRESENTATION_LIST:
+        return <UpdatePresentationListSubtaskForm subtask={subtask} />;
+
       default:
         return null;
     }
@@ -98,17 +108,7 @@ export default async function EditSubtaskPage({
         </div>
       </PageHeader>
 
-      <PageContent>
-        <Card>
-          <CardHeader>
-            <CardTitle>Subtask Details</CardTitle>
-            <CardDescription>
-              Update the subtask name and content (supports Markdown)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>{renderContent()}</CardContent>
-        </Card>
-      </PageContent>
+      <PageContent>{renderContent()}</PageContent>
     </>
   );
 }

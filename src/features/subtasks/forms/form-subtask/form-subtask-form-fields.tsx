@@ -1,5 +1,7 @@
+"use client";
+
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
@@ -12,7 +14,7 @@ type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateFormSubtaskFormInput>>;
 };
 
-export const CreateFormSubtaskFormFields = ({ fieldNames }: Props) => {
+export const FormSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />

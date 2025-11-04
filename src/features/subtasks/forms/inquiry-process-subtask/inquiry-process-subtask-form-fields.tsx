@@ -1,7 +1,9 @@
+"use client";
+
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldArraySection } from "@/components/forms/field-array-section";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateInquiryProcessSubtaskFormInput } from "@/features/subtasks/forms/inquiry-process-subtask/create-inquiry-process-subtask-form-schema";
+import { CreateInquiryProcessSubtaskFormInput } from "@/features/subtasks/forms/inquiry-process-subtask/inquiry-process-subtask-form-schema";
 
 type Props = {
   fieldNames: FieldNamesType<
@@ -9,9 +11,7 @@ type Props = {
   >;
 };
 
-export const CreateInquiryProcessSubtaskFormFields = ({
-  fieldNames,
-}: Props) => {
+export const InquiryProcessSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
@@ -22,7 +22,7 @@ export const CreateInquiryProcessSubtaskFormFields = ({
   );
 };
 
-const StepsFields = ({ fieldNames }: Props) => {
+export const StepsFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
       arrayFieldName={fieldNames.steps.fieldName}
@@ -47,7 +47,7 @@ const StepsFields = ({ fieldNames }: Props) => {
   );
 };
 
-const ProgressBarFields = ({ fieldNames }: Props) => {
+export const ProgressBarFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
       arrayFieldName={fieldNames.progressBar.fieldName}

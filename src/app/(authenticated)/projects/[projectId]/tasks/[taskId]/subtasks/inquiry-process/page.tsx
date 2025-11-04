@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { CreateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inquiry-process-subtask/create-inquiry-process-subtask-form";
+import { CreateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inquiry-process-subtask/create/create-inquiry-process-subtask-form";
 
 type Props = {
   params: Promise<{

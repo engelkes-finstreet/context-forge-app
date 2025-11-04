@@ -100,13 +100,17 @@ const formFieldConfigSchema = z.discriminatedUnion("fieldType", [
   comboboxFieldSchema,
 ]);
 
+const fieldsArraySchema = z
+  .array(formFieldConfigSchema)
+  .min(1, "At least one field is required");
+
+export type Fields = z.infer<typeof fieldsArraySchema>;
+
 export const createFormSubtaskFormSchema = z
   .object({
     taskId: z.string().cuid("Invalid task ID"),
     subtaskName: z.string().min(1, "Subtask name is required"),
-    fields: z
-      .array(formFieldConfigSchema)
-      .min(1, "At least one field is required"),
+    fields: fieldsArraySchema,
   })
   .superRefine((data, ctx) => {
     // Validate unique field names
@@ -130,6 +134,10 @@ export const createFormSubtaskFormSchema = z
     }
   });
 
+export const updateFormSubtaskFormSchema = createFormSubtaskFormSchema.extend({
+  subtaskId: z.cuid("Invalid subtask ID"),
+});
+
 // Export TypeScript types
 export type FormFieldConfig = z.infer<typeof formFieldConfigSchema>;
 export type InputFieldConfig = z.infer<typeof inputFieldSchema>;
@@ -139,4 +147,7 @@ export type SelectableCardFieldConfig = z.infer<
 export type HiddenFieldConfig = z.infer<typeof hiddenFieldSchema>;
 export type CreateFormSubtaskFormInput = z.infer<
   typeof createFormSubtaskFormSchema
+>;
+export type UpdateFormSubtaskFormInput = z.infer<
+  typeof updateFormSubtaskFormSchema
 >;

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   FormConfig,
   FormFieldsType,
@@ -5,22 +7,20 @@ import {
 } from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import { createPresentationListSubtaskFormAction } from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-action";
+import { createPresentationListSubtaskFormAction } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-action";
 import {
   CreatePresentationListSubtaskFormInput,
   createPresentationListSubtaskFormSchema,
-} from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-schema";
+} from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
+import { useCreatePresentationListSubtaskFormFields } from "@/features/subtasks/forms/presentation-list-subtask/use-presentation-list-subtask-form-fields";
 import { useRouter } from "next/navigation";
 import { DeepPartial } from "react-hook-form";
 
-type Props = {
-  taskId: string;
-};
-
-export function useCreatePresentationListSubtaskFormConfig({
-  taskId,
-}: Props): FormConfig<FormState, CreatePresentationListSubtaskFormInput> {
+export function useCreatePresentationListSubtaskFormConfig(
+  taskId: string,
+): FormConfig<FormState, CreatePresentationListSubtaskFormInput> {
   const router = useRouter();
+  const fields = useCreatePresentationListSubtaskFormFields();
 
   const defaultValues: DeepPartial<CreatePresentationListSubtaskFormInput> = {
     taskId,
@@ -33,41 +33,6 @@ export function useCreatePresentationListSubtaskFormConfig({
       },
     ],
     noItemTranslation: "",
-  };
-
-  const fields: FormFieldsType<CreatePresentationListSubtaskFormInput> = {
-    taskId: {
-      type: "hidden",
-    },
-    subtaskName: {
-      type: "input",
-      label: "Subtask Name",
-      placeholder: "Enter subtask name",
-    },
-    columns: {
-      type: "array",
-      name: {
-        type: "input",
-        label: "Name",
-        placeholder: "Enter name",
-      },
-      translation: {
-        type: "input",
-        label: "Translation",
-        placeholder: "Enter translation",
-      },
-      gridTemplateColumns: {
-        type: "input",
-        label: "Grid Template Columns",
-        placeholder: "Enter grid template columns",
-        inputType: "number",
-      },
-    },
-    noItemTranslation: {
-      type: "input",
-      label: "No Item Translation",
-      placeholder: "Enter no item translation",
-    },
   };
 
   return {

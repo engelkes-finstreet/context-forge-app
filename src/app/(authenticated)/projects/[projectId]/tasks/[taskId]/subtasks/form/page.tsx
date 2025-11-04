@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { CreateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form";
+import { CreateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/create/create-form-subtask-form";
 
 type Props = {
   params: Promise<{

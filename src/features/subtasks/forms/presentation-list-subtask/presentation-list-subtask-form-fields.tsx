@@ -1,7 +1,9 @@
+"use client";
+
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { FieldArraySection } from "@/components/forms/field-array-section";
-import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/create-presentation-list-subtask-form-schema";
+import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
 import { AlertCircle } from "lucide-react";
 import { useFormState } from "react-hook-form";
 
@@ -11,9 +13,7 @@ type Props = {
   >;
 };
 
-export const CreatePresentationListSubtaskFormFields = ({
-  fieldNames,
-}: Props) => {
+export const PresentationListSubtaskFormFields = ({ fieldNames }: Props) => {
   const { errors } = useFormState();
   const columnsError = errors.columns?.root?.message?.toString();
 
@@ -32,7 +32,7 @@ export const CreatePresentationListSubtaskFormFields = ({
   );
 };
 
-const ColumnsFields = ({ fieldNames }: Props) => {
+export const ColumnsFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
       arrayFieldName={fieldNames.columns.fieldName}
