@@ -10,6 +10,7 @@ import { Zap, Lock, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { FieldArrayAccordion } from "@/components/forms/field-array-accordion";
+import { useWatch } from "react-hook-form";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateRequestSubtaskFormInput>>;
@@ -32,11 +33,22 @@ export const RequestSubtaskFormFields = ({ fieldNames }: Props) => {
   );
 };
 
-const RequestSummary = ({ request }: { request: Request }) => {
+const RequestSummary = ({
+  index,
+  arrayFieldName,
+}: {
+  index: number;
+  arrayFieldName: string;
+}) => {
+  // Subscribe to live form data for real-time updates
+  const request = useWatch({
+    name: `${arrayFieldName}.${index}`,
+  }) as Request | undefined;
+
   // Parse endpoint format: "GET:/api/path"
-  const [method, path] = request.endpoint?.split(":", 2) || ["", ""];
+  const [method, path] = request?.endpoint?.split(":", 2) || ["", ""];
   const hasEndpoint = method && path;
-  const requestType = request.requestType;
+  const requestType = request?.requestType;
 
   return (
     <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -44,13 +56,15 @@ const RequestSummary = ({ request }: { request: Request }) => {
         <>
           <Badge
             className={cn(
-              "text-white text-xs font-semibold",
+              "text-white text-xs font-semibold shadow-sm",
               METHOD_COLORS[method] || "bg-gray-500",
             )}
           >
             {method}
           </Badge>
-          <span className="text-sm font-mono truncate">{path}</span>
+          <span className="text-sm font-mono truncate dark:text-foreground/90">
+            {path}
+          </span>
         </>
       ) : (
         <span className="text-sm text-muted-foreground italic">
@@ -60,26 +74,28 @@ const RequestSummary = ({ request }: { request: Request }) => {
 
       {requestType && (
         <>
-          <span className="text-muted-foreground">•</span>
-          <span className="text-sm capitalize">{requestType}</span>
+          <span className="text-muted-foreground/60">•</span>
+          <span className="text-sm capitalize dark:text-foreground/80">
+            {requestType}
+          </span>
         </>
       )}
 
-      {request.paginated && (
+      {request?.paginated && (
         <Badge variant="secondary" className="gap-1">
           <Zap className="size-3" />
           <span className="text-xs">Paginated</span>
         </Badge>
       )}
 
-      {request.protected && (
+      {request?.protected && (
         <Badge variant="secondary" className="gap-1">
           <Lock className="size-3" />
           <span className="text-xs">Protected</span>
         </Badge>
       )}
 
-      {request.resultSchema && (
+      {request?.resultSchema && (
         <Badge variant="secondary" className="gap-1">
           <FileText className="size-3" />
           <span className="text-xs">Schema</span>
@@ -103,7 +119,12 @@ export const RequestsFields = ({ fieldNames }: Props) => {
       }}
       itemLabel="Request"
       sectionTitle="Requests"
-      renderSummary={({ item }) => <RequestSummary request={item} />}
+      renderSummary={({ index }) => (
+        <RequestSummary
+          index={index}
+          arrayFieldName={fieldNames.requests.fieldName}
+        />
+      )}
     >
       {({ buildFieldName, fieldNames: fields }) => (
         <>
@@ -111,7 +132,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
           <DynamicFormField fieldName={buildFieldName(fields.requestType)} />
 
           <div className="space-y-2">
-            <p className="text-sm font-medium">Options</p>
+            <p className="text-sm font-medium dark:text-foreground/90">Options</p>
             <div className="flex flex-wrap gap-4">
               <DynamicFormField fieldName={buildFieldName(fields.paginated)} />
               <DynamicFormField fieldName={buildFieldName(fields.protected)} />

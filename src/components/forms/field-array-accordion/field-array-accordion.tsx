@@ -70,12 +70,14 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
 
   const [openItems, setOpenItems] = useState<string[]>([]);
 
-  // Only add empty first item if array is empty - don't auto-expand
+  // Add first item and auto-expand when creating new form
   useEffect(() => {
-    if (fieldsArray.length === 0 && minItems > 0) {
+    if (fieldsArray.length === 1 && minItems > 0) {
       append(defaultItem);
+      // Auto-expand the first item only when creating (not when editing)
+      setOpenItems([`${arrayFieldName}-0`]);
     }
-  }, [fieldsArray.length, append, defaultItem, minItems]);
+  }, [fieldsArray.length, append, defaultItem, minItems, arrayFieldName]);
 
   const handleRemove = (index: number) => {
     const itemValue = `${arrayFieldName}-${index}`;
@@ -104,14 +106,18 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
   return (
     <div className={cn("space-y-4", className)}>
       {(sectionTitle || showCount) && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-1">
           {sectionTitle && (
-            <h3 className="text-sm font-semibold">{sectionTitle}</h3>
+            <h3 className="text-sm font-semibold text-foreground/90 dark:text-foreground">
+              {sectionTitle}
+            </h3>
           )}
           {showCount && (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs font-medium text-muted-foreground/80 dark:text-muted-foreground">
               {fieldsArray.length}{" "}
-              {fieldsArray.length === 1 ? itemLabel.toLowerCase() : `${itemLabel.toLowerCase()}s`}
+              {fieldsArray.length === 1
+                ? itemLabel.toLowerCase()
+                : `${itemLabel.toLowerCase()}s`}
             </span>
           )}
         </div>
@@ -119,20 +125,20 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
 
       <Accordion
         type="multiple"
-        className="space-y-2"
+        className="space-y-3"
         value={openItems}
         onValueChange={setOpenItems}
       >
         {fieldsArray.map((field, index) => (
-          <div key={field.id} className="flex items-start gap-2">
+          <div key={field.id} className="flex items-start gap-3">
             <AccordionItem
               value={`${arrayFieldName}-${index}`}
-              className="border rounded-lg flex-1"
+              className="border flex-1 bg-card rounded-xl shadow-sm hover:shadow-md transition-all border-border/40 dark:border-border dark:bg-transparent"
             >
-              <AccordionTrigger className="px-4 hover:no-underline">
-                <div className="flex items-center gap-3 flex-1">
+              <AccordionTrigger className="px-5 py-4 hover:no-underline hover:bg-muted/30 dark:hover:bg-muted/40 rounded-t-xl transition-colors data-[state=open]:border-b data-[state=open]:border-border/50 dark:data-[state=open]:border-border dark:bg-muted/30">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
                   {showItemNumber && (
-                    <span className="text-xs font-medium text-muted-foreground">
+                    <span className="text-xs font-semibold text-muted-foreground shrink-0 dark:text-muted-foreground/90">
                       #{index + 1}
                     </span>
                   )}
@@ -146,8 +152,8 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
                 </div>
               </AccordionTrigger>
 
-              <AccordionContent className="px-4 pb-4">
-                <div className="space-y-4 pt-2">
+              <AccordionContent className="px-5 pb-5">
+                <div className="space-y-4 pt-4">
                   {children({
                     index,
                     fieldNames: arrayFieldConfig.fields,
@@ -164,7 +170,7 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
               variant="ghost"
               size="icon"
               type="button"
-              className="size-9 shrink-0 mt-1"
+              className="size-9 shrink-0 mt-2.5 hover:bg-destructive/10 hover:text-destructive transition-colors dark:hover:bg-destructive/20"
               aria-label={`Remove ${itemLabel} ${index + 1}`}
             >
               <XIcon className="size-4" />
@@ -178,7 +184,7 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
           onClick={handleAdd}
           variant="outline"
           size="sm"
-          className="w-full border-dashed"
+          className="w-full border-dashed border-2 hover:bg-muted/50 transition-colors dark:border-border/60 dark:hover:bg-muted/30"
           type="button"
         >
           <PlusIcon className="size-4 mr-2" />

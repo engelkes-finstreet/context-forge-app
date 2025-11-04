@@ -47,7 +47,6 @@ export function FormSubtaskDisplay({
   content,
   metadata,
 }: FormSubtaskDisplayProps) {
-  console.log({ metadata });
   return (
     <div className="space-y-6">
       {/* Content */}

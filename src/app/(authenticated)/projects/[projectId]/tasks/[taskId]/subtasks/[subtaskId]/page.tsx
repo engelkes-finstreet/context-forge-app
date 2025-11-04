@@ -68,7 +68,7 @@ export default async function SubtaskDetailPage({
         return (
           <FormSubtaskDisplay
             content={subtask.content}
-            metadata={parsedMetadata as FormMetadata}
+            metadata={parsedMetadata as any}
           />
         );
 
@@ -76,7 +76,7 @@ export default async function SubtaskDetailPage({
         return (
           <InquiryProcessSubtaskDisplay
             content={subtask.content}
-            metadata={parsedMetadata as InquiryProcessMetadata}
+            metadata={parsedMetadata as any}
           />
         );
 
@@ -84,7 +84,7 @@ export default async function SubtaskDetailPage({
         return (
           <ModalSubtaskDisplay
             content={subtask.content}
-            metadata={parsedMetadata as ModalMetadata}
+            metadata={parsedMetadata as any}
           />
         );
 
