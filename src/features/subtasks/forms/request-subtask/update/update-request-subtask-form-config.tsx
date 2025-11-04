@@ -20,14 +20,16 @@ export function useUpdateRequestSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdateRequestSubtaskFormFields({ endpoints });
 
+  console.log({ subtask });
+
   const defaultValues: DeepPartial<UpdateRequestSubtaskFormInput> = {
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
     requests: subtask.metadata
-      ? JSON.parse(subtask.metadata as string).requests.map(
-          (request: Request) => ({
-            endpoint: request.endpoint,
+      ? (subtask.metadata as { requests: Array<Request & { httpMethod: string }> }).requests.map(
+          (request) => ({
+            endpoint: `${request.httpMethod}:${request.endpoint}`,
             requestType: request.requestType,
             paginated: request.paginated,
             protected: request.protected,

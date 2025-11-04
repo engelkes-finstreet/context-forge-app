@@ -18,9 +18,7 @@ export function useUpdatePresentationListSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdatePresentationListSubtaskFormFields();
 
-  const metadata = subtask.metadata
-    ? JSON.parse(subtask.metadata as string)
-    : null;
+  const metadata = subtask.metadata as { columns?: Column[]; noItemTranslation?: string } | null;
 
   const defaultValues: DeepPartial<UpdatePresentationListSubtaskFormInput> = {
     subtaskId: subtask.id,

@@ -18,9 +18,7 @@ export function useUpdateFormSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdateFormSubtaskFormFields();
 
-  const metadata = subtask.metadata
-    ? JSON.parse(subtask.metadata as string)
-    : null;
+  const metadata = subtask.metadata as { fields?: FormFieldConfig[] } | null;
 
   const defaultValues: DeepPartial<UpdateFormSubtaskFormInput> = {
     subtaskId: subtask.id,

@@ -31,7 +31,7 @@ export async function createFormSubtaskFormAction(
     name: formData.subtaskName,
     type: SubtaskType.FORM,
     content: "",
-    metadata: JSON.stringify(metadata),
+    metadata: metadata,
   });
 
   if (result.success) {
@@ -57,7 +57,7 @@ export async function updateFormSubtaskFormAction(
   const metadata = getMetadata(formData.fields);
 
   const result = await SubtaskService.updateSubtask(formData.subtaskId, {
-    metadata: JSON.stringify(metadata),
+    metadata: metadata,
   });
 
   if (result.success) {

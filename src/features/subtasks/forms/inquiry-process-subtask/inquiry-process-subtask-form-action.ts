@@ -42,7 +42,7 @@ export async function createInquiryProcessSubtaskFormAction(
     name: formData.subtaskName,
     type: SubtaskType.INQUIRY_PROCESS,
     content: "",
-    metadata: JSON.stringify(metadata),
+    metadata: metadata,
   });
 
   if (result.success) {
@@ -72,7 +72,7 @@ export async function updateInquiryProcessSubtaskFormAction(
   );
 
   const result = await SubtaskService.updateSubtask(formData.subtaskId, {
-    metadata: JSON.stringify(metadata),
+    metadata: metadata,
   });
 
   if (result.success) {

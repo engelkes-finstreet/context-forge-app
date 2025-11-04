@@ -56,20 +56,8 @@ export default async function SubtaskDetailPage({
 
   const typeConfig = getTypeConfig(subtask.type);
 
-  // Parse metadata safely
-  let parsedMetadata = null;
-  try {
-    if (subtask.metadata) {
-      parsedMetadata =
-        typeof subtask.metadata === "string"
-          ? JSON.parse(subtask.metadata)
-          : subtask.metadata;
-    }
-  } catch (error) {
-    console.error("Failed to parse subtask metadata:", error);
-  }
-
-  console.log({ parsedMetadata });
+  // Metadata is already a JavaScript object (no parsing needed)
+  const parsedMetadata = subtask.metadata;
   // Render the appropriate display component based on type
   const renderContent = () => {
     switch (subtask.type) {

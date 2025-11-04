@@ -31,8 +31,8 @@ export async function createPresentationListSubtaskFormAction(
     taskId: formData.taskId,
     name: formData.subtaskName,
     type: SubtaskType.PRESENTATION_LIST,
-    content: JSON.stringify(metadata),
-    metadata: JSON.stringify(metadata),
+    content: "",
+    metadata: metadata,
   });
 
   if (result.success) {
@@ -58,8 +58,7 @@ export async function updatePresentationListSubtaskFormAction(
   const metadata = getMetadata(formData.columns, formData.noItemTranslation);
 
   const result = await SubtaskService.updateSubtask(formData.subtaskId, {
-    metadata: JSON.stringify(metadata),
-    content: JSON.stringify(metadata),
+    metadata: metadata,
   });
 
   if (result.success) {

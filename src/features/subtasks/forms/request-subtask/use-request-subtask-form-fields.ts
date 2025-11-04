@@ -41,15 +41,15 @@ export function useCreateRequestSubtaskFormFields({
       },
       paginated: {
         type: "checkbox",
-        label: "Is this a paginated request?",
+        label: "Paginated",
       },
       protected: {
         type: "checkbox",
-        label: "Is this a protected request?",
+        label: "Protected",
       },
       resultSchema: {
         type: "checkbox",
-        label: "Does this request return a result schema?",
+        label: "Result Schema",
       },
     },
   };

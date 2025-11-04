@@ -19,9 +19,11 @@ export function useUpdateInquiryProcessSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdateInquiryProcessSubtaskFormFields();
 
-  const metadata = subtask.metadata
-    ? JSON.parse(subtask.metadata as string)
-    : null;
+  const metadata = subtask.metadata as {
+    inquiryRoute?: string;
+    steps?: Step[];
+    progressBar?: ProgressBarGroup[];
+  } | null;
 
   const defaultValues: DeepPartial<UpdateInquiryProcessSubtaskFormInput> = {
     subtaskId: subtask.id,
