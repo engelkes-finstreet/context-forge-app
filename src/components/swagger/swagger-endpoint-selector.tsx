@@ -93,6 +93,13 @@ export function SwaggerEndpointSelector({
     return `${endpoint.method} ${endpoint.path} ${endpoint.summary || ""} ${endpoint.description || ""} ${endpoint.tags?.join(" ") || ""}`;
   };
 
+  // Custom filter for exact substring matching (case-insensitive)
+  const customFilter = (value: string, search: string) => {
+    const searchLower = search.toLowerCase();
+    const valueLower = value.toLowerCase();
+    return valueLower.includes(searchLower) ? 1 : 0;
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -131,7 +138,7 @@ export function SwaggerEndpointSelector({
         align="start"
         style={{ width: "var(--radix-popover-trigger-width)" }}
       >
-        <Command>
+        <Command filter={customFilter}>
           <CommandInput placeholder="Search endpoints..." />
           <CommandList>
             <CommandEmpty>{emptyText}</CommandEmpty>
