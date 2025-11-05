@@ -21,35 +21,37 @@ export function useCreateRequestSubtaskFormFields({
       label: "Subtask Name",
       placeholder: "Enter subtask name",
     },
-    requests: {
-      type: "array",
-      endpoint: {
-        type: "swagger_endpoint_selector",
-        label: "Endpoint",
-        placeholder: "Select endpoint...",
-        emptyText: "No endpoints found",
-        endpoints,
-      },
-      requestType: {
-        type: "select",
-        label: "Request Type",
-        placeholder: "Select request type...",
-        options: [
-          { label: "Server", value: "server" },
-          { label: "Client", value: "client" },
-        ],
-      },
-      paginated: {
-        type: "checkbox",
-        label: "Paginated",
-      },
-      protected: {
-        type: "checkbox",
-        label: "Protected",
-      },
-      resultSchema: {
-        type: "checkbox",
-        label: "Result Schema",
+    metadata: {
+      requests: {
+        type: "array",
+        endpoint: {
+          type: "swagger_endpoint_selector",
+          label: "Endpoint",
+          placeholder: "Select endpoint...",
+          emptyText: "No endpoints found",
+          endpoints,
+        },
+        requestType: {
+          type: "select",
+          label: "Request Type",
+          placeholder: "Select request type...",
+          options: [
+            { label: "Server", value: "server" },
+            { label: "Client", value: "client" },
+          ],
+        },
+        paginated: {
+          type: "checkbox",
+          label: "Paginated",
+        },
+        protected: {
+          type: "checkbox",
+          label: "Protected",
+        },
+        resultSchema: {
+          type: "checkbox",
+          label: "Result Schema",
+        },
       },
     },
   };

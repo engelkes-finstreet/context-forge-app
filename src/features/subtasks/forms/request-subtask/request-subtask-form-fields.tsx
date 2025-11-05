@@ -108,8 +108,8 @@ const RequestSummary = ({
 export const RequestsFields = ({ fieldNames }: Props) => {
   return (
     <FieldArrayAccordion
-      arrayFieldName={fieldNames.requests.fieldName}
-      arrayFieldConfig={fieldNames.requests}
+      arrayFieldName={fieldNames.metadata.requests.fieldName}
+      arrayFieldConfig={fieldNames.metadata.requests}
       defaultItem={{
         endpoint: "",
         requestType: undefined,
@@ -122,7 +122,7 @@ export const RequestsFields = ({ fieldNames }: Props) => {
       renderSummary={({ index }) => (
         <RequestSummary
           index={index}
-          arrayFieldName={fieldNames.requests.fieldName}
+          arrayFieldName={fieldNames.metadata.requests.fieldName}
         />
       )}
     >
@@ -132,7 +132,9 @@ export const RequestsFields = ({ fieldNames }: Props) => {
           <DynamicFormField fieldName={buildFieldName(fields.requestType)} />
 
           <div className="space-y-2">
-            <p className="text-sm font-medium dark:text-foreground/90">Options</p>
+            <p className="text-sm font-medium dark:text-foreground/90">
+              Options
+            </p>
             <div className="flex flex-wrap gap-4">
               <DynamicFormField fieldName={buildFieldName(fields.paginated)} />
               <DynamicFormField fieldName={buildFieldName(fields.protected)} />

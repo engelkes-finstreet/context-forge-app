@@ -5,7 +5,7 @@ import { updatePresentationListSubtaskFormAction } from "@/features/subtasks/for
 import {
   UpdatePresentationListSubtaskFormInput,
   updatePresentationListSubtaskFormSchema,
-  Column,
+  PresentationListMetadata,
 } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
 import { useUpdatePresentationListSubtaskFormFields } from "@/features/subtasks/forms/presentation-list-subtask/use-presentation-list-subtask-form-fields";
 import { Subtask } from "@prisma/client";
@@ -18,20 +18,11 @@ export function useUpdatePresentationListSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdatePresentationListSubtaskFormFields();
 
-  const metadata = subtask.metadata as { columns?: Column[]; noItemTranslation?: string } | null;
-
   const defaultValues: DeepPartial<UpdatePresentationListSubtaskFormInput> = {
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
-    columns: metadata?.columns
-      ? metadata.columns.map((column: Column) => ({
-          name: column.name,
-          translation: column.translation,
-          gridTemplateColumns: column.gridTemplateColumns,
-        }))
-      : [],
-    noItemTranslation: metadata?.noItemTranslation || "",
+    metadata: subtask.metadata as PresentationListMetadata,
   };
 
   return {

@@ -12,27 +12,18 @@ import { TaskService } from "@/lib/services/task-service";
 import { SubtaskType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-function getMetadata(columns: Columns, noItemTranslation: string) {
-  return {
-    columns,
-    noItemTranslation,
-  };
-}
-
 export async function createPresentationListSubtaskFormAction(
   state: FormState,
   formData: CreatePresentationListSubtaskFormInput,
 ): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
-  const metadata = getMetadata(formData.columns, formData.noItemTranslation);
-
   const result = await SubtaskService.createSubtask({
     taskId: formData.taskId,
     name: formData.subtaskName,
     type: SubtaskType.PRESENTATION_LIST,
     content: "",
-    metadata: metadata,
+    metadata: formData.metadata,
   });
 
   if (result.success) {
@@ -55,10 +46,8 @@ export async function updatePresentationListSubtaskFormAction(
 ): Promise<FormState> {
   const subtask = await SubtaskService.getSubtaskById(formData.subtaskId);
 
-  const metadata = getMetadata(formData.columns, formData.noItemTranslation);
-
   const result = await SubtaskService.updateSubtask(formData.subtaskId, {
-    metadata: metadata,
+    metadata: formData.metadata,
   });
 
   if (result.success) {

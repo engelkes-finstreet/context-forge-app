@@ -27,15 +27,17 @@ export function useCreateRequestSubtaskFormConfig(
   const defaultValues: DeepPartial<CreateRequestSubtaskFormInput> = {
     taskId,
     subtaskName: "",
-    requests: [
-      {
-        endpoint: "",
-        requestType: undefined,
-        paginated: false,
-        protected: false,
-        resultSchema: false,
-      },
-    ],
+    metadata: {
+      requests: [
+        {
+          endpoint: "",
+          requestType: undefined,
+          paginated: false,
+          protected: false,
+          resultSchema: false,
+        },
+      ],
+    },
   };
 
   return {

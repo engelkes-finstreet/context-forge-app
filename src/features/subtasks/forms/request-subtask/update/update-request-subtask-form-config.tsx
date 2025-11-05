@@ -3,6 +3,8 @@ import { createFormFieldNames } from "@/components/forms/utils/create-form-field
 import { Button } from "@/components/ui/button";
 import { updateRequestSubtaskFormAction } from "@/features/subtasks/forms/request-subtask/request-subtask-form-action";
 import {
+  RequestSubtaskDatabaseMetadata,
+  RequestSubtaskMetadata,
   UpdateRequestSubtaskFormInput,
   updateRequestSubtaskFormSchema,
 } from "@/features/subtasks/forms/request-subtask/request-subtask-form-schema";
@@ -11,7 +13,6 @@ import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { Subtask } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { DeepPartial } from "react-hook-form";
-import { Request } from "@/features/subtasks/forms/request-subtask/request-subtask-form-schema";
 
 export function useUpdateRequestSubtaskFormConfig(
   subtask: Subtask,
@@ -20,23 +21,21 @@ export function useUpdateRequestSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdateRequestSubtaskFormFields({ endpoints });
 
+  const databaseMetadata = subtask.metadata as RequestSubtaskDatabaseMetadata;
+  const requestsMetadata: RequestSubtaskMetadata = {
+    requests: databaseMetadata.requests.map((request) => ({
+      endpoint: `${request.httpMethod}:${request.endpoint}`,
+      requestType: request.requestType,
+      paginated: request.paginated,
+      protected: request.protected,
+      resultSchema: request.resultSchema,
+    })),
+  };
   const defaultValues: DeepPartial<UpdateRequestSubtaskFormInput> = {
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
-    requests: subtask.metadata
-      ? (
-          subtask.metadata as {
-            requests: Array<Request & { httpMethod: string }>;
-          }
-        ).requests.map((request) => ({
-          endpoint: `${request.httpMethod}:${request.endpoint}`,
-          requestType: request.requestType,
-          paginated: request.paginated,
-          protected: request.protected,
-          resultSchema: request.resultSchema,
-        }))
-      : [],
+    metadata: requestsMetadata,
   };
 
   return {

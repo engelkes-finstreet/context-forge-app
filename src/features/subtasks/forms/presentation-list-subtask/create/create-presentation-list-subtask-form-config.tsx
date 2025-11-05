@@ -27,14 +27,16 @@ export function useCreatePresentationListSubtaskFormConfig(
   const defaultValues: DeepPartial<CreatePresentationListSubtaskFormInput> = {
     taskId,
     subtaskName: "",
-    columns: [
-      {
-        name: "",
-        translation: "",
-        gridTemplateColumns: undefined,
-      },
-    ],
-    noItemTranslation: "",
+    metadata: {
+      columns: [
+        {
+          name: "",
+          translation: "",
+          gridTemplateColumns: undefined,
+        },
+      ],
+      noItemTranslation: "",
+    },
   };
 
   return {

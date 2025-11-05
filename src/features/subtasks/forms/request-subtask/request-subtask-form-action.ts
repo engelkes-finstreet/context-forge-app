@@ -3,6 +3,7 @@
 import {
   CreateRequestSubtaskFormInput,
   Requests,
+  RequestSubtaskDatabaseMetadata,
   UpdateRequestSubtaskFormInput,
 } from "@/features/subtasks/forms/request-subtask/request-subtask-form-schema";
 import { SubtaskService } from "@/lib/services/subtask-service";
@@ -13,7 +14,7 @@ import { routes } from "@/lib/routes";
 import { TaskService } from "@/lib/services/task-service";
 import { FormState } from "@/components/forms/types";
 
-function getMetadata(requests: Requests) {
+function getMetadata(requests: Requests): RequestSubtaskDatabaseMetadata {
   const requestsMetadata = requests.map((request) => {
     // Parse endpoint format: "GET:/api/internal/financing_inquiries/hoa_account/{id}"
     const [httpMethod, endpoint] = request.endpoint.split(":", 2);
@@ -39,7 +40,7 @@ export async function createRequestSubtaskFormAction(
 ): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
-  const metadata = getMetadata(formData.requests);
+  const metadata = getMetadata(formData.metadata.requests);
 
   const result = await SubtaskService.createSubtask({
     taskId: formData.taskId,
@@ -69,7 +70,7 @@ export async function updateRequestSubtaskFormAction(
 ): Promise<FormState> {
   const subtask = await SubtaskService.getSubtaskById(formData.subtaskId);
 
-  const metadata = getMetadata(formData.requests);
+  const metadata = getMetadata(formData.metadata.requests);
 
   const result = await SubtaskService.updateSubtask(formData.subtaskId, {
     metadata: metadata,

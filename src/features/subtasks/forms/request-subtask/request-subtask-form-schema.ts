@@ -12,12 +12,29 @@ export type Request = z.infer<typeof requestSchema>;
 
 const requestsSchema = z.array(requestSchema);
 
+const metadataSchema = z.object({
+  requests: requestsSchema,
+});
+
+const requestSubtaskDatabaseMetadataSchema = z.object({
+  requests: z.array(
+    requestSchema.extend({
+      httpMethod: z.string().min(1, "HTTP method is required"),
+    }),
+  ),
+});
+
+export type RequestSubtaskDatabaseMetadata = z.infer<
+  typeof requestSubtaskDatabaseMetadataSchema
+>;
+
 export type Requests = z.infer<typeof requestsSchema>;
+export type RequestSubtaskMetadata = z.infer<typeof metadataSchema>;
 
 export const createRequestSubtaskFormSchema = z.object({
   taskId: z.cuid("Invalid task ID"),
   subtaskName: z.string().min(1, "Subtask name is required"),
-  requests: requestsSchema,
+  metadata: metadataSchema,
 });
 
 export const updateRequestSubtaskFormSchema =

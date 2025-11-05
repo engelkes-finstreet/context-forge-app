@@ -27,7 +27,7 @@ export const PresentationListSubtaskFormFields = ({ fieldNames }: Props) => {
         </div>
       )}
       <ColumnsFields fieldNames={fieldNames} />
-      <DynamicFormField fieldName={fieldNames.noItemTranslation} />
+      <DynamicFormField fieldName={fieldNames.metadata.noItemTranslation} />
     </div>
   );
 };
@@ -35,8 +35,8 @@ export const PresentationListSubtaskFormFields = ({ fieldNames }: Props) => {
 export const ColumnsFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
-      arrayFieldName={fieldNames.columns.fieldName}
-      arrayFieldConfig={fieldNames.columns}
+      arrayFieldName={fieldNames.metadata.columns.fieldName}
+      arrayFieldConfig={fieldNames.metadata.columns}
       defaultItem={{
         name: "",
         translation: "",

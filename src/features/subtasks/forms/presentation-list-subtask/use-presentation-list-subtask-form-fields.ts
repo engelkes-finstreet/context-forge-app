@@ -14,29 +14,31 @@ export function useCreatePresentationListSubtaskFormFields(): FormFieldsType<Cre
       label: "Subtask Name",
       placeholder: "Enter subtask name",
     },
-    columns: {
-      type: "array",
-      name: {
-        type: "input",
-        label: "Name",
-        placeholder: "Enter name",
+    metadata: {
+      columns: {
+        type: "array",
+        name: {
+          type: "input",
+          label: "Name",
+          placeholder: "Enter name",
+        },
+        translation: {
+          type: "input",
+          label: "Translation",
+          placeholder: "Enter translation",
+        },
+        gridTemplateColumns: {
+          type: "input",
+          label: "Grid Template Columns",
+          placeholder: "Enter grid template columns",
+          inputType: "number",
+        },
       },
-      translation: {
+      noItemTranslation: {
         type: "input",
-        label: "Translation",
-        placeholder: "Enter translation",
+        label: "No Item Translation",
+        placeholder: "Enter no item translation",
       },
-      gridTemplateColumns: {
-        type: "input",
-        label: "Grid Template Columns",
-        placeholder: "Enter grid template columns",
-        inputType: "number",
-      },
-    },
-    noItemTranslation: {
-      type: "input",
-      label: "No Item Translation",
-      placeholder: "Enter no item translation",
     },
   };
 }

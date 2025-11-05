@@ -12,15 +12,21 @@ const columnsSchema = z.array(columnSchema);
 
 export type Columns = z.infer<typeof columnsSchema>;
 
+const metadataSchema = z.object({
+  columns: columnsSchema,
+  noItemTranslation: z.string().min(1, "No item translation is required"),
+});
+
+export type PresentationListMetadata = z.infer<typeof metadataSchema>;
+
 export const createPresentationListSubtaskFormSchema = z
   .object({
     taskId: z.string().cuid("Invalid task ID"),
     subtaskName: z.string().min(1, "Subtask name is required"),
-    columns: columnsSchema,
-    noItemTranslation: z.string().min(1, "No item translation is required"),
+    metadata: metadataSchema,
   })
   .superRefine((data, ctx) => {
-    const totalColumns = data.columns.reduce(
+    const totalColumns = data.metadata.columns.reduce(
       (sum, column) => sum + column.gridTemplateColumns,
       0,
     );
