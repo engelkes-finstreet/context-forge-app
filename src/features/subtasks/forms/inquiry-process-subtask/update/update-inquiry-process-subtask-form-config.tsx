@@ -7,6 +7,7 @@ import {
   updateInquiryProcessSubtaskFormSchema,
   Step,
   ProgressBarGroup,
+  InquiryProcessMetadata,
 } from "@/features/subtasks/forms/inquiry-process-subtask/inquiry-process-subtask-form-schema";
 import { useUpdateInquiryProcessSubtaskFormFields } from "@/features/subtasks/forms/inquiry-process-subtask/use-inquiry-process-subtask-form-fields";
 import { Subtask } from "@prisma/client";
@@ -29,20 +30,7 @@ export function useUpdateInquiryProcessSubtaskFormConfig(
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
-    inquiryRoute: metadata?.inquiryRoute || "",
-    steps: metadata?.steps
-      ? metadata.steps.map((step: Step) => ({
-          name: step.name,
-          routeName: step.routeName,
-          title: step.title,
-          description: step.description,
-        }))
-      : [],
-    progressBar: metadata?.progressBar
-      ? metadata.progressBar.map((group: ProgressBarGroup) => ({
-          groupTitle: group.groupTitle,
-        }))
-      : [],
+    metadata: subtask.metadata as InquiryProcessMetadata,
   };
 
   return {

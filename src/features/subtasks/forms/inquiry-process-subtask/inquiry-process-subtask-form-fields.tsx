@@ -15,7 +15,7 @@ export const InquiryProcessSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
-      <DynamicFormField fieldName={fieldNames.inquiryRoute} />
+      <DynamicFormField fieldName={fieldNames.metadata.inquiryRoute} />
       <StepsFields fieldNames={fieldNames} />
       <ProgressBarFields fieldNames={fieldNames} />
     </div>
@@ -25,8 +25,8 @@ export const InquiryProcessSubtaskFormFields = ({ fieldNames }: Props) => {
 export const StepsFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
-      arrayFieldName={fieldNames.steps.fieldName}
-      arrayFieldConfig={fieldNames.steps}
+      arrayFieldName={fieldNames.metadata.steps.fieldName}
+      arrayFieldConfig={fieldNames.metadata.steps}
       defaultItem={{
         name: "",
         routeName: "",
@@ -50,8 +50,8 @@ export const StepsFields = ({ fieldNames }: Props) => {
 export const ProgressBarFields = ({ fieldNames }: Props) => {
   return (
     <FieldArraySection
-      arrayFieldName={fieldNames.progressBar.fieldName}
-      arrayFieldConfig={fieldNames.progressBar}
+      arrayFieldName={fieldNames.metadata.progressBar.fieldName}
+      arrayFieldConfig={fieldNames.metadata.progressBar}
       defaultItem={{
         groupTitle: "",
       }}

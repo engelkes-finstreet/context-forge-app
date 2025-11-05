@@ -25,20 +25,22 @@ export function useCreateInquiryProcessSubtaskFormConfig(
   const defaultValues: DeepPartial<CreateInquiryProcessSubtaskFormInput> = {
     taskId,
     subtaskName: "",
-    inquiryRoute: "",
-    steps: [
-      {
-        name: "",
-        routeName: "",
-        title: "",
-        description: "",
-      },
-    ],
-    progressBar: [
-      {
-        groupTitle: "",
-      },
-    ],
+    metadata: {
+      inquiryRoute: "",
+      steps: [
+        {
+          name: "",
+          routeName: "",
+          title: "",
+          description: "",
+        },
+      ],
+      progressBar: [
+        {
+          groupTitle: "",
+        },
+      ],
+    },
   };
 
   return {

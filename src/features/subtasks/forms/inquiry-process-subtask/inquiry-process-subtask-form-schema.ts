@@ -23,12 +23,18 @@ const progressBarSchema = z.array(progressBarGroupSchema);
 
 export type ProgressBar = z.infer<typeof progressBarSchema>;
 
-export const createInquiryProcessSubtaskFormSchema = z.object({
-  taskId: z.string().cuid("Invalid task ID"),
-  subtaskName: z.string().min(1, "Subtask name is required"),
+const metadataSchema = z.object({
   inquiryRoute: z.string().min(1, "Inquiry route is required"),
   steps: stepsSchema,
   progressBar: progressBarSchema,
+});
+
+export type InquiryProcessMetadata = z.infer<typeof metadataSchema>;
+
+export const createInquiryProcessSubtaskFormSchema = z.object({
+  taskId: z.string().cuid("Invalid task ID"),
+  subtaskName: z.string().min(1, "Subtask name is required"),
+  metadata: metadataSchema,
 });
 
 export const updateInquiryProcessSubtaskFormSchema =

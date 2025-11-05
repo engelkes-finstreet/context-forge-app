@@ -14,40 +14,42 @@ export function useCreateInquiryProcessSubtaskFormFields(): FormFieldsType<Creat
       label: "Subtask Name",
       placeholder: "Enter subtask name",
     },
-    inquiryRoute: {
-      type: "input",
-      label: "Inquiry Route",
-      placeholder: "Enter inquiry route",
-    },
-    steps: {
-      type: "array",
-      name: {
+    metadata: {
+      inquiryRoute: {
         type: "input",
-        label: "Name",
-        placeholder: "Enter name",
+        label: "Inquiry Route",
+        placeholder: "Enter inquiry route",
       },
-      routeName: {
-        type: "input",
-        label: "Route Name",
-        placeholder: "Enter route name",
+      steps: {
+        type: "array",
+        name: {
+          type: "input",
+          label: "Name",
+          placeholder: "Enter name",
+        },
+        routeName: {
+          type: "input",
+          label: "Route Name",
+          placeholder: "Enter route name",
+        },
+        title: {
+          type: "input",
+          label: "Title",
+          placeholder: "Enter title",
+        },
+        description: {
+          type: "input",
+          label: "Description",
+          placeholder: "Enter description",
+        },
       },
-      title: {
-        type: "input",
-        label: "Title",
-        placeholder: "Enter title",
-      },
-      description: {
-        type: "input",
-        label: "Description",
-        placeholder: "Enter description",
-      },
-    },
-    progressBar: {
-      type: "array",
-      groupTitle: {
-        type: "input",
-        label: "Group Title",
-        placeholder: "Enter group title",
+      progressBar: {
+        type: "array",
+        groupTitle: {
+          type: "input",
+          label: "Group Title",
+          placeholder: "Enter group title",
+        },
       },
     },
   };

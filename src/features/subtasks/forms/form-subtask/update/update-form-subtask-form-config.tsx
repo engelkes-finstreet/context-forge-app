@@ -6,6 +6,7 @@ import {
   UpdateFormSubtaskFormInput,
   updateFormSubtaskFormSchema,
   FormFieldConfig,
+  FormSubtaskMetadata,
 } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { useUpdateFormSubtaskFormFields } from "@/features/subtasks/forms/form-subtask/use-form-subtask-form-fields";
 import { Subtask } from "@prisma/client";
@@ -24,9 +25,7 @@ export function useUpdateFormSubtaskFormConfig(
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
-    fields: metadata?.fields
-      ? metadata.fields.map((field: FormFieldConfig) => field)
-      : [],
+    metadata: subtask.metadata as FormSubtaskMetadata,
   };
 
   return {
