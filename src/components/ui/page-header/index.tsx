@@ -14,7 +14,7 @@ function PageHeaderRoot({ children }: PageHeaderProps) {
 }
 
 function PageHeaderActions({ children }: PageHeaderActionsProps) {
-  return <div>{children}</div>;
+  return <div className="flex items-center gap-2">{children}</div>;
 }
 
 export const PageHeader = Object.assign(PageHeaderRoot, {

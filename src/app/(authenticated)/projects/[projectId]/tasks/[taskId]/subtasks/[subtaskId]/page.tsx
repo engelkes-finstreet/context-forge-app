@@ -16,15 +16,8 @@ import {
   RequestSubtaskDisplay,
   PresentationListSubtaskDisplay,
 } from "@/features/subtasks/components/display";
-import {
-  isFormMetadata,
-  isInquiryProcessMetadata,
-  isModalMetadata,
-  type FormMetadata,
-  type InquiryProcessMetadata,
-  type ModalMetadata,
-} from "@/features/subtasks/types/subtask-types";
 import { SubtaskType } from "@prisma/client";
+import { DeleteSubtaskButton } from "@/features/subtasks/components/delete-subtask-button";
 
 interface SubtaskDetailPageProps {
   params: Promise<{
@@ -142,6 +135,11 @@ export default async function SubtaskDetailPage({
               Edit Subtask
             </Button>
           </TypedLink>
+          <DeleteSubtaskButton
+            subtaskId={subtaskId}
+            projectId={projectId}
+            taskId={taskId}
+          />
         </PageHeader.Actions>
       </PageHeader>
 
