@@ -30,7 +30,7 @@ export const Fields = ({ fieldNames }: Props) => {
     remove,
     update,
   } = useFieldArray({
-    name: fieldNames.fields.fieldName,
+    name: fieldNames.metadata.fields.fieldName,
   });
 
   useEffect(() => {
@@ -94,10 +94,10 @@ export const Fields = ({ fieldNames }: Props) => {
                   Base Configuration
                 </FieldLegend>
                 <DynamicFormField
-                  fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.fieldType}`}
+                  fieldName={`${fieldNames.metadata.fields.fieldName}.${index}.${fieldNames.metadata.fields.fields.fieldType}`}
                 />
                 <DynamicFormField
-                  fieldName={`${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.name}`}
+                  fieldName={`${fieldNames.metadata.fields.fieldName}.${index}.${fieldNames.metadata.fields.fields.name}`}
                 />
               </FieldSet>
 

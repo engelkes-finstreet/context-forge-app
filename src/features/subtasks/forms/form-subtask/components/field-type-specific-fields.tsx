@@ -1,5 +1,4 @@
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
 import { useWatch } from "react-hook-form";
 import { InputFields } from "./input-fields";
 import { SelectableCardFields } from "./selectable-card-fields";
@@ -13,6 +12,7 @@ import { RadioFields } from "@/features/subtasks/forms/form-subtask/components/r
 import { YesNoRadioFields } from "@/features/subtasks/forms/form-subtask/components/yes-no-radio-fields";
 import { CheckboxFields } from "@/features/subtasks/forms/form-subtask/components/checkbox-fields";
 import { ComboboxFields } from "@/features/subtasks/forms/form-subtask/components/combobox-fields";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 
 type FieldTypeSpecificFieldsProps = {
   index: number;
@@ -24,7 +24,7 @@ export const FieldTypeSpecificFields = ({
   fieldNames,
 }: FieldTypeSpecificFieldsProps) => {
   const fieldType = useWatch({
-    name: `${fieldNames.fields.fieldName}.${index}.${fieldNames.fields.fields.fieldType}`,
+    name: `${fieldNames.metadata.fields.fieldName}.${index}.${fieldNames.metadata.fields.fields.fieldType}`,
   });
 
   switch (fieldType) {

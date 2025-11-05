@@ -25,37 +25,39 @@ export function useCreateFormSubtaskFormConfig(
   const defaultValues = {
     taskId,
     subtaskName: "",
-    fields: [
-      {
-        fieldType: "input",
-        name: "",
-        label: "",
-        description: "",
-        options: [
-          {
-            name: "",
-            label: "",
-            sublabel: "",
-          },
-        ],
-        radioItems: [
-          {
-            label: "",
-            value: "",
-          },
-        ],
-        selectItems: [
-          {
-            label: "",
-            value: "",
-          },
-        ],
-        multiSelect: false,
-        inputType: "text",
-        placeholder: "",
-        validation: "",
-      },
-    ],
+    metadata: {
+      fields: [
+        {
+          fieldType: "input",
+          name: "",
+          label: "",
+          description: "",
+          options: [
+            {
+              name: "",
+              label: "",
+              sublabel: "",
+            },
+          ],
+          radioItems: [
+            {
+              label: "",
+              value: "",
+            },
+          ],
+          selectItems: [
+            {
+              label: "",
+              value: "",
+            },
+          ],
+          multiSelect: false,
+          inputType: "text",
+          placeholder: "",
+          validation: "",
+        },
+      ],
+    },
   };
 
   return {

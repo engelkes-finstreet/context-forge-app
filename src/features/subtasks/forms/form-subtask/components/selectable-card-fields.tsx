@@ -1,9 +1,9 @@
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
 import { FieldArraySection } from "@/components/forms/field-array-section";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 
 type SelectableCardFieldsProps = {
   index: number;
@@ -28,13 +28,13 @@ export const SelectableCardFields = ({
         </FieldLegend>
         <DynamicFormField
           fieldName={
-            `${fieldNames.fields.fieldName}.${index}.multiSelect` as any
+            `${fieldNames.metadata.fields.fieldName}.${index}.multiSelect` as any
           }
         />
         <FieldArraySection
-          arrayFieldName={`${fieldNames.fields.fieldName}.${index}.options`}
+          arrayFieldName={`${fieldNames.metadata.fields.fieldName}.${index}.options`}
           arrayFieldConfig={{
-            fieldName: `${fieldNames.fields.fieldName}.${index}.options`,
+            fieldName: `${fieldNames.metadata.fields.fieldName}.${index}.options`,
             fields: {
               name: "name",
               label: "label",

@@ -1,5 +1,5 @@
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
 

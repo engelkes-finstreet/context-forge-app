@@ -1,5 +1,5 @@
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
@@ -24,9 +24,9 @@ export const SelectFields = ({ index, fieldNames }: Props) => {
           Select Configuration
         </FieldLegend>
         <FieldArraySection
-          arrayFieldName={`${fieldNames.fields.fieldName}.${index}.selectItems`}
+          arrayFieldName={`${fieldNames.metadata.fields.fieldName}.${index}.selectItems`}
           arrayFieldConfig={{
-            fieldName: `${fieldNames.fields.fieldName}.${index}.selectItems`,
+            fieldName: `${fieldNames.metadata.fields.fieldName}.${index}.selectItems`,
             fields: {
               label: "label",
               value: "value",

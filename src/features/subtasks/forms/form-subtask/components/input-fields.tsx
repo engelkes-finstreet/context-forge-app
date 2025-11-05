@@ -1,8 +1,8 @@
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
-import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/create-form-subtask-form-schema";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldSet, FieldLegend } from "@/components/ui/field";
 import { CommonVisualFields } from "./common-visual-fields";
+import { CreateFormSubtaskFormInput } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 
 type InputFieldsProps = {
   index: number;
@@ -24,7 +24,9 @@ export const InputFields = ({ index, fieldNames }: InputFieldsProps) => {
         </FieldLegend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <DynamicFormField
-            fieldName={`${fieldNames.fields.fieldName}.${index}.suffix` as any}
+            fieldName={
+              `${fieldNames.metadata.fields.fieldName}.${index}.suffix` as any
+            }
           />
         </div>
       </FieldSet>

@@ -106,15 +106,21 @@ const fieldsArraySchema = z
 
 export type Fields = z.infer<typeof fieldsArraySchema>;
 
+const metadataSchema = z.object({
+  fields: fieldsArraySchema,
+});
+
+export type FormSubtaskMetadata = z.infer<typeof metadataSchema>;
+
 export const createFormSubtaskFormSchema = z
   .object({
     taskId: z.string().cuid("Invalid task ID"),
     subtaskName: z.string().min(1, "Subtask name is required"),
-    fields: fieldsArraySchema,
+    metadata: metadataSchema,
   })
   .superRefine((data, ctx) => {
     // Validate unique field names
-    const fieldNames = data.fields.map((f) => f.name);
+    const fieldNames = data.metadata.fields.map((f) => f.name);
     const seen = new Set<string>();
     const duplicates: string[] = [];
 
