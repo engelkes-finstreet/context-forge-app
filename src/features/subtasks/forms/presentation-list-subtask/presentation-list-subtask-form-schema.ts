@@ -3,9 +3,7 @@ import { z } from "zod";
 const columnSchema = z.object({
   name: z.string().min(1, "Column name is required"),
   translation: z.string().min(1, "Translation is required"),
-  gridTemplateColumns: z
-    .number()
-    .min(1, "Number of grid columns is required"),
+  gridTemplateColumns: z.number().min(1, "Number of grid columns is required"),
 });
 
 export type Column = z.infer<typeof columnSchema>;
@@ -37,7 +35,7 @@ export const createPresentationListSubtaskFormSchema = z
   });
 
 export const updatePresentationListSubtaskFormSchema =
-  createPresentationListSubtaskFormSchema.extend({
+  createPresentationListSubtaskFormSchema.safeExtend({
     subtaskId: z.cuid("Invalid subtask ID"),
   });
 

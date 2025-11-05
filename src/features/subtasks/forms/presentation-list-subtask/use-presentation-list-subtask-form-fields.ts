@@ -30,6 +30,7 @@ export function useCreatePresentationListSubtaskFormFields(): FormFieldsType<Cre
         type: "input",
         label: "Grid Template Columns",
         placeholder: "Enter grid template columns",
+        inputType: "number",
       },
     },
     noItemTranslation: {

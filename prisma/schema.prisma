@@ -104,8 +104,8 @@ model Task {
   projectId     String
   name          String
   featureName String
-  product     String
-  role        String
+  product     String?
+  role        String?
   sharedContext String   @db.Text
   status        Status   @default(OPEN)
   order         Int      @default(0)

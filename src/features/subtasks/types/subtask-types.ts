@@ -82,16 +82,13 @@ export interface FormMetadata extends BaseSubtaskMetadata {
  * Modal subtask metadata
  * Represents a modal dialog or popup component
  */
-export interface ModalMetadata extends BaseSubtaskMetadata {
-  type: typeof SubtaskType.MODAL;
-  size?: "sm" | "md" | "lg" | "xl" | "full";
-  triggerType: "button" | "link" | "automatic";
-  triggerText?: string; // Text for button/link trigger
-  closeOnOutsideClick?: boolean;
-  closeOnEscape?: boolean;
-  showCloseButton?: boolean;
-  modalTitle?: string;
-  modalDescription?: string;
+export interface ModalMetadata {
+  dataTypes: Array<{
+    keyName: string;
+    dataType: string;
+  }>;
+  withOpenButton: boolean;
+  contentDescription: string | undefined;
 }
 
 /**
@@ -105,91 +102,8 @@ export type SubtaskMetadata =
   | ModalMetadata;
 
 // ============================================================================
-// Type Guards
-// ============================================================================
-
-/**
- * Type guard to check if metadata is for a Generic subtask
- */
-export function isGenericMetadata(
-  metadata: SubtaskMetadata | null,
-): metadata is GenericMetadata {
-  return metadata?.type === SubtaskType.GENERIC;
-}
-
-/**
- * Type guard to check if metadata is for an Inquiry Process subtask
- */
-export function isInquiryProcessMetadata(
-  metadata: SubtaskMetadata | null,
-): metadata is InquiryProcessMetadata {
-  return metadata?.type === SubtaskType.INQUIRY_PROCESS;
-}
-
-/**
- * Type guard to check if metadata is for a Form subtask
- */
-export function isFormMetadata(
-  metadata: SubtaskMetadata | null,
-): metadata is FormMetadata {
-  return metadata?.type === SubtaskType.FORM;
-}
-
-/**
- * Type guard to check if metadata is for a Modal subtask
- */
-export function isModalMetadata(
-  metadata: SubtaskMetadata | null,
-): metadata is ModalMetadata {
-  return metadata?.type === SubtaskType.MODAL;
-}
-
-// ============================================================================
 // Helper Functions
 // ============================================================================
-
-/**
- * Create default metadata for a given subtask type
- */
-export function createDefaultMetadata(
-  type: SubtaskType,
-): SubtaskMetadata | null {
-  switch (type) {
-    case SubtaskType.GENERIC:
-      // Generic type doesn't need metadata
-      return null;
-
-    case SubtaskType.INQUIRY_PROCESS:
-      return {
-        type: SubtaskType.INQUIRY_PROCESS,
-        steps: [],
-        progressBarStyle: "linear",
-        allowBackNavigation: true,
-        saveProgressOnExit: true,
-      };
-
-    case SubtaskType.FORM:
-      return {
-        type: SubtaskType.FORM,
-        fields: [],
-        showResetButton: false,
-        submitButtonText: "Submit",
-      };
-
-    case SubtaskType.MODAL:
-      return {
-        type: SubtaskType.MODAL,
-        size: "md",
-        triggerType: "button",
-        closeOnOutsideClick: true,
-        closeOnEscape: true,
-        showCloseButton: true,
-      };
-
-    default:
-      return null;
-  }
-}
 
 /**
  * Validate metadata matches the subtask type

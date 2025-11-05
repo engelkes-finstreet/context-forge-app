@@ -134,9 +134,10 @@ export const createFormSubtaskFormSchema = z
     }
   });
 
-export const updateFormSubtaskFormSchema = createFormSubtaskFormSchema.extend({
-  subtaskId: z.cuid("Invalid subtask ID"),
-});
+export const updateFormSubtaskFormSchema =
+  createFormSubtaskFormSchema.safeExtend({
+    subtaskId: z.cuid("Invalid subtask ID"),
+  });
 
 // Export TypeScript types
 export type FormFieldConfig = z.infer<typeof formFieldConfigSchema>;

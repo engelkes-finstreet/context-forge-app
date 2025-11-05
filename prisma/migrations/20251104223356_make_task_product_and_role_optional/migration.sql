@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "tasks" ALTER COLUMN "product" DROP NOT NULL,
+ALTER COLUMN "role" DROP NOT NULL;

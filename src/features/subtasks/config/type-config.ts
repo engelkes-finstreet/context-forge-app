@@ -81,7 +81,7 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     description: "Dialog or popup component",
     icon: "🪟",
     route: "modal",
-    enabled: false, // Disabled for now - will be implemented later
+    enabled: true,
     badgeVariant: "secondary",
   },
 };
@@ -91,25 +91,4 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
  */
 export function getTypeConfig(type: SubtaskType): SubtaskTypeConfig {
   return SUBTASK_TYPE_CONFIG[type ?? SubtaskType.GENERIC];
-}
-
-/**
- * Get all enabled subtask types
- */
-export function getEnabledTypes(): SubtaskTypeConfig[] {
-  return Object.values(SUBTASK_TYPE_CONFIG).filter((config) => config.enabled);
-}
-
-/**
- * Check if a subtask type is enabled
- */
-export function isTypeEnabled(type: SubtaskType): boolean {
-  return SUBTASK_TYPE_CONFIG[type].enabled;
-}
-
-/**
- * Get route for a subtask type
- */
-export function getTypeRoute(type: SubtaskType): string {
-  return SUBTASK_TYPE_CONFIG[type].route;
 }

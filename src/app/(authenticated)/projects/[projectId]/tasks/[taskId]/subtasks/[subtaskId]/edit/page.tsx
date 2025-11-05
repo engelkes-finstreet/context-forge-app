@@ -2,17 +2,9 @@ import { notFound } from "next/navigation";
 import { TypedLink, routes } from "@/lib/routes";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
 import { ArrowLeft } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { SubtaskType } from "@prisma/client";
@@ -25,6 +17,7 @@ import {
 import { UpdateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inquiry-process-subtask/update/update-inquiry-process-subtask-form";
 import { UpdateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/update/update-form-subtask-form";
 import { UpdatePresentationListSubtaskForm } from "@/features/subtasks/forms/presentation-list-subtask/update/update-presentation-list-subtask-form";
+import { UpdateModalSubtaskForm } from "@/features/subtasks/forms/modal-subtask/update/update-modal-subtask-form";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -72,7 +65,8 @@ export default async function EditSubtaskPage({
         return <UpdateFormSubtaskForm subtask={subtask} />;
       case SubtaskType.PRESENTATION_LIST:
         return <UpdatePresentationListSubtaskForm subtask={subtask} />;
-
+      case SubtaskType.MODAL:
+        return <UpdateModalSubtaskForm subtask={subtask} />;
       default:
         return null;
     }
