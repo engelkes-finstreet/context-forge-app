@@ -2,18 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { TypeCard } from "./type-card";
-import { getEnabledTypes } from "@/features/subtasks/config/type-config";
+import { SUBTASK_TYPE_CONFIG } from "@/features/subtasks/config/type-config";
 import { Button } from "@/components/ui/button";
 import {
   StaggeredContainer,
   StaggeredItem,
 } from "@/components/ui/staggered-container";
-import { routes } from "@/lib/routes";
-
-interface TypeSelectorProps {
-  projectId: string;
-  taskId: string;
-}
+import { useSelectedTypeStore } from "@/features/subtasks/stores/selected-type-store";
+import { SubtaskType } from "@prisma/client";
 
 /**
  * TypeSelector Component
@@ -21,26 +17,14 @@ interface TypeSelectorProps {
  * Displays a grid of type cards for selecting the subtask type to create.
  * This is Step 1 of the two-step subtask creation wizard.
  */
-export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
+export function TypeSelector() {
   const router = useRouter();
-  const enabledTypes = getEnabledTypes();
+  const setSelectedType = useSelectedTypeStore(
+    (state) => state.setSelectedType,
+  );
 
-  // Map subtask type route strings to route objects
-  const routeMap = {
-    generic: routes.projects.tasks.subtasks.newGeneric,
-    "inquiry-process": routes.projects.tasks.subtasks.newInquiryProcess,
-    form: routes.projects.tasks.subtasks.newForm,
-    modal: routes.projects.tasks.subtasks.newModal,
-    request: routes.projects.tasks.subtasks.newRequest,
-    "presentation-list": routes.projects.tasks.subtasks.newPresentationList,
-  } as const;
-
-  const handleTypeSelect = (route: string) => {
-    const routeObj = (routeMap as any)[route];
-    console.log(routeObj);
-    if (routeObj) {
-      router.push(routeObj.path({ projectId, taskId }));
-    }
+  const handleTypeSelect = (type: SubtaskType) => {
+    setSelectedType(type);
   };
 
   const handleCancel = () => {
@@ -49,25 +33,16 @@ export function TypeSelector({ projectId, taskId }: TypeSelectorProps) {
 
   return (
     <div className="space-y-6">
-      {enabledTypes.length > 0 ? (
-        <StaggeredContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {enabledTypes.map((config) => (
-            <StaggeredItem key={config.type}>
-              <TypeCard
-                config={config}
-                onClick={() => handleTypeSelect(config.route)}
-              />
-            </StaggeredItem>
-          ))}
-        </StaggeredContainer>
-      ) : (
-        <div className="text-center py-8 text-muted-foreground">
-          <p>No subtask types are currently available.</p>
-          <p className="text-sm mt-2">
-            Please contact your administrator to enable subtask types.
-          </p>
-        </div>
-      )}
+      <StaggeredContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {Object.values(SUBTASK_TYPE_CONFIG).map((config) => (
+          <StaggeredItem key={config.type}>
+            <TypeCard
+              config={config}
+              onClick={() => handleTypeSelect(config.type)}
+            />
+          </StaggeredItem>
+        ))}
+      </StaggeredContainer>
 
       <div className="flex justify-start">
         <Button variant="outline" onClick={handleCancel}>

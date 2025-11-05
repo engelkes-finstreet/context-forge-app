@@ -13,13 +13,15 @@ import {
   createPresentationListSubtaskFormSchema,
 } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
 import { useCreatePresentationListSubtaskFormFields } from "@/features/subtasks/forms/presentation-list-subtask/use-presentation-list-subtask-form-fields";
-import { useRouter } from "next/navigation";
+import { useSelectedTypeStore } from "@/features/subtasks/stores/selected-type-store";
 import { DeepPartial } from "react-hook-form";
 
 export function useCreatePresentationListSubtaskFormConfig(
   taskId: string,
 ): FormConfig<FormState, CreatePresentationListSubtaskFormInput> {
-  const router = useRouter();
+  const clearSelectedType = useSelectedTypeStore(
+    (state) => state.clearSelectedType,
+  );
   const fields = useCreatePresentationListSubtaskFormFields();
 
   const defaultValues: DeepPartial<CreatePresentationListSubtaskFormInput> = {
@@ -47,7 +49,7 @@ export function useCreatePresentationListSubtaskFormConfig(
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.back()}
+            onClick={() => clearSelectedType()}
             disabled={isPending}
           >
             Cancel
