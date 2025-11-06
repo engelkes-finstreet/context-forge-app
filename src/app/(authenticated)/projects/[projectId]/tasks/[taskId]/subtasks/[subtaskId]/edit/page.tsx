@@ -16,7 +16,7 @@ import {
 } from "@/lib/services/swagger-service";
 import { UpdateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inquiry-process-subtask/update/update-inquiry-process-subtask-form";
 import { UpdateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/update/update-form-subtask-form";
-import { UpdatePresentationListSubtaskForm } from "@/features/subtasks/forms/presentation-list-subtask/update/update-presentation-list-subtask-form";
+import { UpdateInteractiveListSubtaskForm } from "@/features/subtasks/forms/interactive-list-subtask/update/update-interactive-list-subtask-form";
 import { UpdateModalSubtaskForm } from "@/features/subtasks/forms/modal-subtask/update/update-modal-subtask-form";
 
 interface EditSubtaskPageProps {
@@ -63,8 +63,8 @@ export default async function EditSubtaskPage({
         return <UpdateInquiryProcessSubtaskForm subtask={subtask} />;
       case SubtaskType.FORM:
         return <UpdateFormSubtaskForm subtask={subtask} />;
-      case SubtaskType.PRESENTATION_LIST:
-        return <UpdatePresentationListSubtaskForm subtask={subtask} />;
+      case SubtaskType.INTERACTIVE_LIST:
+        return <UpdateInteractiveListSubtaskForm subtask={subtask} />;
       case SubtaskType.MODAL:
         return <UpdateModalSubtaskForm subtask={subtask} />;
       default:

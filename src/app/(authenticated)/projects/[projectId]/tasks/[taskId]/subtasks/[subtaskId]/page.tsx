@@ -89,7 +89,7 @@ export default async function SubtaskDetailPage({
           />
         );
 
-      case SubtaskType.PRESENTATION_LIST:
+      case SubtaskType.INTERACTIVE_LIST:
         return (
           <PresentationListSubtaskDisplay
             content={subtask.content}

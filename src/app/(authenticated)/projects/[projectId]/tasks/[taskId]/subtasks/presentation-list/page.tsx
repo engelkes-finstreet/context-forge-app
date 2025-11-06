@@ -1,6 +1,6 @@
 import { PageContent } from "@/components/ui/page-content";
 import { PageHeader } from "@/components/ui/page-header";
-import { CreatePresentationListSubtaskForm } from "@/features/subtasks/forms/presentation-list-subtask/create/create-presentation-list-subtask-form";
+import { CreateInteractiveListSubtaskForm } from "@/features/subtasks/forms/interactive-list-subtask/create/create-interactive-list-subtask-form";
 
 type Props = {
   params: Promise<{
@@ -22,7 +22,7 @@ export default async function PresentationListSubtaskPage({ params }: Props) {
       </PageHeader>
 
       <PageContent>
-        <CreatePresentationListSubtaskForm taskId={taskId} />
+        <CreateInteractiveListSubtaskForm taskId={taskId} />
       </PageContent>
     </>
   );

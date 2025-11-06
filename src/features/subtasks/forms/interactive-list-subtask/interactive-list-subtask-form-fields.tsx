@@ -3,17 +3,17 @@
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { FieldArraySection } from "@/components/forms/field-array-section";
-import { CreatePresentationListSubtaskFormInput } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
+import { CreateInteractiveListSubtaskFormInput } from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
 import { AlertCircle } from "lucide-react";
 import { useFormState } from "react-hook-form";
 
 type Props = {
   fieldNames: FieldNamesType<
-    FormFieldsType<CreatePresentationListSubtaskFormInput>
+    FormFieldsType<CreateInteractiveListSubtaskFormInput>
   >;
 };
 
-export const PresentationListSubtaskFormFields = ({ fieldNames }: Props) => {
+export const InteractiveListSubtaskFormFields = ({ fieldNames }: Props) => {
   const { errors } = useFormState();
   const columnsError = errors.columns?.root?.message?.toString();
 

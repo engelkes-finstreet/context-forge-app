@@ -3,95 +3,44 @@ import { toast } from "@/lib/toast";
 import { useRouter } from "next/navigation";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import {
-  FormConfig,
-  FormFieldsType,
-  FormState,
-} from "@/components/forms/types";
-import { z } from "zod";
+import { FormConfig, FormState } from "@/components/forms/types";
 import { routes } from "@/lib/routes";
 import {
-  EditTaskInput,
-  editTaskSchema,
-} from "@/features/tasks/components/forms/edit-task/edit-task-form-schema";
-import { editTaskFormAction } from "@/features/tasks/components/forms/edit-task/edit-task-form-action";
+  UpdateTaskInput,
+  updateTaskSchema,
+} from "@/features/tasks/components/forms/task-form-schema";
+import { Task } from "@prisma/client";
+import { useUpdateTaskFormFields } from "@/features/tasks/components/forms/use-task-form-fields";
+import { updateTaskFormAction } from "@/features/tasks/components/forms/task-form-action";
 
 interface UseEditTaskFormConfigProps {
-  taskId: string;
-  projectId: string;
-  defaultValues: {
-    name: string;
-    sharedContext: string;
-  };
+  task: Task;
 }
 
 export function useEditTaskFormConfig({
-  taskId,
-  projectId,
-  defaultValues: initialValues,
-}: UseEditTaskFormConfigProps): FormConfig<FormState, EditTaskInput> {
+  task,
+}: UseEditTaskFormConfigProps): FormConfig<FormState, UpdateTaskInput> {
   const router = useRouter();
+  const fields = useUpdateTaskFormFields();
 
-  const defaultValues: DeepPartial<EditTaskInput> = {
-    id: taskId,
-    projectId,
-    name: initialValues.name,
-  };
-
-  const fields: FormFieldsType<EditTaskInput> = {
-    id: {
-      type: "hidden",
-    },
-    projectId: {
-      type: "hidden",
-    },
-    name: {
-      type: "input",
-      inputType: "text",
-      label: "Task Name",
-      placeholder: "Enter task name",
-    },
-    featureName: {
-      type: "input",
-      inputType: "text",
-      label: "Feature Name",
-      placeholder: "Enter feature name",
-    },
-    product: {
-      type: "select",
-      label: "Product",
-      placeholder: "Enter product",
-      options: [
-        { label: "Hoa Loan", value: "hoa-loan" },
-        { label: "Hoa Account", value: "hoa-account" },
-      ],
-    },
-    role: {
-      type: "select",
-      label: "Role",
-      placeholder: "Enter role",
-      options: [
-        { label: "PM (Property Manager)", value: "pm" },
-        { label: "FSP (Financial Service Provider)", value: "fsp" },
-      ],
-    },
+  const defaultValues: DeepPartial<UpdateTaskInput> = {
+    taskId: task.id,
+    projectId: task.projectId,
+    name: task.name,
+    featureName: task.featureName,
+    product: task.product ?? undefined,
+    role: task.role ?? undefined,
   };
 
   return {
     fields,
     defaultValues,
-    schema: editTaskSchema,
+    schema: updateTaskSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: editTaskFormAction,
+    serverAction: updateTaskFormAction,
     useErrorAction: () => {
       return (state: FormState) => {
         toast.error(state?.error || "Something went wrong. Please try again.");
-      };
-    },
-    useSuccessAction: () => {
-      return (state: FormState) => {
-        toast.success(state?.message || "Task updated successfully");
-        router.push(routes.projects.tasks.detail.path({ projectId, taskId }));
       };
     },
     renderFormActions: (isPending: boolean) => {

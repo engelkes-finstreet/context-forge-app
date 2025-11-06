@@ -58,14 +58,7 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <EditTaskForm
-              taskId={taskId}
-              projectId={projectId}
-              defaultValues={{
-                name: task.name,
-                sharedContext: task.sharedContext,
-              }}
-            />
+            <EditTaskForm task={task} />
           </CardContent>
         </Card>
       </PageContent>

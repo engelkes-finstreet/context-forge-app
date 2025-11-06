@@ -2,26 +2,25 @@
 
 import { FormState } from "@/components/forms/types";
 import {
-  CreatePresentationListSubtaskFormInput,
-  UpdatePresentationListSubtaskFormInput,
-  Columns,
-} from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
+  CreateInteractiveListSubtaskFormInput,
+  UpdateInteractiveListSubtaskFormInput,
+} from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
 import { routes, typedRedirect } from "@/lib/routes";
 import { SubtaskService } from "@/lib/services/subtask-service";
 import { TaskService } from "@/lib/services/task-service";
 import { SubtaskType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function createPresentationListSubtaskFormAction(
+export async function createInteractiveListSubtaskFormAction(
   state: FormState,
-  formData: CreatePresentationListSubtaskFormInput,
+  formData: CreateInteractiveListSubtaskFormInput,
 ): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
   const result = await SubtaskService.createSubtask({
     taskId: formData.taskId,
     name: formData.subtaskName,
-    type: SubtaskType.PRESENTATION_LIST,
+    type: SubtaskType.INTERACTIVE_LIST,
     content: "",
     metadata: formData.metadata,
   });
@@ -42,7 +41,7 @@ export async function createPresentationListSubtaskFormAction(
 
 export async function updatePresentationListSubtaskFormAction(
   state: FormState,
-  formData: UpdatePresentationListSubtaskFormInput,
+  formData: UpdateInteractiveListSubtaskFormInput,
 ): Promise<FormState> {
   const subtask = await SubtaskService.getSubtaskById(formData.subtaskId);
 

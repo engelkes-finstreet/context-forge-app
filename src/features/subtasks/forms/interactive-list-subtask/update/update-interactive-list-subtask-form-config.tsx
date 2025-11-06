@@ -1,34 +1,34 @@
 import { FormConfig, FormState } from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import { updatePresentationListSubtaskFormAction } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-action";
+import { updatePresentationListSubtaskFormAction } from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-action";
 import {
-  UpdatePresentationListSubtaskFormInput,
-  updatePresentationListSubtaskFormSchema,
-  PresentationListMetadata,
-} from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
-import { useUpdatePresentationListSubtaskFormFields } from "@/features/subtasks/forms/presentation-list-subtask/use-presentation-list-subtask-form-fields";
+  UpdateInteractiveListSubtaskFormInput,
+  updateInteractiveListSubtaskFormSchema,
+  InteractiveListMetadata,
+} from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
+import { useUpdateInteractiveListSubtaskFormFields } from "@/features/subtasks/forms/interactive-list-subtask/use-interactive-list-subtask-form-fields";
 import { Subtask } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { DeepPartial } from "react-hook-form";
 
-export function useUpdatePresentationListSubtaskFormConfig(
+export function useUpdateInteractiveListSubtaskFormConfig(
   subtask: Subtask,
-): FormConfig<FormState, UpdatePresentationListSubtaskFormInput> {
+): FormConfig<FormState, UpdateInteractiveListSubtaskFormInput> {
   const router = useRouter();
-  const fields = useUpdatePresentationListSubtaskFormFields();
+  const fields = useUpdateInteractiveListSubtaskFormFields();
 
-  const defaultValues: DeepPartial<UpdatePresentationListSubtaskFormInput> = {
+  const defaultValues: DeepPartial<UpdateInteractiveListSubtaskFormInput> = {
     subtaskId: subtask.id,
     subtaskName: subtask.name,
     taskId: subtask.taskId,
-    metadata: subtask.metadata as PresentationListMetadata,
+    metadata: subtask.metadata as InteractiveListMetadata,
   };
 
   return {
     fields,
     defaultValues,
-    schema: updatePresentationListSubtaskFormSchema,
+    schema: updateInteractiveListSubtaskFormSchema,
     fieldNames: createFormFieldNames(fields),
     serverAction: updatePresentationListSubtaskFormAction,
     renderFormActions: (isPending: boolean) => {

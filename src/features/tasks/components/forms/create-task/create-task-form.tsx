@@ -3,6 +3,7 @@
 import { Form } from "@/components/forms/form";
 import { useCreateTaskFormConfig } from "@/features/tasks/components/forms/create-task/create-task-form-config";
 import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-form-field";
+import { TaskFormFields } from "@/features/tasks/components/forms/task-form-fields";
 
 interface CreateTaskFormProps {
   projectId: string;
@@ -14,12 +15,7 @@ export function CreateTaskForm({ projectId }: CreateTaskFormProps) {
 
   return (
     <Form formConfig={formConfig}>
-      <div className="space-y-6">
-        <DynamicFormField fieldName={fieldNames.name} />
-        <DynamicFormField fieldName={fieldNames.featureName} />
-        <DynamicFormField fieldName={fieldNames.product} />
-        <DynamicFormField fieldName={fieldNames.role} />
-      </div>
+      <TaskFormFields fieldNames={fieldNames} />
     </Form>
   );
 }

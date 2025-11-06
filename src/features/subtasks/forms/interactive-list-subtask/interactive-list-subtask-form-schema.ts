@@ -17,9 +17,9 @@ const metadataSchema = z.object({
   noItemTranslation: z.string().min(1, "No item translation is required"),
 });
 
-export type PresentationListMetadata = z.infer<typeof metadataSchema>;
+export type InteractiveListMetadata = z.infer<typeof metadataSchema>;
 
-export const createPresentationListSubtaskFormSchema = z
+export const createInteractiveListSubtaskFormSchema = z
   .object({
     taskId: z.string().cuid("Invalid task ID"),
     subtaskName: z.string().min(1, "Subtask name is required"),
@@ -40,15 +40,15 @@ export const createPresentationListSubtaskFormSchema = z
     }
   });
 
-export const updatePresentationListSubtaskFormSchema =
-  createPresentationListSubtaskFormSchema.safeExtend({
+export const updateInteractiveListSubtaskFormSchema =
+  createInteractiveListSubtaskFormSchema.safeExtend({
     subtaskId: z.cuid("Invalid subtask ID"),
   });
 
-export type CreatePresentationListSubtaskFormInput = z.infer<
-  typeof createPresentationListSubtaskFormSchema
+export type CreateInteractiveListSubtaskFormInput = z.infer<
+  typeof createInteractiveListSubtaskFormSchema
 >;
 
-export type UpdatePresentationListSubtaskFormInput = z.infer<
-  typeof updatePresentationListSubtaskFormSchema
+export type UpdateInteractiveListSubtaskFormInput = z.infer<
+  typeof updateInteractiveListSubtaskFormSchema
 >;

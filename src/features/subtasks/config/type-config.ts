@@ -45,8 +45,8 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     badgeVariant: "default",
   },
 
-  [SubtaskType.PRESENTATION_LIST]: {
-    type: SubtaskType.PRESENTATION_LIST,
+  [SubtaskType.INTERACTIVE_LIST]: {
+    type: SubtaskType.INTERACTIVE_LIST,
     label: "Presentation List",
     description: "List of presentations",
     icon: "📊",

@@ -18,7 +18,7 @@ interface PresentationListMetadata {
   noItemTranslation: string;
 }
 
-interface PresentationListSubtaskDisplayProps {
+interface InteractiveListSubtaskDisplayProps {
   content: string;
   metadata: PresentationListMetadata;
 }
@@ -28,10 +28,10 @@ interface PresentationListSubtaskDisplayProps {
  *
  * Displays list/table presentation configuration with column definitions.
  */
-export function PresentationListSubtaskDisplay({
+export function InteractiveListSubtaskDisplay({
   content,
   metadata,
-}: PresentationListSubtaskDisplayProps) {
+}: InteractiveListSubtaskDisplayProps) {
   const totalColumns = metadata.columns.reduce(
     (sum, col) => sum + col.gridTemplateColumns,
     0,
@@ -53,9 +53,7 @@ export function PresentationListSubtaskDisplay({
       <Card>
         <CardHeader>
           <CardTitle>List Configuration</CardTitle>
-          <CardDescription>
-            Column definitions and grid layout
-          </CardDescription>
+          <CardDescription>Column definitions and grid layout</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Columns */}
@@ -114,9 +112,14 @@ export function PresentationListSubtaskDisplay({
                     <div className="flex items-start gap-3 flex-1">
                       <Columns className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                       <div className="space-y-1 flex-1">
-                        <div className="font-semibold">{column.translation}</div>
+                        <div className="font-semibold">
+                          {column.translation}
+                        </div>
                         <div className="text-sm text-muted-foreground">
-                          Field: <code className="bg-muted px-1.5 py-0.5 rounded">{column.name}</code>
+                          Field:{" "}
+                          <code className="bg-muted px-1.5 py-0.5 rounded">
+                            {column.name}
+                          </code>
                         </div>
                       </div>
                     </div>

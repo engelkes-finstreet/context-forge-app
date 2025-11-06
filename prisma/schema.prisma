@@ -125,7 +125,7 @@ enum SubtaskType {
   FORM
   MODAL
   REQUEST
-  PRESENTATION_LIST
+  INTERACTIVE_LIST
 }
 
 model Subtask {

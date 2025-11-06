@@ -1,10 +1,10 @@
 import { FormFieldsType } from "@/components/forms/types";
 import {
-  CreatePresentationListSubtaskFormInput,
-  UpdatePresentationListSubtaskFormInput,
-} from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
+  CreateInteractiveListSubtaskFormInput,
+  UpdateInteractiveListSubtaskFormInput,
+} from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
 
-export function useCreatePresentationListSubtaskFormFields(): FormFieldsType<CreatePresentationListSubtaskFormInput> {
+export function useCreateInteractiveListSubtaskFormFields(): FormFieldsType<CreateInteractiveListSubtaskFormInput> {
   return {
     taskId: {
       type: "hidden",
@@ -43,8 +43,8 @@ export function useCreatePresentationListSubtaskFormFields(): FormFieldsType<Cre
   };
 }
 
-export function useUpdatePresentationListSubtaskFormFields(): FormFieldsType<UpdatePresentationListSubtaskFormInput> {
-  const fields = useCreatePresentationListSubtaskFormFields();
+export function useUpdateInteractiveListSubtaskFormFields(): FormFieldsType<UpdateInteractiveListSubtaskFormInput> {
+  const fields = useCreateInteractiveListSubtaskFormFields();
   return {
     ...fields,
     subtaskId: {

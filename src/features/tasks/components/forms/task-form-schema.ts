@@ -11,4 +11,9 @@ export const createTaskSchema = z.object({
   role: z.string().optional(),
 });
 
+export const updateTaskSchema = createTaskSchema.extend({
+  taskId: z.cuid("Invalid task ID"),
+});
+
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
+export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;

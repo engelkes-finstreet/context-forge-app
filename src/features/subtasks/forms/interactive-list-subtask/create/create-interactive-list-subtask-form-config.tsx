@@ -7,24 +7,24 @@ import {
 } from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import { createPresentationListSubtaskFormAction } from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-action";
+import { createInteractiveListSubtaskFormAction } from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-action";
 import {
-  CreatePresentationListSubtaskFormInput,
-  createPresentationListSubtaskFormSchema,
-} from "@/features/subtasks/forms/presentation-list-subtask/presentation-list-subtask-form-schema";
-import { useCreatePresentationListSubtaskFormFields } from "@/features/subtasks/forms/presentation-list-subtask/use-presentation-list-subtask-form-fields";
+  CreateInteractiveListSubtaskFormInput,
+  createInteractiveListSubtaskFormSchema,
+} from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
+import { useCreateInteractiveListSubtaskFormFields } from "@/features/subtasks/forms/interactive-list-subtask/use-interactive-list-subtask-form-fields";
 import { useSelectedTypeStore } from "@/features/subtasks/stores/selected-type-store";
 import { DeepPartial } from "react-hook-form";
 
-export function useCreatePresentationListSubtaskFormConfig(
+export function useCreateInteractiveListSubtaskFormConfig(
   taskId: string,
-): FormConfig<FormState, CreatePresentationListSubtaskFormInput> {
+): FormConfig<FormState, CreateInteractiveListSubtaskFormInput> {
   const clearSelectedType = useSelectedTypeStore(
     (state) => state.clearSelectedType,
   );
-  const fields = useCreatePresentationListSubtaskFormFields();
+  const fields = useCreateInteractiveListSubtaskFormFields();
 
-  const defaultValues: DeepPartial<CreatePresentationListSubtaskFormInput> = {
+  const defaultValues: DeepPartial<CreateInteractiveListSubtaskFormInput> = {
     taskId,
     subtaskName: "",
     metadata: {
@@ -42,9 +42,9 @@ export function useCreatePresentationListSubtaskFormConfig(
   return {
     fields,
     defaultValues,
-    schema: createPresentationListSubtaskFormSchema,
+    schema: createInteractiveListSubtaskFormSchema,
     fieldNames: createFormFieldNames(fields),
-    serverAction: createPresentationListSubtaskFormAction,
+    serverAction: createInteractiveListSubtaskFormAction,
     renderFormActions: (isPending: boolean) => {
       return (
         <div className="flex gap-4 w-full justify-between">
