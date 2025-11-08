@@ -121,4 +121,64 @@ export class SubtaskService {
     });
     return count > 0;
   }
+
+  /**
+   * Get names of all INTERACTIVE_LIST subtasks for a task
+   * Returns array of objects with label and value properties
+   */
+  static async getInteractiveListNames(taskId: string) {
+    const subtasks = await db.subtask.findMany({
+      where: {
+        taskId,
+        type: "INTERACTIVE_LIST",
+      },
+      select: {
+        name: true,
+      },
+    });
+
+    return subtasks.map((subtask) => ({
+      label: subtask.name,
+      value: subtask.name,
+    }));
+  }
+
+  /**
+   * Get all unique request paths from REQUEST subtasks for a task
+   * Extracts paths from the metadata.requests[].endpoint field
+   * Returns array of objects with label and value properties
+   */
+  static async getRequestPaths(taskId: string) {
+    const subtasks = await db.subtask.findMany({
+      where: {
+        taskId,
+        type: "REQUEST",
+      },
+      select: {
+        metadata: true,
+      },
+    });
+
+    // Extract all unique paths from request metadata
+    const paths = new Set<string>();
+    for (const subtask of subtasks) {
+      if (subtask.metadata) {
+        const metadata = subtask.metadata as {
+          requests?: Array<{ endpoint?: string }>;
+        };
+        if (metadata.requests && Array.isArray(metadata.requests)) {
+          for (const request of metadata.requests) {
+            if (request.endpoint) {
+              paths.add(request.endpoint);
+            }
+          }
+        }
+      }
+    }
+
+    return Array.from(paths).map((path) => ({
+      label: path,
+      value: path,
+    }));
+  }
 }

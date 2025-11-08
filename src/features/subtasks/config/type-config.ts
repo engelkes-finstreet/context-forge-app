@@ -47,7 +47,7 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
 
   [SubtaskType.INTERACTIVE_LIST]: {
     type: SubtaskType.INTERACTIVE_LIST,
-    label: "Presentation List",
+    label: "Interactive List",
     description: "List of presentations",
     icon: "📊",
     route: "presentation-list",
@@ -83,6 +83,16 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     route: "modal",
     enabled: true,
     badgeVariant: "secondary",
+  },
+
+  [SubtaskType.LIST_ACTIONS_AND_PAGINATION]: {
+    type: SubtaskType.LIST_ACTIONS_AND_PAGINATION,
+    label: "List Actions and Pagination",
+    description: "List of actions and pagination",
+    icon: "📊",
+    route: "list-actions-and-pagination",
+    enabled: true,
+    badgeVariant: "default",
   },
 };
 

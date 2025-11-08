@@ -72,12 +72,16 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
 
   // Add first item and auto-expand when creating new form
   useEffect(() => {
-    if (fieldsArray.length === 1 && minItems > 0) {
+    if (fieldsArray.length === 0 && minItems > 0) {
       append(defaultItem);
-      // Auto-expand the first item only when creating (not when editing)
-      setOpenItems([`${arrayFieldName}-0`]);
     }
   }, [fieldsArray.length, append, defaultItem, minItems, arrayFieldName]);
+
+  useEffect(() => {
+    if (fieldsArray.length === 1) {
+      setOpenItems([`${arrayFieldName}-0`]);
+    }
+  }, [fieldsArray.length]);
 
   const handleRemove = (index: number) => {
     const itemValue = `${arrayFieldName}-${index}`;

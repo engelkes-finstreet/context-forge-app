@@ -10,10 +10,14 @@ import { CreateInteractiveListSubtaskForm } from "@/features/subtasks/forms/inte
 import { CreateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/create/create-request-subtask-form";
 import { useSelectedTypeStore } from "@/features/subtasks/stores/selected-type-store";
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
+import { CreateListActionsSubtaskForm } from "@/features/subtasks/forms/list-actions-subtask/create/create-list-actions-subtask-form";
+import { SelectOptions } from "@/components/forms/dynamic-form-field/types";
 
 interface TypeSelectorWrapperProps {
   taskId: string;
   endpoints: SwaggerEndpoint[];
+  swaggerPathOptions: SelectOptions;
+  nameOptions: SelectOptions;
 }
 
 /**
@@ -26,6 +30,8 @@ interface TypeSelectorWrapperProps {
 export function TypeSelectorWrapper({
   taskId,
   endpoints,
+  swaggerPathOptions,
+  nameOptions,
 }: TypeSelectorWrapperProps) {
   const selectedType = useSelectedTypeStore((state) => state.selectedType);
   const clearSelectedType = useSelectedTypeStore(
@@ -48,6 +54,8 @@ export function TypeSelectorWrapper({
       taskId={taskId}
       type={selectedType}
       endpoints={endpoints}
+      swaggerPathOptions={swaggerPathOptions}
+      nameOptions={nameOptions}
     />
   );
 }
@@ -56,10 +64,14 @@ function CreateSubtaskForm({
   taskId,
   type,
   endpoints,
+  swaggerPathOptions,
+  nameOptions,
 }: {
   taskId: string;
   type: SubtaskType;
   endpoints: SwaggerEndpoint[];
+  swaggerPathOptions: SelectOptions;
+  nameOptions: SelectOptions;
 }) {
   switch (type) {
     case SubtaskType.FORM:
@@ -72,6 +84,14 @@ function CreateSubtaskForm({
       return <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />;
     case SubtaskType.MODAL:
       return <CreateModalSubtaskForm taskId={taskId} />;
+    case SubtaskType.LIST_ACTIONS_AND_PAGINATION:
+      return (
+        <CreateListActionsSubtaskForm
+          taskId={taskId}
+          swaggerPathOptions={swaggerPathOptions}
+          nameOptions={nameOptions}
+        />
+      );
     default:
       return <div>Invalid subtask type</div>;
   }

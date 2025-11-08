@@ -1,5 +1,7 @@
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 
+export type SelectOptions = Array<{ label: string; value: string }>;
+
 export enum BaseField {
   HIDDEN = "hidden",
   INPUT = "input",
@@ -52,7 +54,7 @@ export type SelectFieldConfig<
   FormValues,
   FieldName extends keyof FormValues,
 > = BaseFieldConfig<FormValues, FieldName, "select"> & {
-  options: Array<{ label: string; value: string }>;
+  options: SelectOptions;
 };
 
 export type SwaggerEndpointSelectorFieldConfig<

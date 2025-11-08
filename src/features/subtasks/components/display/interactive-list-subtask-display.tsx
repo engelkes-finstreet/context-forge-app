@@ -24,7 +24,7 @@ interface InteractiveListSubtaskDisplayProps {
 }
 
 /**
- * Presentation List Subtask Display Component
+ * Interactive List Subtask Display Component
  *
  * Displays list/table presentation configuration with column definitions.
  */

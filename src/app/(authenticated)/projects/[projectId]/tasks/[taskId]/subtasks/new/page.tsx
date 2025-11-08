@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
 import { ProjectService } from "@/lib/services/project-service";
 import { SwaggerService } from "@/lib/services/swagger-service";
+import { SwaggerEndpointsProvider } from "@/features/subtasks/providers/swagger-endpoints-provider";
+import { SubtaskService } from "@/lib/services/subtask-service";
 
 interface NewSubtaskPageProps {
   params: Promise<{
@@ -26,6 +28,10 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
     project.githubRepo!,
     project.swaggerPath!,
   );
+  const [nameOptions, swaggerPathOptions] = await Promise.all([
+    SubtaskService.getInteractiveListNames(taskId),
+    SubtaskService.getRequestPaths(taskId),
+  ]);
   const task = await TaskService.getTaskById(taskId);
 
   if (!task || task.projectId !== projectId) {
@@ -42,9 +48,16 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
         />
       </PageHeader>
 
-      <PageContent>
-        <TypeSelectorWrapper taskId={taskId} endpoints={endpoints} />
-      </PageContent>
+      <SwaggerEndpointsProvider endpoints={endpoints}>
+        <PageContent>
+          <TypeSelectorWrapper
+            taskId={taskId}
+            endpoints={endpoints}
+            swaggerPathOptions={swaggerPathOptions}
+            nameOptions={nameOptions}
+          />
+        </PageContent>
+      </SwaggerEndpointsProvider>
     </>
   );
 }

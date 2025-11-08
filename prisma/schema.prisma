@@ -126,6 +126,7 @@ enum SubtaskType {
   MODAL
   REQUEST
   INTERACTIVE_LIST
+  LIST_ACTIONS_AND_PAGINATION
 }
 
 model Subtask {
