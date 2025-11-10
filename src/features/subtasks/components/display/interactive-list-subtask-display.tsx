@@ -39,24 +39,12 @@ export function InteractiveListSubtaskDisplay({
 
   return (
     <div className="space-y-6">
-      {/* Content */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Description</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Markdown content={content} />
-        </CardContent>
-      </Card>
-
-      {/* Presentation Configuration */}
       <Card>
         <CardHeader>
           <CardTitle>List Configuration</CardTitle>
           <CardDescription>Column definitions and grid layout</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Columns */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
@@ -80,7 +68,6 @@ export function InteractiveListSubtaskDisplay({
               </div>
             </div>
 
-            {/* Column Visual Preview */}
             <div className="border rounded-lg p-4 bg-muted/50">
               <div className="grid grid-cols-12 gap-2">
                 {metadata.columns.map((column, index) => (
@@ -101,7 +88,6 @@ export function InteractiveListSubtaskDisplay({
               </div>
             </div>
 
-            {/* Column Details */}
             <div className="space-y-3">
               {metadata.columns.map((column, index) => (
                 <div
@@ -132,7 +118,6 @@ export function InteractiveListSubtaskDisplay({
             </div>
           </div>
 
-          {/* Settings */}
           <div className="space-y-3 pt-4 border-t">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               Settings
@@ -151,40 +136,15 @@ export function InteractiveListSubtaskDisplay({
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Summary */}
-          <div className="pt-4 border-t">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-primary">
-                  {metadata.columns.length}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Total Columns
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-info">
-                  {totalColumns}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Grid Columns Used
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div
-                  className={`text-2xl font-bold ${
-                    totalColumns === 12 ? "text-success" : "text-destructive"
-                  }`}
-                >
-                  {totalColumns === 12 ? "✓" : "✗"}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Layout Valid
-                </div>
-              </div>
-            </div>
-          </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Description</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Markdown content={content} />
         </CardContent>
       </Card>
     </div>

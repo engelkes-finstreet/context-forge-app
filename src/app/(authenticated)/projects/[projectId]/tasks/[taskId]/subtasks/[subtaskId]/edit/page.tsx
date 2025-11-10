@@ -18,6 +18,7 @@ import { UpdateInquiryProcessSubtaskForm } from "@/features/subtasks/forms/inqui
 import { UpdateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/update/update-form-subtask-form";
 import { UpdateInteractiveListSubtaskForm } from "@/features/subtasks/forms/interactive-list-subtask/update/update-interactive-list-subtask-form";
 import { UpdateModalSubtaskForm } from "@/features/subtasks/forms/modal-subtask/update/update-modal-subtask-form";
+import { UpdateListActionsSubtaskForm } from "@/features/subtasks/forms/list-actions-subtask/update/update-list-actions-subtask-form";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -32,6 +33,10 @@ export default async function EditSubtaskPage({
 }: EditSubtaskPageProps) {
   const { projectId, taskId, subtaskId } = await params;
   const project = await ProjectService.getProjectById(projectId);
+  const [nameOptions, swaggerPathOptions] = await Promise.all([
+    SubtaskService.getInteractiveListNames(taskId),
+    SubtaskService.getRequestPaths(taskId),
+  ]);
   let endpoints: SwaggerEndpoint[] = [];
 
   if (project.githubRepo && project.swaggerPath) {
@@ -67,6 +72,14 @@ export default async function EditSubtaskPage({
         return <UpdateInteractiveListSubtaskForm subtask={subtask} />;
       case SubtaskType.MODAL:
         return <UpdateModalSubtaskForm subtask={subtask} />;
+      case SubtaskType.LIST_ACTIONS_AND_PAGINATION:
+        return (
+          <UpdateListActionsSubtaskForm
+            subtask={subtask}
+            swaggerPathOptions={swaggerPathOptions}
+            nameOptions={nameOptions}
+          />
+        );
       default:
         return null;
     }

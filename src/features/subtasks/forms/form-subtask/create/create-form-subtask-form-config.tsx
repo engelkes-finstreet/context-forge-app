@@ -55,6 +55,7 @@ export function useCreateFormSubtaskFormConfig(
           inputType: "text",
           placeholder: "",
           validation: "",
+          suffix: "none",
         },
       ],
     },

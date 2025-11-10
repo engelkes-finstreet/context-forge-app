@@ -39,6 +39,23 @@ export function useCreateModalSubtaskFormFields(): FormFieldsType<CreateModalSub
           ],
         },
       },
+      translations: {
+        title: {
+          type: "input",
+          label: "Title",
+          placeholder: "Enter title",
+        },
+        subheading: {
+          type: "input",
+          label: "Subheading",
+          placeholder: "Enter subheading",
+        },
+        confirmButton: {
+          type: "input",
+          label: "Confirm Button",
+          placeholder: "Enter confirm button",
+        },
+      },
       withOpenButton: {
         type: "checkbox",
         label: "With Open Button",

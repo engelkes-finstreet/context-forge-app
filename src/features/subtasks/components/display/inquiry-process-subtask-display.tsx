@@ -36,6 +36,7 @@ export function InquiryProcessSubtaskDisplay({
   content,
   metadata,
 }: InquiryProcessSubtaskDisplayProps) {
+  console.log({ metadata });
   return (
     <div className="space-y-6">
       {/* Content */}
@@ -111,7 +112,10 @@ export function InquiryProcessSubtaskDisplay({
                             </p>
                           )}
                           <div className="text-xs text-muted-foreground">
-                            ID: <code className="bg-muted px-1 py-0.5 rounded">{step.id}</code>
+                            ID:{" "}
+                            <code className="bg-muted px-1 py-0.5 rounded">
+                              {step.id}
+                            </code>
                           </div>
                         </div>
                       </div>

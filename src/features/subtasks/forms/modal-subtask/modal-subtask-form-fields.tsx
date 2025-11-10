@@ -12,6 +12,13 @@ export const ModalSubtaskFormFields = ({ fieldNames }: Props) => {
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.modalName} />
       <DataTypeFields fieldNames={fieldNames} />
+      <DynamicFormField fieldName={fieldNames.metadata.translations.title} />
+      <DynamicFormField
+        fieldName={fieldNames.metadata.translations.subheading}
+      />
+      <DynamicFormField
+        fieldName={fieldNames.metadata.translations.confirmButton}
+      />
       <DynamicFormField fieldName={fieldNames.metadata.withOpenButton} />
       <DynamicFormField fieldName={fieldNames.metadata.contentDescription} />
     </div>

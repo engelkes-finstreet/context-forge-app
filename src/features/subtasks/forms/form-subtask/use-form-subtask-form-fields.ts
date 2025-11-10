@@ -3,8 +3,13 @@ import {
   CreateFormSubtaskFormInput,
   UpdateFormSubtaskFormInput,
 } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
+import { useFieldTypeOptions } from "@/features/subtasks/forms/form-subtask/options/useFieldTypeOptions";
+import { useSuffixOptions } from "@/features/subtasks/forms/form-subtask/options/useSuffixOptions";
 
 export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubtaskFormInput> {
+  const fieldTypeOptions = useFieldTypeOptions();
+  const suffixOptions = useSuffixOptions();
+
   return {
     taskId: {
       type: "hidden",
@@ -21,20 +26,7 @@ export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubta
           type: "select",
           label: "Field Type",
           placeholder: "Select field type",
-          options: [
-            { label: "Input", value: "input" },
-            { label: "Password", value: "password" },
-            { label: "Textarea", value: "textarea" },
-            { label: "Number", value: "number" },
-            { label: "Date", value: "datepicker" },
-            { label: "Checkbox", value: "checkbox" },
-            { label: "Radio Group", value: "radio-group" },
-            { label: "Yes No Radio", value: "yes-no-radio" },
-            { label: "Select", value: "select" },
-            { label: "Combobox", value: "combobox" },
-            { label: "Selectable Card", value: "selectable-card" },
-            { label: "Hidden", value: "hidden" },
-          ],
+          options: fieldTypeOptions,
         },
         name: {
           type: "input",
@@ -110,12 +102,14 @@ export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubta
           },
         },
         suffix: {
-          type: "input",
+          type: "select",
           label: "Suffix",
           placeholder: "Enter suffix",
+          options: suffixOptions,
         },
         decimal: {
           type: "input",
+          inputType: "number",
           label: "Decimal",
           placeholder: "Enter decimal",
         },
