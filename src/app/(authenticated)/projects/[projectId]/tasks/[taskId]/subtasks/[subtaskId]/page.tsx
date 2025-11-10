@@ -15,6 +15,7 @@ import {
   ModalSubtaskDisplay,
   RequestSubtaskDisplay,
   PresentationListSubtaskDisplay,
+  ListActionsSubtaskDisplay,
 } from "@/features/subtasks/components/display";
 import { SubtaskType } from "@prisma/client";
 import { DeleteSubtaskButton } from "@/features/subtasks/components/delete-subtask-button";
@@ -92,6 +93,14 @@ export default async function SubtaskDetailPage({
       case SubtaskType.INTERACTIVE_LIST:
         return (
           <PresentationListSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as any}
+          />
+        );
+
+      case SubtaskType.LIST_ACTIONS_AND_PAGINATION:
+        return (
+          <ListActionsSubtaskDisplay
             content={subtask.content}
             metadata={parsedMetadata as any}
           />

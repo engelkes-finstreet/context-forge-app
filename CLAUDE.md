@@ -229,3 +229,4 @@ Having issues? Check the [Troubleshooting Guide](./docs/guides/troubleshooting.m
 **Note:** For detailed documentation on any topic, please refer to the files in the [`docs/`](./docs/) directory. This file serves as a quick reference and index to the full documentation.
 
 - Stop to write everything into some markdown files if I do not explicitly ask you. If you want to add a short explanation do it inside the console but stop creating markdown files
+- You never use the pnpm or npm run command. I am doing this on my own in a separate terminal. Same for pnpm or npm build. This is not needed for you. I will do this on each commit on my own
