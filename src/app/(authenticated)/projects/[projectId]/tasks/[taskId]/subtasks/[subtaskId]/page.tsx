@@ -4,10 +4,11 @@ import { SubtaskService } from "@/lib/services/subtask-service";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { ArrowLeft, Pencil } from "lucide-react";
+import { ArrowLeft, Pencil, CheckCircle2, Circle, Clock, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Status } from "@prisma/client";
 import {
   GenericSubtaskDisplay,
   FormSubtaskDisplay,
@@ -19,6 +20,32 @@ import {
 } from "@/features/subtasks/components/display";
 import { SubtaskType } from "@prisma/client";
 import { DeleteSubtaskButton } from "@/features/subtasks/components/delete-subtask-button";
+
+/**
+ * Get status configuration for badge display
+ */
+function getStatusConfig(status: Status) {
+  switch (status) {
+    case Status.OPEN:
+      return {
+        label: "Open",
+        variant: "outline" as const,
+        icon: <Circle className="h-3 w-3" />,
+      };
+    case Status.IN_PROGRESS:
+      return {
+        label: "In Progress",
+        variant: "default" as const,
+        icon: <Clock className="h-3 w-3" />,
+      };
+    case Status.DONE:
+      return {
+        label: "Done",
+        variant: "secondary" as const,
+        icon: <CheckCircle2 className="h-3 w-3" />,
+      };
+  }
+}
 
 interface SubtaskDetailPageProps {
   params: Promise<{
@@ -49,6 +76,10 @@ export default async function SubtaskDetailPage({
   }
 
   const typeConfig = getTypeConfig(subtask.type);
+  const statusConfig = getStatusConfig(subtask.status);
+  const isDone = subtask.status === Status.DONE;
+  const isNotEditable =
+    subtask.status === Status.DONE || subtask.status === Status.IN_PROGRESS;
 
   // Metadata is already a JavaScript object (no parsing needed)
   const parsedMetadata = subtask.metadata;
@@ -128,6 +159,13 @@ export default async function SubtaskDetailPage({
         <div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold text-gradient">{subtask.name}</h1>
+            <Badge
+              variant={statusConfig.variant}
+              className="flex items-center gap-1"
+            >
+              {statusConfig.icon}
+              {statusConfig.label}
+            </Badge>
             <Badge variant={typeConfig.badgeVariant}>
               {typeConfig.icon} {typeConfig.label}
             </Badge>
@@ -135,24 +173,42 @@ export default async function SubtaskDetailPage({
           <p className="text-muted-foreground">Task: {subtask.task.name}</p>
         </div>
         <PageHeader.Actions>
-          <TypedLink
-            route={routes.projects.tasks.subtasks.edit}
-            params={{ projectId, taskId, subtaskId }}
-          >
-            <Button variant="outline">
-              <Pencil className="mr-2 h-4 w-4" />
-              Edit Subtask
-            </Button>
-          </TypedLink>
+          <div className={isNotEditable ? "cursor-not-allowed" : ""}>
+            <TypedLink
+              route={routes.projects.tasks.subtasks.edit}
+              params={{ projectId, taskId, subtaskId }}
+              style={{ pointerEvents: isNotEditable ? "none" : "auto" }}
+            >
+              <Button variant="outline" disabled={isNotEditable}>
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Subtask
+              </Button>
+            </TypedLink>
+          </div>
           <DeleteSubtaskButton
             subtaskId={subtaskId}
             projectId={projectId}
             taskId={taskId}
+            disabled={isNotEditable}
           />
         </PageHeader.Actions>
       </PageHeader>
 
       <PageContent>
+        {isNotEditable && (
+          <Alert variant="warning" className="mb-6">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>
+              {isDone ? "Subtask Completed" : "Subtask In Progress"}
+            </AlertTitle>
+            <AlertDescription>
+              This subtask is currently {isDone ? "completed" : "in progress"}{" "}
+              and cannot be edited or deleted. To make changes, update the
+              status to "Open" first.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {subtask.task.sharedContext && (
           <Alert className="mb-6">
             <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>

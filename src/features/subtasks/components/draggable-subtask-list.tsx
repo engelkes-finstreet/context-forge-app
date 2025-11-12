@@ -37,12 +37,12 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GripVertical } from "lucide-react";
+import { GripVertical, CheckCircle2, Circle, Clock } from "lucide-react";
 import { TypedLink } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { toast } from "@/lib/toast";
-import { Subtask } from "@prisma/client";
+import { Subtask, Status } from "@prisma/client";
 import { reorderSubtasksAction } from "@/features/subtasks/actions/reorder-subtasks-action";
 
 interface DraggableSubtaskListProps {
@@ -57,6 +57,32 @@ interface SortableSubtaskItemProps {
   projectId: string;
   taskId: string;
   isDragActive: boolean; // Prevents clicks during/after drag operations
+}
+
+/**
+ * Get status configuration for badge display
+ */
+function getStatusConfig(status: Status) {
+  switch (status) {
+    case Status.OPEN:
+      return {
+        label: "Open",
+        variant: "outline" as const,
+        icon: <Circle className="h-3 w-3" />,
+      };
+    case Status.IN_PROGRESS:
+      return {
+        label: "In Progress",
+        variant: "default" as const,
+        icon: <Clock className="h-3 w-3" />,
+      };
+    case Status.DONE:
+      return {
+        label: "Done",
+        variant: "secondary" as const,
+        icon: <CheckCircle2 className="h-3 w-3" />,
+      };
+  }
 }
 
 /**
@@ -87,10 +113,13 @@ function SortableSubtaskItem({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.5 : subtask.status === Status.DONE ? 0.6 : 1,
   };
 
   const typeConfig = getTypeConfig(subtask.type);
+  const statusConfig = getStatusConfig(subtask.status);
+  const isDone = subtask.status === Status.DONE;
+  const isNotEditable = subtask.status === Status.DONE || subtask.status === Status.IN_PROGRESS;
 
   return (
     <div ref={setNodeRef} style={style} className="relative group">
@@ -107,16 +136,21 @@ function SortableSubtaskItem({
           <CardHeader>
             <div className="flex items-start gap-3">
               <button
-                {...attributes}
-                {...listeners}
-                className="mt-1 cursor-grab active:cursor-grabbing touch-none flex-shrink-0 p-1 hover:bg-accent rounded transition-colors"
+                {...(isNotEditable ? {} : attributes)}
+                {...(isNotEditable ? {} : listeners)}
+                className={`mt-1 touch-none shrink-0 p-1 rounded transition-colors ${
+                  isNotEditable
+                    ? "cursor-not-allowed opacity-40"
+                    : "cursor-grab active:cursor-grabbing hover:bg-accent"
+                }`}
                 onClick={(e) => e.preventDefault()} // Don't navigate when clicking drag handle
-                aria-label="Drag to reorder"
+                aria-label={isNotEditable ? "Cannot reorder active subtask" : "Drag to reorder"}
+                disabled={isNotEditable}
               >
                 <GripVertical className="h-5 w-5 text-muted-foreground" />
               </button>
 
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+              <div className="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
                 <span className="text-sm font-semibold text-primary">
                   {index + 1}
                 </span>
@@ -124,12 +158,18 @@ function SortableSubtaskItem({
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <CardTitle className="text-lg flex-1">
+                  <CardTitle className={`text-lg flex-1 ${isDone ? "line-through" : ""}`}>
                     {subtask.name}
                   </CardTitle>
-                  <Badge variant={typeConfig.badgeVariant} className="shrink-0">
-                    {typeConfig.icon} {typeConfig.label}
-                  </Badge>
+                  <div className="flex gap-2 shrink-0">
+                    <Badge variant={statusConfig.variant} className="flex items-center gap-1">
+                      {statusConfig.icon}
+                      {statusConfig.label}
+                    </Badge>
+                    <Badge variant={typeConfig.badgeVariant}>
+                      {typeConfig.icon} {typeConfig.label}
+                    </Badge>
+                  </div>
                 </div>
                 <CardDescription className="line-clamp-2">
                   {subtask.content.substring(0, 200)}

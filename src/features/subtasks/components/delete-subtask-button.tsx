@@ -11,10 +11,12 @@ export const DeleteSubtaskButton = ({
   subtaskId,
   projectId,
   taskId,
+  disabled = false,
 }: {
   subtaskId: string;
   projectId: string;
   taskId: string;
+  disabled?: boolean;
 }) => {
   const [isPending, startTransition] = useTransition();
 
@@ -28,7 +30,12 @@ export const DeleteSubtaskButton = ({
   };
 
   return (
-    <Button onClick={handleDelete} disabled={isPending} variant="destructive">
+    <Button
+      onClick={handleDelete}
+      disabled={isPending || disabled}
+      variant="destructive"
+      className={disabled ? "cursor-not-allowed" : ""}
+    >
       {isPending ? (
         <Loader2 className="size-4 animate-spin" />
       ) : (
