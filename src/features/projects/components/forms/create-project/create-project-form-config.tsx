@@ -3,14 +3,15 @@ import { toast } from "@/lib/toast";
 import { useRouter } from "next/navigation";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
-import {
-  createProjectSchema,
-  CreateProjectInput,
-} from "./create-project-form-schema";
 import { FormState } from "@/components/forms/types";
-import { FormConfig, FormFieldsType } from "@/components/forms/types";
+import { FormConfig } from "@/components/forms/types";
 import { routes } from "@/lib/routes";
-import { createProjectFormAction } from "@/features/projects/components/forms/create-project/create-project-form-action";
+import {
+  CreateProjectInput,
+  createProjectSchema,
+} from "@/features/projects/components/forms/project/project-form-schema";
+import { useCreateProjectFormFields } from "@/features/projects/components/forms/project/use-project-form-fields";
+import { createProjectFormAction } from "@/features/projects/components/forms/project/project-form-action";
 
 const createProjectFormId = "create-project-form";
 
@@ -19,38 +20,15 @@ export function useCreateProjectFormConfig(): FormConfig<
   CreateProjectInput
 > {
   const router = useRouter();
+  const fields = useCreateProjectFormFields();
 
   const defaultValues: DeepPartial<CreateProjectInput> = {
     name: "",
     description: "",
-    githubRepo: "",
+    feGithubRepo: "",
+    routesPath: "",
+    beGithubRepo: "",
     swaggerPath: "",
-  };
-
-  const fields: FormFieldsType<CreateProjectInput> = {
-    name: {
-      type: "input",
-      inputType: "text",
-      label: "Project Name",
-      placeholder: "Enter project name",
-    },
-    description: {
-      type: "textarea",
-      label: "Description (optional)",
-      placeholder: "Enter project description",
-    },
-    githubRepo: {
-      type: "input",
-      inputType: "text",
-      label: "GitHub Repository (optional)",
-      placeholder: "e.g., owner/repo-name",
-    },
-    swaggerPath: {
-      type: "input",
-      inputType: "text",
-      label: "Swagger File Path (optional)",
-      placeholder: "e.g., docs/swagger.yaml",
-    },
   };
 
   return {

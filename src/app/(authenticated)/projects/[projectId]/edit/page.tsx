@@ -57,15 +57,7 @@ export default async function EditProjectPage({
             <CardDescription>Update the project information</CardDescription>
           </CardHeader>
           <CardContent>
-            <EditProjectForm
-              projectId={projectId}
-              defaultValues={{
-                name: project.name,
-                description: project.description,
-                githubRepo: project.githubRepo,
-                swaggerPath: project.swaggerPath,
-              }}
-            />
+            <EditProjectForm project={project} />
           </CardContent>
         </Card>
       </PageContent>
