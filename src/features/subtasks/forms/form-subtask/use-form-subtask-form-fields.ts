@@ -20,6 +20,11 @@ export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubta
       placeholder: "Enter subtask name",
     },
     metadata: {
+      additionalDetails: {
+        type: "textarea",
+        label: "Additional Details",
+        placeholder: "Enter additional details (optional)",
+      },
       fields: {
         type: "array",
         fieldType: {
@@ -87,6 +92,15 @@ export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubta
             label: "Value",
             placeholder: "Enter value",
           },
+        },
+        variant: {
+          type: "select",
+          label: "Variant",
+          placeholder: "Select variant",
+          options: [
+            { label: "Default", value: "default" },
+            { label: "Likert Scale", value: "likert-scale" },
+          ],
         },
         selectItems: {
           type: "array",

@@ -26,6 +26,7 @@ export function useCreateFormSubtaskFormConfig(
     taskId,
     subtaskName: "",
     metadata: {
+      additionalDetails: "",
       fields: [
         {
           fieldType: "input",
@@ -45,6 +46,7 @@ export function useCreateFormSubtaskFormConfig(
               value: "",
             },
           ],
+          variant: "default",
           selectItems: [
             {
               label: "",

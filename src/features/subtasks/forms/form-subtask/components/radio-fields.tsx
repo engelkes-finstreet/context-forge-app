@@ -23,6 +23,9 @@ export const RadioFields = ({ index, fieldNames }: Props) => {
         <FieldLegend className="text-base font-semibold mb-4">
           Radio Configuration
         </FieldLegend>
+        <DynamicFormField
+          fieldName={`${fieldNames.metadata.fields.fieldName}.${index}.variant` as any}
+        />
         <FieldArraySection
           arrayFieldName={`${fieldNames.metadata.fields.fieldName}.${index}.radioItems`}
           arrayFieldConfig={{

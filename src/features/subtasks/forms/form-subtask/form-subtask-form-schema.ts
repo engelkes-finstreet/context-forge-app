@@ -44,6 +44,7 @@ const radioFieldSchema = baseFieldSchema.extend({
       value: z.string().min(1, "Value is required"),
     }),
   ),
+  variant: z.enum(["default", "likert-scale"]).default("default"),
 });
 
 const yesNoRadioSchema = baseFieldSchema.extend({
@@ -108,6 +109,7 @@ export type Fields = z.infer<typeof fieldsArraySchema>;
 
 const metadataSchema = z.object({
   fields: fieldsArraySchema,
+  additionalDetails: z.string().optional(),
 });
 
 export type FormSubtaskMetadata = z.infer<typeof metadataSchema>;
