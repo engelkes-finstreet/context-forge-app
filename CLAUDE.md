@@ -230,3 +230,34 @@ Having issues? Check the [Troubleshooting Guide](./docs/guides/troubleshooting.m
 
 - Stop to write everything into some markdown files if I do not explicitly ask you. If you want to add a short explanation do it inside the console but stop creating markdown files
 - You never use the pnpm or npm run command. I am doing this on my own in a separate terminal. Same for pnpm or npm build. This is not needed for you. I will do this on each commit on my own
+
+## Development Guidelines
+
+### JSX Quotes and Special Characters
+
+When working with quotes and special characters in JSX text content, always use HTML entities to satisfy the `react/no-unescaped-entities` ESLint rule:
+
+**Use HTML entities for quotes:**
+- `&quot;` for double quotes (")
+- `&apos;` or `&#39;` for apostrophes (')
+- `&ldquo;` and `&rdquo;` for curly quotes (" ")
+
+**Example:**
+```tsx
+// ✅ Correct - Use HTML entities
+<AlertDescription>
+  Update the status to &quot;Open&quot; first.
+</AlertDescription>
+
+// ❌ Incorrect - Unescaped quotes
+<AlertDescription>
+  Update the status to "Open" first.
+</AlertDescription>
+```
+
+**Why this matters:**
+- Prevents linting errors and build failures
+- Ensures proper HTML compliance
+- Improves accessibility for screen readers
+- Avoids potential parsing edge cases
+- Consistent with React and HTML best practices

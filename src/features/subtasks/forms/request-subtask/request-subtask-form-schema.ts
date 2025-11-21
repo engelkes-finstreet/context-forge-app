@@ -8,6 +8,10 @@ const requestSchema = z.object({
   resultSchema: z.boolean(),
 });
 
+const databaseRequestSchema = requestSchema.extend({
+  httpMethod: z.string().min(1, "HTTP method is required"),
+});
+
 export type Request = z.infer<typeof requestSchema>;
 
 const requestsSchema = z.array(requestSchema);
@@ -16,16 +20,12 @@ const metadataSchema = z.object({
   requests: requestsSchema,
 });
 
-const requestSubtaskDatabaseMetadataSchema = z.object({
-  requests: z.array(
-    requestSchema.extend({
-      httpMethod: z.string().min(1, "HTTP method is required"),
-    }),
-  ),
+const requestDatabaseMetadataSchema = z.object({
+  requests: z.array(databaseRequestSchema),
 });
 
-export type RequestSubtaskDatabaseMetadata = z.infer<
-  typeof requestSubtaskDatabaseMetadataSchema
+export type RequestDatabaseMetadata = z.infer<
+  typeof requestDatabaseMetadataSchema
 >;
 
 export type Requests = z.infer<typeof requestsSchema>;

@@ -215,7 +215,7 @@ export default async function SubtaskDetailPage({
             <AlertDescription>
               This subtask is currently {isDone ? "completed" : "in progress"}{" "}
               and cannot be edited or deleted. To make changes, update the
-              status to "Open" first.
+              status to &quot;Open&quot; first.
             </AlertDescription>
           </Alert>
         )}

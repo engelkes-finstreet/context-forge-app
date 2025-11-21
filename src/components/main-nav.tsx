@@ -10,7 +10,6 @@ import { TypedLink, useTypedRouter, routes } from "@/lib/routes";
 import { ModeToggle } from "@/components/mode-toggle";
 
 export function MainNav() {
-  const pathname = usePathname();
   const router = useTypedRouter();
   const [scrolled, setScrolled] = useState(false);
 

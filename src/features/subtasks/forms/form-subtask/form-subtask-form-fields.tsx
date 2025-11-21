@@ -6,7 +6,7 @@ import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { FieldArrayAccordion } from "@/components/forms/field-array-accordion";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import { FieldTypeSpecificFields } from "./components/field-type-specific-fields";
 
 type Props = {

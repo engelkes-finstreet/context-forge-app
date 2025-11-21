@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Markdown } from "@/components/ui/markdown";
-import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
   XCircle,

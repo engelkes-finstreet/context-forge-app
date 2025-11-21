@@ -22,7 +22,7 @@ async function generateContentFromSwagger(
   metadata: ListActionsSubtaskMetadata,
 ): Promise<string> {
   if (
-    !project.githubRepo ||
+    !project.beGithubRepo ||
     !project.swaggerPath ||
     metadata.interactiveLists.length === 0
   ) {
@@ -36,7 +36,7 @@ async function generateContentFromSwagger(
     for (const interactiveList of metadata.interactiveLists) {
       // Fetch raw endpoint definitions
       const rawDefinitions = await SwaggerService.getRawEndpointDefinitions(
-        project.githubRepo,
+        project.beGithubRepo,
         project.swaggerPath,
         [interactiveList.swaggerPath],
       );

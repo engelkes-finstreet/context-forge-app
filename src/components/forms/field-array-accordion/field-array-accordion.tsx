@@ -83,7 +83,7 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
     if (fieldsArray.length === 1) {
       setOpenItems([`${arrayFieldName}-0`]);
     }
-  }, [fieldsArray.length]);
+  }, [fieldsArray.length, arrayFieldName]);
 
   const handleRemove = (index: number) => {
     const itemValue = `${arrayFieldName}-${index}`;
@@ -119,14 +119,14 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
 
         // Find all accordion items and get the one at the new index
         const accordionItems = accordionRef.current.querySelectorAll(
-          '[data-slot="accordion-item"]'
+          '[data-slot="accordion-item"]',
         );
         const newAccordionItem = accordionItems[newIndex];
 
         if (newAccordionItem) {
           // Find the first focusable form element within this accordion item
           const firstFocusable = newAccordionItem.querySelector(
-            'input:not([type="hidden"]), button[role="combobox"], textarea, select'
+            'input:not([type="hidden"]), button[role="combobox"], textarea, select',
           ) as HTMLElement;
 
           if (firstFocusable) {
