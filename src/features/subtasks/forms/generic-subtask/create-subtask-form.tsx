@@ -13,7 +13,6 @@ export function CreateGenericSubtaskForm({
   subtaskId,
 }: CreateGenericSubtaskFormProps) {
   const formConfig = useCreateGenericSubtaskFormConfig(taskId, subtaskId);
-  const { fieldNames } = formConfig;
 
   return (
     <Form formConfig={formConfig}>

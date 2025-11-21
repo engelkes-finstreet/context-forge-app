@@ -39,9 +39,9 @@ export default async function EditSubtaskPage({
   ]);
   let endpoints: SwaggerEndpoint[] = [];
 
-  if (project.githubRepo && project.swaggerPath) {
+  if (project.beGithubRepo && project.swaggerPath) {
     endpoints = await SwaggerService.getEndpointsFromGitHub(
-      project.githubRepo!,
+      project.beGithubRepo!,
       project.swaggerPath!,
     );
   }

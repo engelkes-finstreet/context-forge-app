@@ -17,8 +17,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { Badge } from "@/components/ui/badge";
 import { SubtaskType } from "@prisma/client";
-import { SwaggerService } from "@/lib/services/swagger-service";
-import { ProjectService } from "@/lib/services/project-service";
 
 interface NewGenericSubtaskPageProps {
   params: Promise<{
@@ -37,13 +35,7 @@ export default async function NewGenericSubtaskPage({
   params,
 }: NewGenericSubtaskPageProps) {
   const { projectId, taskId, subtaskId } = await params;
-  const project = await ProjectService.getProjectById(projectId);
   const task = await TaskService.getTaskById(taskId);
-
-  const endpoints = await SwaggerService.getEndpointsFromGitHub(
-    project.githubRepo!,
-    project.swaggerPath!,
-  );
 
   if (!task || task.projectId !== projectId) {
     notFound();

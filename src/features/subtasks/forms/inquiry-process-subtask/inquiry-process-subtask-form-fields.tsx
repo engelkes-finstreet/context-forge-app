@@ -15,7 +15,6 @@ export const InquiryProcessSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
-      <DynamicFormField fieldName={fieldNames.metadata.inquiryRoute} />
       <StepsFields fieldNames={fieldNames} />
       <ProgressBarFields fieldNames={fieldNames} />
     </div>

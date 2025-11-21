@@ -3,7 +3,7 @@ import { createFormFieldNames } from "@/components/forms/utils/create-form-field
 import { Button } from "@/components/ui/button";
 import { updateRequestSubtaskFormAction } from "@/features/subtasks/forms/request-subtask/request-subtask-form-action";
 import {
-  RequestSubtaskDatabaseMetadata,
+  RequestDatabaseMetadata,
   RequestSubtaskMetadata,
   UpdateRequestSubtaskFormInput,
   updateRequestSubtaskFormSchema,
@@ -21,7 +21,7 @@ export function useUpdateRequestSubtaskFormConfig(
   const router = useRouter();
   const fields = useUpdateRequestSubtaskFormFields({ endpoints });
 
-  const databaseMetadata = subtask.metadata as RequestSubtaskDatabaseMetadata;
+  const databaseMetadata = subtask.metadata as RequestDatabaseMetadata;
   const requestsMetadata: RequestSubtaskMetadata = {
     requests: databaseMetadata.requests.map((request) => ({
       endpoint: `${request.httpMethod}:${request.endpoint}`,

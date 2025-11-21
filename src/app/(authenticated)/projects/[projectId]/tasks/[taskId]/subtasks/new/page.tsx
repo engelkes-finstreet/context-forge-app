@@ -25,7 +25,7 @@ export default async function NewSubtaskPage({ params }: NewSubtaskPageProps) {
   const { projectId, taskId } = await params;
   const project = await ProjectService.getProjectById(projectId);
   const endpoints = await SwaggerService.getEndpointsFromGitHub(
-    project.githubRepo!,
+    project.beGithubRepo!,
     project.swaggerPath!,
   );
   const [nameOptions, swaggerPathOptions] = await Promise.all([

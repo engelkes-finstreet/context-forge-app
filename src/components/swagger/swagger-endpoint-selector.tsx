@@ -85,10 +85,6 @@ export function SwaggerEndpointSelector({
     setOpen(false);
   };
 
-  const getEndpointLabel = (endpoint: SwaggerEndpoint) => {
-    return `${endpoint.method} ${endpoint.path}`;
-  };
-
   const getEndpointSearchValue = (endpoint: SwaggerEndpoint) => {
     return `${endpoint.method} ${endpoint.path} ${endpoint.summary || ""} ${endpoint.description || ""} ${endpoint.tags?.join(" ") || ""}`;
   };

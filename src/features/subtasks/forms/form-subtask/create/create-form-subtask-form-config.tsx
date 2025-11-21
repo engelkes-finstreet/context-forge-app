@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  FormConfig,
-  FormFieldsType,
-  FormState,
-} from "@/components/forms/types";
+import { FormConfig, FormState } from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
 import { createFormSubtaskFormAction } from "@/features/subtasks/forms/form-subtask/form-subtask-form-action";
@@ -14,7 +10,6 @@ import {
 } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { useCreateFormSubtaskFormFields } from "@/features/subtasks/forms/form-subtask/use-form-subtask-form-fields";
 import { useRouter } from "next/navigation";
-import { DeepPartial } from "react-hook-form";
 
 export function useCreateFormSubtaskFormConfig(
   taskId: string,
@@ -26,6 +21,7 @@ export function useCreateFormSubtaskFormConfig(
     taskId,
     subtaskName: "",
     metadata: {
+      additionalDetails: "",
       fields: [
         {
           fieldType: "input",
@@ -39,12 +35,7 @@ export function useCreateFormSubtaskFormConfig(
               sublabel: "",
             },
           ],
-          radioItems: [
-            {
-              label: "",
-              value: "",
-            },
-          ],
+          variant: "default",
           selectItems: [
             {
               label: "",

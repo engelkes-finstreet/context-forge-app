@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  FormConfig,
-  FormFieldsType,
-  FormState,
-} from "@/components/forms/types";
+import { FormConfig, FormState } from "@/components/forms/types";
 import { createFormFieldNames } from "@/components/forms/utils/create-form-field-names";
 import { Button } from "@/components/ui/button";
 import {

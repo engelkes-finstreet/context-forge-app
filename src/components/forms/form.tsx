@@ -13,7 +13,6 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { FormConfig, FormState } from "@/components/forms/types";
 import { useFormIsPending } from "@/components/forms/form-state-store";

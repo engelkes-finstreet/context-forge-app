@@ -39,6 +39,7 @@ export const FormSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
       <DynamicFormField fieldName={fieldNames.subtaskName} />
+      <DynamicFormField fieldName={fieldNames.metadata.additionalDetails} />
       <Fields fieldNames={fieldNames} />
     </div>
   );
@@ -51,7 +52,6 @@ const FieldSummary = ({
   index: number;
   arrayFieldName: string;
 }) => {
-  // Subscribe to live form data for real-time updates
   const field = useWatch({
     name: `${arrayFieldName}.${index}`,
   }) as FieldItem | undefined;
