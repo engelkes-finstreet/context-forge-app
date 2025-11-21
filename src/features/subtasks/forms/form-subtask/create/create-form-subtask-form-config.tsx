@@ -14,7 +14,6 @@ import {
 } from "@/features/subtasks/forms/form-subtask/form-subtask-form-schema";
 import { useCreateFormSubtaskFormFields } from "@/features/subtasks/forms/form-subtask/use-form-subtask-form-fields";
 import { useRouter } from "next/navigation";
-import { DeepPartial } from "react-hook-form";
 
 export function useCreateFormSubtaskFormConfig(
   taskId: string,
@@ -38,12 +37,6 @@ export function useCreateFormSubtaskFormConfig(
               name: "",
               label: "",
               sublabel: "",
-            },
-          ],
-          radioItems: [
-            {
-              label: "",
-              value: "",
             },
           ],
           variant: "default",

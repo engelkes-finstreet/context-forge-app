@@ -6,7 +6,7 @@ import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { FieldArrayAccordion } from "@/components/forms/field-array-accordion";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { FieldTypeSpecificFields } from "./components/field-type-specific-fields";
 
 type Props = {
@@ -52,7 +52,6 @@ const FieldSummary = ({
   index: number;
   arrayFieldName: string;
 }) => {
-  // Subscribe to live form data for real-time updates
   const field = useWatch({
     name: `${arrayFieldName}.${index}`,
   }) as FieldItem | undefined;

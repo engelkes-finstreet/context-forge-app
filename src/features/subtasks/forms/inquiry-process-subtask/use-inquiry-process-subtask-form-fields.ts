@@ -15,11 +15,6 @@ export function useCreateInquiryProcessSubtaskFormFields(): FormFieldsType<Creat
       placeholder: "Enter subtask name",
     },
     metadata: {
-      inquiryRoute: {
-        type: "input",
-        label: "Inquiry Route",
-        placeholder: "Enter inquiry route",
-      },
       steps: {
         type: "array",
         name: {

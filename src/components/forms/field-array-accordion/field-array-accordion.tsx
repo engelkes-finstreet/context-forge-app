@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { PlusIcon, XIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useFieldArray } from "react-hook-form";
 import { FieldArrayAccordionProps } from "./types";
 import { cn } from "@/lib/utils";
@@ -69,6 +69,8 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
   });
 
   const [openItems, setOpenItems] = useState<string[]>([]);
+  const newlyAddedIndexRef = useRef<number | null>(null);
+  const accordionRef = useRef<HTMLDivElement>(null);
 
   // Add first item and auto-expand when creating new form
   useEffect(() => {
@@ -96,9 +98,48 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
 
   const handleAdd = () => {
     const newIndex = fieldsArray.length;
+    newlyAddedIndexRef.current = newIndex;
     append(defaultItem);
-    setOpenItems((prev) => [...prev, `${arrayFieldName}-${newIndex}`]);
+    // Collapse all other items, only expand the newly added one
+    setOpenItems([`${arrayFieldName}-${newIndex}`]);
   };
+
+  // Focus first form element in newly added accordion item
+  useEffect(() => {
+    if (newlyAddedIndexRef.current === null || !accordionRef.current) return;
+
+    const newIndex = newlyAddedIndexRef.current;
+    const itemValue = `${arrayFieldName}-${newIndex}`;
+
+    // Check if the newly added item is open
+    if (openItems.includes(itemValue)) {
+      // Wait for accordion animation to complete
+      const timeoutId = setTimeout(() => {
+        if (!accordionRef.current) return;
+
+        // Find all accordion items and get the one at the new index
+        const accordionItems = accordionRef.current.querySelectorAll(
+          '[data-slot="accordion-item"]'
+        );
+        const newAccordionItem = accordionItems[newIndex];
+
+        if (newAccordionItem) {
+          // Find the first focusable form element within this accordion item
+          const firstFocusable = newAccordionItem.querySelector(
+            'input:not([type="hidden"]), button[role="combobox"], textarea, select'
+          ) as HTMLElement;
+
+          if (firstFocusable) {
+            firstFocusable.focus();
+          }
+        }
+
+        newlyAddedIndexRef.current = null;
+      }, 150); // Delay to ensure accordion animation completes
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [openItems, arrayFieldName]);
 
   const buildFieldName = (index: number, fieldKey: string): string => {
     return `${arrayFieldName}.${index}.${fieldKey}`;
@@ -132,6 +173,7 @@ export function FieldArrayAccordion<TItem extends Record<string, any>>({
         className="space-y-3"
         value={openItems}
         onValueChange={setOpenItems}
+        ref={accordionRef}
       >
         {fieldsArray.map((field, index) => (
           <div key={field.id} className="flex items-start gap-3">

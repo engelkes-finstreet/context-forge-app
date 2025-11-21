@@ -39,6 +39,8 @@ export const RadioFields = ({ index, fieldNames }: Props) => {
           itemLabel="Option"
           variant="compact"
           sectionTitle="Options"
+          minItems={0}
+          addButtonText="Add Radio Item"
         >
           {({ buildFieldName, fieldNames: fields }) => (
             <>

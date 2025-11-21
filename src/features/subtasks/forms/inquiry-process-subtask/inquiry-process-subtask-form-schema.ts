@@ -24,7 +24,6 @@ const progressBarSchema = z.array(progressBarGroupSchema);
 export type ProgressBar = z.infer<typeof progressBarSchema>;
 
 const metadataSchema = z.object({
-  inquiryRoute: z.string().min(1, "Inquiry route is required"),
   steps: stepsSchema,
   progressBar: progressBarSchema,
 });

@@ -109,6 +109,8 @@ export type Fields = z.infer<typeof fieldsArraySchema>;
 
 const metadataSchema = z.object({
   fields: fieldsArraySchema,
+  // These additional details should be used as Info for the AI Agent that implements the form
+  // It might contain information like add some lorem ipsum select options or something like that
   additionalDetails: z.string().optional(),
 });
 

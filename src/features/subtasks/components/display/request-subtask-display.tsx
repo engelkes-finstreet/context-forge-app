@@ -27,7 +27,8 @@ const requestTypeColors: Record<string, string> = {
   GET: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
   POST: "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
   PUT: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20",
-  PATCH: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
+  PATCH:
+    "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
   DELETE: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20",
 };
 
@@ -42,17 +43,6 @@ export function RequestSubtaskDisplay({
 }: RequestSubtaskDisplayProps) {
   return (
     <div className="space-y-6">
-      {/* Content */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Description</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Markdown content={content} />
-        </CardContent>
-      </Card>
-
-      {/* Request Configuration */}
       <Card>
         <CardHeader>
           <CardTitle>API Requests</CardTitle>
@@ -127,44 +117,15 @@ export function RequestSubtaskDisplay({
               ))}
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Summary */}
-          <div className="pt-4 border-t">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-primary">
-                  {metadata.requests.length}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Total Requests
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-info">
-                  {metadata.requests.filter((r) => r.paginated).length}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Paginated
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-warning">
-                  {metadata.requests.filter((r) => r.protected).length}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Protected
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-muted-foreground">
-                  {new Set(metadata.requests.map((r) => r.requestType)).size}
-                </div>
-                <div className="text-xs text-muted-foreground uppercase tracking-wide">
-                  HTTP Methods
-                </div>
-              </div>
-            </div>
-          </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Description</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Markdown content={content} />
         </CardContent>
       </Card>
     </div>

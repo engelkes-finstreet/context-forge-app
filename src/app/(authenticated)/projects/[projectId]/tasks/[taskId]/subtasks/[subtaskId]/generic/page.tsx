@@ -37,13 +37,7 @@ export default async function NewGenericSubtaskPage({
   params,
 }: NewGenericSubtaskPageProps) {
   const { projectId, taskId, subtaskId } = await params;
-  const project = await ProjectService.getProjectById(projectId);
   const task = await TaskService.getTaskById(taskId);
-
-  const endpoints = await SwaggerService.getEndpointsFromGitHub(
-    project.githubRepo!,
-    project.swaggerPath!,
-  );
 
   if (!task || task.projectId !== projectId) {
     notFound();

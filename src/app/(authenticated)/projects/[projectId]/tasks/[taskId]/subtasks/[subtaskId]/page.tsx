@@ -4,7 +4,16 @@ import { SubtaskService } from "@/lib/services/subtask-service";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageContent } from "@/components/ui/page-content";
-import { ArrowLeft, Pencil, CheckCircle2, Circle, Clock, AlertTriangle } from "lucide-react";
+import {
+  ArrowLeft,
+  Pencil,
+  CheckCircle2,
+  Circle,
+  Clock,
+  AlertTriangle,
+  FileText,
+  Layers,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -20,6 +29,8 @@ import {
 } from "@/features/subtasks/components/display";
 import { SubtaskType } from "@prisma/client";
 import { DeleteSubtaskButton } from "@/features/subtasks/components/delete-subtask-button";
+import { Markdown } from "@/components/ui/markdown";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 /**
  * Get status configuration for badge display
@@ -209,18 +220,47 @@ export default async function SubtaskDetailPage({
           </Alert>
         )}
 
-        {subtask.task.sharedContext && (
-          <Alert className="mb-6">
-            <AlertTitle>Shared Context (Available to all subtasks)</AlertTitle>
-            <AlertDescription className="prose prose-sm max-w-none mt-2">
-              <pre className="whitespace-pre-wrap text-sm">
-                {subtask.task.sharedContext}
-              </pre>
-            </AlertDescription>
-          </Alert>
-        )}
+        <Tabs defaultValue="details" className="w-full">
+          <TabsList>
+            <TabsTrigger value="details">
+              <FileText className="mr-2 h-4 w-4" />
+              Details
+            </TabsTrigger>
+            <TabsTrigger value="context">
+              <Layers className="mr-2 h-4 w-4" />
+              Task Context
+              <Badge variant="outline" className="ml-2 text-xs">
+                Shared
+              </Badge>
+            </TabsTrigger>
+          </TabsList>
 
-        {renderContent()}
+          <TabsContent value="details" className="mt-6">
+            {renderContent()}
+          </TabsContent>
+
+          <TabsContent value="context" className="mt-6">
+            {subtask.task.sharedContext ? (
+              <Alert>
+                <AlertTitle>
+                  Shared Context (Available to all subtasks)
+                </AlertTitle>
+                <AlertDescription>
+                  <Markdown content={subtask.task.sharedContext} />
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <Alert>
+                <AlertTitle>No Shared Context</AlertTitle>
+                <AlertDescription>
+                  This task does not have any shared context yet. Shared context
+                  is information that is available to all subtasks within this
+                  task.
+                </AlertDescription>
+              </Alert>
+            )}
+          </TabsContent>
+        </Tabs>
       </PageContent>
     </>
   );
