@@ -185,13 +185,108 @@ function SortableSubtaskItem({
 }
 
 /**
- * Main component that renders a list of draggable subtasks
+ * Renders a group of subtasks with the same status
+ */
+function SubtaskStatusGroup({
+  status,
+  subtasks,
+  taskId,
+  projectId,
+  isDragActive,
+  onDragStart,
+  onDragEnd,
+}: {
+  status: Status;
+  subtasks: Subtask[];
+  taskId: string;
+  projectId: string;
+  isDragActive: boolean;
+  onDragStart: () => void;
+  onDragEnd: (event: DragEndEvent) => void;
+}) {
+  const statusLabels = {
+    [Status.OPEN]: "Open",
+    [Status.IN_PROGRESS]: "In Progress",
+    [Status.DONE]: "Done",
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  // For OPEN status, enable drag and drop
+  if (status === Status.OPEN) {
+    return (
+      <div>
+        <h3 className="text-xl font-semibold mb-3">
+          {statusLabels[status]} ({subtasks.length})
+        </h3>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+        >
+          <SortableContext
+            items={subtasks.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="grid gap-4">
+              {subtasks.map((subtask, index) => (
+                <SortableSubtaskItem
+                  key={subtask.id}
+                  subtask={subtask}
+                  index={index}
+                  projectId={projectId}
+                  taskId={taskId}
+                  isDragActive={isDragActive}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+      </div>
+    );
+  }
+
+  // For IN_PROGRESS and DONE, just render the items without drag context
+  return (
+    <div>
+      <h3 className="text-xl font-semibold mb-3">
+        {statusLabels[status]} ({subtasks.length})
+      </h3>
+      <div className="grid gap-4">
+        {subtasks.map((subtask, index) => (
+          <SortableSubtaskItem
+            key={subtask.id}
+            subtask={subtask}
+            index={index}
+            projectId={projectId}
+            taskId={taskId}
+            isDragActive={isDragActive}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Main component that renders a list of draggable subtasks grouped by status
  *
  * Key Features:
- * 1. Uses useOptimistic for instant UI updates (optimistic updates)
- * 2. Uses useTransition to track pending state
- * 3. Configures sensors for drag interactions (mouse, touch, keyboard)
- * 4. Wraps items in DndContext and SortableContext providers
+ * 1. Groups subtasks by status (OPEN, IN_PROGRESS, DONE)
+ * 2. Uses useOptimistic for instant UI updates (optimistic updates)
+ * 3. Uses useTransition to track pending state
+ * 4. Only OPEN subtasks are draggable
+ * 5. Maintains order within each status group
  */
 export function DraggableSubtaskList({
   subtasks,
@@ -225,17 +320,6 @@ export function DraggableSubtaskList({
    */
   const [isDragActive, setIsDragActive] = useState(false);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
   /**
    * Called when user starts dragging a subtask
    */
@@ -257,12 +341,17 @@ export function DraggableSubtaskList({
       return;
     }
 
-    const oldIndex = optimisticItems.findIndex((item) => item.id === active.id);
-    const newIndex = optimisticItems.findIndex((item) => item.id === over.id);
+    // Only allow reordering within OPEN status
+    const openSubtasks = optimisticItems.filter((item) => item.status === Status.OPEN);
+    const oldIndex = openSubtasks.findIndex((item) => item.id === active.id);
+    const newIndex = openSubtasks.findIndex((item) => item.id === over.id);
 
-    // Calculate the new order using arrayMove helper
-    // arrayMove([A, B, C, D], 0, 2) => [B, C, A, D]
-    const newItems = arrayMove(optimisticItems, oldIndex, newIndex);
+    // Calculate the new order for OPEN subtasks
+    const reorderedOpenSubtasks = arrayMove(openSubtasks, oldIndex, newIndex);
+
+    // Merge with other status subtasks
+    const otherSubtasks = optimisticItems.filter((item) => item.status !== Status.OPEN);
+    const newItems = [...reorderedOpenSubtasks, ...otherSubtasks];
 
     startTransition(async () => {
       addOptimistic(newItems);
@@ -283,32 +372,34 @@ export function DraggableSubtaskList({
     });
   }
 
+  // Group subtasks by status
+  const groupedSubtasks = {
+    [Status.OPEN]: optimisticItems.filter((item) => item.status === Status.OPEN),
+    [Status.IN_PROGRESS]: optimisticItems.filter((item) => item.status === Status.IN_PROGRESS),
+    [Status.DONE]: optimisticItems.filter((item) => item.status === Status.DONE),
+  };
+
   return (
     <>
-      <DndContext
-        sensors={sensors} // Mouse, touch, and keyboard sensors
-        collisionDetection={closestCenter} // Drop on the closest item
-        onDragStart={handleDragStart} // Track when drag starts
-        onDragEnd={handleDragEnd} // Handle reordering when drag ends
-      >
-        <SortableContext
-          items={optimisticItems.map((item) => item.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <div className="grid gap-4">
-            {optimisticItems.map((subtask, index) => (
-              <SortableSubtaskItem
-                key={subtask.id}
-                subtask={subtask}
-                index={index}
-                projectId={projectId}
-                taskId={taskId}
-                isDragActive={isDragActive}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
+      <div className="space-y-8">
+        {[Status.OPEN, Status.IN_PROGRESS, Status.DONE].map((status) => {
+          const subtasksInStatus = groupedSubtasks[status];
+          if (subtasksInStatus.length === 0) return null;
+
+          return (
+            <SubtaskStatusGroup
+              key={status}
+              status={status}
+              subtasks={subtasksInStatus}
+              taskId={taskId}
+              projectId={projectId}
+              isDragActive={isDragActive}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+            />
+          );
+        })}
+      </div>
 
       {isPending && (
         <div className="fixed bottom-4 right-4 bg-background border rounded-lg px-4 py-2 shadow-lg">

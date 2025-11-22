@@ -16,6 +16,7 @@ import {
   StaggeredItem,
 } from "@/components/ui/staggered-container";
 import { PlusCircle, ArrowLeft, Pencil } from "lucide-react";
+import { Status } from "@prisma/client";
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -84,26 +85,49 @@ export default async function ProjectDetailPage({
             </CardContent>
           </Card>
         ) : (
-          <StaggeredContainer className="grid gap-4">
-            {project.tasks.map((task) => (
-              <StaggeredItem key={task.id}>
-                <TypedLink
-                  route={routes.projects.tasks.detail}
-                  params={{ projectId, taskId: task.id }}
-                >
-                  <Card interactive={true}>
-                    <CardHeader>
-                      <CardTitle>{task.name}</CardTitle>
-                      <CardDescription>
-                        {task._count.subtasks}{" "}
-                        {task._count.subtasks === 1 ? "subtask" : "subtasks"}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                </TypedLink>
-              </StaggeredItem>
-            ))}
-          </StaggeredContainer>
+          <div className="space-y-8">
+            {[Status.OPEN, Status.IN_PROGRESS, Status.DONE].map((status) => {
+              const tasksInStatus = project.tasks.filter(
+                (task) => task.status === status
+              );
+
+              if (tasksInStatus.length === 0) return null;
+
+              const statusLabels = {
+                [Status.OPEN]: "Open",
+                [Status.IN_PROGRESS]: "In Progress",
+                [Status.DONE]: "Done",
+              };
+
+              return (
+                <div key={status}>
+                  <h3 className="text-xl font-semibold mb-3">
+                    {statusLabels[status]} ({tasksInStatus.length})
+                  </h3>
+                  <StaggeredContainer className="grid gap-4">
+                    {tasksInStatus.map((task) => (
+                      <StaggeredItem key={task.id}>
+                        <TypedLink
+                          route={routes.projects.tasks.detail}
+                          params={{ projectId, taskId: task.id }}
+                        >
+                          <Card interactive={true}>
+                            <CardHeader>
+                              <CardTitle>{task.name}</CardTitle>
+                              <CardDescription>
+                                {task._count.subtasks}{" "}
+                                {task._count.subtasks === 1 ? "subtask" : "subtasks"}
+                              </CardDescription>
+                            </CardHeader>
+                          </Card>
+                        </TypedLink>
+                      </StaggeredItem>
+                    ))}
+                  </StaggeredContainer>
+                </div>
+              );
+            })}
+          </div>
         )}
       </PageContent>
     </>
