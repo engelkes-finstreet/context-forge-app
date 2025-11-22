@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { FieldArrayAccordion } from "@/components/forms/field-array-accordion";
 import { useWatch } from "react-hook-form";
 import { FieldTypeSpecificFields } from "./components/field-type-specific-fields";
+import { FieldSet, FieldLegend } from "@/components/ui/field";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateFormSubtaskFormInput>>;
@@ -38,8 +39,12 @@ const FIELD_TYPE_COLORS: Record<string, string> = {
 export const FormSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
-      <DynamicFormField fieldName={fieldNames.subtaskName} />
-      <DynamicFormField fieldName={fieldNames.metadata.additionalDetails} />
+      <FieldSet>
+        <FieldLegend>Basic Information</FieldLegend>
+        <DynamicFormField fieldName={fieldNames.subtaskName} />
+        <DynamicFormField fieldName={fieldNames.metadata.additionalDetails} />
+      </FieldSet>
+
       <Fields fieldNames={fieldNames} />
     </div>
   );

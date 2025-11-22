@@ -7,11 +7,11 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { InputFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { FormFieldLabel } from "./form-field-label";
 
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -33,7 +33,7 @@ export function FormInput<
       name={name}
       render={({ field }) => (
         <FormItem>
-          {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
+          <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
           <FormControl>
             <Input
               {...field}

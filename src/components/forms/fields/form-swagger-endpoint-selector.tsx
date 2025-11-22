@@ -6,13 +6,13 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { SwaggerEndpointSelector } from "@/components/swagger/swagger-endpoint-selector";
 import type { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { SwaggerEndpointSelectorFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { FormFieldLabel } from "./form-field-label";
 
 /**
  * Encodes a SwaggerEndpoint to a string for form storage
@@ -84,7 +84,7 @@ export function FormSwaggerEndpointSelector<
 
         return (
           <FormItem>
-            {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
+            <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
             <FormControl>
               <SwaggerEndpointSelector
                 endpoints={endpoints}

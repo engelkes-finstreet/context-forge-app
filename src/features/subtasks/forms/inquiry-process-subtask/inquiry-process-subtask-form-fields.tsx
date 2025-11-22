@@ -4,6 +4,7 @@ import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-
 import { FieldArraySection } from "@/components/forms/field-array-section";
 import { FieldNamesType, FormFieldsType } from "@/components/forms/types";
 import { CreateInquiryProcessSubtaskFormInput } from "@/features/subtasks/forms/inquiry-process-subtask/inquiry-process-subtask-form-schema";
+import { FieldSet, FieldLegend } from "@/components/ui/field";
 
 type Props = {
   fieldNames: FieldNamesType<
@@ -14,9 +15,20 @@ type Props = {
 export const InquiryProcessSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
-      <DynamicFormField fieldName={fieldNames.subtaskName} />
-      <StepsFields fieldNames={fieldNames} />
-      <ProgressBarFields fieldNames={fieldNames} />
+      <FieldSet>
+        <FieldLegend>Basic Information</FieldLegend>
+        <DynamicFormField fieldName={fieldNames.subtaskName} />
+      </FieldSet>
+
+      <FieldSet>
+        <FieldLegend>Process Steps</FieldLegend>
+        <StepsFields fieldNames={fieldNames} />
+      </FieldSet>
+
+      <FieldSet>
+        <FieldLegend>Progress Bar Configuration</FieldLegend>
+        <ProgressBarFields fieldNames={fieldNames} />
+      </FieldSet>
     </div>
   );
 };

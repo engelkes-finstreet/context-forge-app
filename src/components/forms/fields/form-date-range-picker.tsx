@@ -11,7 +11,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -22,6 +21,7 @@ import {
 import { FieldPath, FieldValues } from "react-hook-form";
 import { DateRangePickerFieldConfig } from "@/components/forms/dynamic-form-field/types";
 import { format } from "date-fns";
+import { FormFieldLabel } from "./form-field-label";
 
 interface FormDateRangePickerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -42,7 +42,7 @@ export function FormDateRangePicker<
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
+          <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>

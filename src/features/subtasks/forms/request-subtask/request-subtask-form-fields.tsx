@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { FieldArrayAccordion } from "@/components/forms/field-array-accordion";
 import { useWatch } from "react-hook-form";
+import { FieldSet, FieldLegend } from "@/components/ui/field";
 
 type Props = {
   fieldNames: FieldNamesType<FormFieldsType<CreateRequestSubtaskFormInput>>;
@@ -27,7 +28,11 @@ const METHOD_COLORS: Record<string, string> = {
 export const RequestSubtaskFormFields = ({ fieldNames }: Props) => {
   return (
     <div className="space-y-6">
-      <DynamicFormField fieldName={fieldNames.subtaskName} />
+      <FieldSet>
+        <FieldLegend>Basic Information</FieldLegend>
+        <DynamicFormField fieldName={fieldNames.subtaskName} />
+      </FieldSet>
+
       <RequestsFields fieldNames={fieldNames} />
     </div>
   );

@@ -6,6 +6,7 @@ import { FieldArraySection } from "@/components/forms/field-array-section";
 import { CreateInteractiveListSubtaskFormInput } from "@/features/subtasks/forms/interactive-list-subtask/interactive-list-subtask-form-schema";
 import { AlertCircle } from "lucide-react";
 import { useFormState } from "react-hook-form";
+import { FieldSet, FieldLegend } from "@/components/ui/field";
 
 type Props = {
   fieldNames: FieldNamesType<
@@ -19,15 +20,22 @@ export const InteractiveListSubtaskFormFields = ({ fieldNames }: Props) => {
 
   return (
     <div className="space-y-6">
-      <DynamicFormField fieldName={fieldNames.subtaskName} />
-      {columnsError && (
-        <div className="flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-          <AlertCircle className="size-4 shrink-0" />
-          <span>{columnsError}</span>
-        </div>
-      )}
-      <ColumnsFields fieldNames={fieldNames} />
-      <DynamicFormField fieldName={fieldNames.metadata.noItemTranslation} />
+      <FieldSet>
+        <FieldLegend>Basic Information</FieldLegend>
+        <DynamicFormField fieldName={fieldNames.subtaskName} />
+      </FieldSet>
+
+      <FieldSet>
+        <FieldLegend>List Configuration</FieldLegend>
+        {columnsError && (
+          <div className="flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            <AlertCircle className="size-4 shrink-0" />
+            <span>{columnsError}</span>
+          </div>
+        )}
+        <ColumnsFields fieldNames={fieldNames} />
+        <DynamicFormField fieldName={fieldNames.metadata.noItemTranslation} />
+      </FieldSet>
     </div>
   );
 };

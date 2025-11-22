@@ -7,11 +7,11 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { CheckboxFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { FormFieldLabel } from "./form-field-label";
 
 interface FormCheckboxProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -40,11 +40,7 @@ export function FormCheckbox<
             />
           </FormControl>
           <div className="space-y-1 leading-none">
-            {fieldConfig.label && (
-              <FormLabel className="text-sm font-medium">
-                {fieldConfig.label}
-              </FormLabel>
-            )}
+            <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
             {fieldConfig.description && (
               <FormDescription>{fieldConfig.description}</FormDescription>
             )}

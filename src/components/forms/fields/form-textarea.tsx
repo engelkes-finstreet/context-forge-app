@@ -7,11 +7,11 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { TextareaFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { FormFieldLabel } from "./form-field-label";
 
 interface FormTextareaProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -30,7 +30,7 @@ export function FormTextarea<
       name={name}
       render={({ field }) => (
         <FormItem>
-          {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
+          <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
           <FormControl>
             <Textarea
               {...field}

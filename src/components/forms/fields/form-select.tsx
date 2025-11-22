@@ -13,11 +13,11 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { SelectFieldConfig } from "@/components/forms/dynamic-form-field/types";
+import { FormFieldLabel } from "./form-field-label";
 
 interface FormSelectProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -36,7 +36,7 @@ export function FormSelect<
       name={name}
       render={({ field }) => (
         <FormItem>
-          {fieldConfig.label && <FormLabel>{fieldConfig.label}</FormLabel>}
+          <FormFieldLabel label={fieldConfig.label} tooltip={fieldConfig.tooltip} />
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="w-full">

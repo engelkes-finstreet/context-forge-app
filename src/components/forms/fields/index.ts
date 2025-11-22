@@ -10,3 +10,4 @@ export {
   encodeEndpoint,
   decodeEndpoint,
 } from "./form-swagger-endpoint-selector";
+export { FormFieldLabel } from "./form-field-label";

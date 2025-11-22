@@ -26,6 +26,7 @@ export type BaseFieldConfig<
   type: FieldType;
   asyncValidate?: (value: FormValues[FieldName]) => Promise<string | undefined>;
   caption?: string;
+  tooltip?: string;
 };
 
 export type HiddenFieldConfig = {
