@@ -7,6 +7,7 @@ import {
 import { FormInput } from "@/components/forms/fields/form-input";
 import { FormPasswordInput } from "@/components/forms/fields/form-password-input";
 import { FormTextarea } from "@/components/forms/fields/form-textarea";
+import { FormMarkdownEditor } from "@/components/forms/fields/form-markdown-editor";
 import { FormSelect } from "@/components/forms/fields/form-select";
 import { FormCheckbox } from "@/components/forms/fields/form-checkbox";
 import { FormDatePicker } from "@/components/forms/fields/form-date-picker";
@@ -34,6 +35,7 @@ const defaultComponents: Partial<
   [BaseField.INPUT]: FormInput,
   [BaseField.PASSWORD]: FormPasswordInput,
   [BaseField.TEXTAREA]: FormTextarea,
+  [BaseField.MARKDOWN]: FormMarkdownEditor,
   [BaseField.SELECT]: FormSelect,
   [BaseField.SWAGGER_ENDPOINT_SELECTOR]: FormSwaggerEndpointSelector,
   [BaseField.CHECKBOX]: FormCheckbox,
