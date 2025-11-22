@@ -88,7 +88,12 @@ export interface ModalMetadata {
     dataType: string;
   }>;
   withOpenButton: boolean;
-  contentDescription: string | undefined;
+  translations: {
+    title: string;
+    subheading?: string;
+    confirmButton: string;
+  };
+  contentDescription?: string;
 }
 
 /**

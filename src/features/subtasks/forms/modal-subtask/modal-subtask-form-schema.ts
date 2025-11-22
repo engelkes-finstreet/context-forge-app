@@ -11,7 +11,6 @@ const modalMetadataSchema = z.object({
   translations: z.object({
     title: z.string().min(1, "Title is required"),
     subheading: z.string().optional(),
-    confirmButton: z.string().min(1, "Confirm button is required"),
   }),
   contentDescription: z.string().optional(),
 });
