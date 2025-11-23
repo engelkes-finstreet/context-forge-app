@@ -24,29 +24,35 @@ const createSubtaskFormId = "create-generic-subtask-form";
  */
 export function useCreateGenericSubtaskFormConfig(
   taskId: string,
-  subtaskId: string,
 ): FormConfig<FormState, CreateGenericSubtaskFormInput> {
   const router = useRouter();
 
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
-    subtaskId,
-    content: "",
+    subtaskName: "",
+    metadata: {
+      context: "",
+    },
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
     taskId: {
       type: "hidden",
     },
-    subtaskId: {
-      type: "hidden",
+    subtaskName: {
+      type: "input",
+      label: "Subtask Name",
+      placeholder: "Enter subtask name",
     },
-    content: {
-      type: "markdown",
-      label: "Content",
-      placeholder: "Write your content using markdown...",
-      description: "Supports GitHub Flavored Markdown (tables, code blocks, lists, etc.)",
-      rows: 15,
+    metadata: {
+      context: {
+        type: "markdown",
+        label: "Content",
+        placeholder: "Write your content using markdown...",
+        description:
+          "Supports GitHub Flavored Markdown (tables, code blocks, lists, etc.)",
+        rows: 15,
+      },
     },
   };
 

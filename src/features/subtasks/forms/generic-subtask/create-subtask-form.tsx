@@ -6,19 +6,18 @@ import { DynamicFormField } from "@/components/forms/dynamic-form-field/dynamic-
 
 interface CreateGenericSubtaskFormProps {
   taskId: string;
-  subtaskId: string;
 }
 
 export function CreateGenericSubtaskForm({
   taskId,
-  subtaskId,
 }: CreateGenericSubtaskFormProps) {
-  const formConfig = useCreateGenericSubtaskFormConfig(taskId, subtaskId);
+  const formConfig = useCreateGenericSubtaskFormConfig(taskId);
 
   return (
     <Form formConfig={formConfig}>
       <div className="space-y-6">
-        <DynamicFormField fieldName={formConfig.fieldNames.content} />
+        <DynamicFormField fieldName={formConfig.fieldNames.subtaskName} />
+        <DynamicFormField fieldName={formConfig.fieldNames.metadata.context} />
       </div>
     </Form>
   );

@@ -14,10 +14,12 @@ export async function createGenericSubtaskFormAction(
 ): Promise<FormState> {
   const task = await TaskService.getTaskById(formData.taskId);
 
-  const result = await SubtaskService.updateSubtask(formData.subtaskId, {
+  const result = await SubtaskService.createSubtask({
+    taskId: formData.taskId,
+    name: formData.subtaskName,
     type: SubtaskType.GENERIC,
-    content: formData.content,
-    metadata: null,
+    content: "",
+    metadata: formData.metadata,
   });
 
   if (result.success) {

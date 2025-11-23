@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
 
 // Dynamically import MDEditor with SSR disabled
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
@@ -30,6 +30,7 @@ export function MarkdownEditorClient({
   height = 500,
 }: MarkdownEditorClientProps) {
   const [mounted, setMounted] = useState(false);
+  const { theme, resolvedTheme } = useTheme();
 
   // Ensure component only renders on client
   useEffect(() => {
@@ -47,8 +48,11 @@ export function MarkdownEditorClient({
     );
   }
 
+  // Use resolvedTheme to get the actual theme (light/dark), fallback to theme
+  const colorMode = (resolvedTheme || theme) as "light" | "dark";
+
   return (
-    <div data-color-mode="auto">
+    <div data-color-mode={colorMode}>
       <MDEditor
         value={value}
         onChange={(val) => onChange(val || "")}
