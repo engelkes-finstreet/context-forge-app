@@ -13,6 +13,7 @@ import { z } from "zod";
 export const createGenericSubtaskFormSchema = z.object({
   taskId: z.string().cuid("Invalid task ID"),
   subtaskId: z.string().cuid("Invalid subtask ID"),
+  content: z.string().min(1, "Content is required"),
 });
 
 /**

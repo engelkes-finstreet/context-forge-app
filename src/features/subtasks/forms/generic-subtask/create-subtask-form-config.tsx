@@ -31,6 +31,7 @@ export function useCreateGenericSubtaskFormConfig(
   const defaultValues: DeepPartial<CreateGenericSubtaskFormInput> = {
     taskId,
     subtaskId,
+    content: "",
   };
 
   const fields: FormFieldsType<CreateGenericSubtaskFormInput> = {
@@ -39,6 +40,13 @@ export function useCreateGenericSubtaskFormConfig(
     },
     subtaskId: {
       type: "hidden",
+    },
+    content: {
+      type: "markdown",
+      label: "Content",
+      placeholder: "Write your content using markdown...",
+      description: "Supports GitHub Flavored Markdown (tables, code blocks, lists, etc.)",
+      rows: 15,
     },
   };
 
