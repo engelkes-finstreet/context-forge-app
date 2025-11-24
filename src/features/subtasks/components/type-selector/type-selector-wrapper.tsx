@@ -12,6 +12,7 @@ import { useSelectedTypeStore } from "@/features/subtasks/stores/selected-type-s
 import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { CreateListActionsSubtaskForm } from "@/features/subtasks/forms/list-actions-subtask/create/create-list-actions-subtask-form";
 import { SelectOptions } from "@/components/forms/dynamic-form-field/types";
+import { CreateGenericSubtaskForm } from "@/features/subtasks/forms/generic-subtask/create-subtask-form";
 
 interface TypeSelectorWrapperProps {
   taskId: string;
@@ -84,6 +85,8 @@ function CreateSubtaskForm({
       return <CreateRequestSubtaskForm taskId={taskId} endpoints={endpoints} />;
     case SubtaskType.MODAL:
       return <CreateModalSubtaskForm taskId={taskId} />;
+    case SubtaskType.GENERIC:
+      return <CreateGenericSubtaskForm taskId={taskId} />;
     case SubtaskType.LIST_ACTIONS_AND_PAGINATION:
       return (
         <CreateListActionsSubtaskForm

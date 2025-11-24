@@ -1,5 +1,6 @@
 export { FormInput } from "./form-input";
 export { FormTextarea } from "./form-textarea";
+export { FormMarkdownEditor } from "./form-markdown-editor";
 export { FormSelect } from "./form-select";
 export { FormPasswordInput } from "./form-password-input";
 export { FormCheckbox } from "./form-checkbox";

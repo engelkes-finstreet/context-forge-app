@@ -7,6 +7,7 @@ export enum BaseField {
   INPUT = "input",
   PASSWORD = "password",
   TEXTAREA = "textarea",
+  MARKDOWN = "markdown",
   SELECT = "select",
   SWAGGER_ENDPOINT_SELECTOR = "swagger_endpoint_selector",
   CHECKBOX = "checkbox",
@@ -49,6 +50,14 @@ export type TextareaFieldConfig<
   FieldName extends keyof FormValues,
 > = BaseFieldConfig<FormValues, FieldName, "textarea"> & {
   rows?: number;
+};
+
+export type MarkdownFieldConfig<
+  FormValues,
+  FieldName extends keyof FormValues,
+> = BaseFieldConfig<FormValues, FieldName, "markdown"> & {
+  rows?: number;
+  layout?: "horizontal" | "vertical";
 };
 
 export type SelectFieldConfig<
@@ -99,6 +108,7 @@ export type FormFieldConfig<
   | InputFieldConfig<FormValues, FieldName>
   | PasswordFieldConfig<FormValues, FieldName>
   | TextareaFieldConfig<FormValues, FieldName>
+  | MarkdownFieldConfig<FormValues, FieldName>
   | SwaggerEndpointSelectorFieldConfig<FormValues, FieldName>
   | SelectFieldConfig<FormValues, FieldName>
   | CheckboxFieldConfig<FormValues, FieldName>

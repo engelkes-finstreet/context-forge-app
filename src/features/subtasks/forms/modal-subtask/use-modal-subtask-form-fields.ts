@@ -50,11 +50,6 @@ export function useCreateModalSubtaskFormFields(): FormFieldsType<CreateModalSub
           label: "Subheading",
           placeholder: "Enter subheading",
         },
-        confirmButton: {
-          type: "input",
-          label: "Confirm Button",
-          placeholder: "Enter confirm button",
-        },
       },
       withOpenButton: {
         type: "checkbox",
