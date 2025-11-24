@@ -30,6 +30,11 @@ export function useCreateModalSubtaskFormConfig(
       ],
       withOpenButton: false,
       contentDescription: "",
+      translations: {
+        title: "",
+        subheading: "",
+        confirmButton: "",
+      },
     },
   };
 

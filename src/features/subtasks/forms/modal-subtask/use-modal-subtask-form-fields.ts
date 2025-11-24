@@ -47,8 +47,15 @@ export function useCreateModalSubtaskFormFields(): FormFieldsType<CreateModalSub
         },
         subheading: {
           type: "input",
-          label: "Subheading",
+          label: "Subheading (optional)",
           placeholder: "Enter subheading",
+        },
+        confirmButton: {
+          type: "input",
+          label: "Confirm Button (optional)",
+          placeholder: "Enter confirm button",
+          tooltip:
+            "Some modals will not include a form that handles the action buttons but they will have to handle it on their own. \n This is the text for the button that will be used to confirm the action.",
         },
       },
       withOpenButton: {
