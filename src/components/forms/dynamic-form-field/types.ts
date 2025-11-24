@@ -13,6 +13,7 @@ export enum BaseField {
   CHECKBOX = "checkbox",
   DATE_PICKER = "date_picker",
   DATE_RANGE_PICKER = "date_range_picker",
+  SWITCH = "switch",
 }
 
 export type BaseFieldConfig<
@@ -100,6 +101,17 @@ export type DateRangePickerFieldConfig<
   disabled?: (date: Date) => boolean;
 };
 
+/**
+ * Switch field for toggling between exactly two string options.
+ * The first option is the "unchecked" state, the second is "checked".
+ */
+export type SwitchFieldConfig<
+  FormValues,
+  FieldName extends keyof FormValues,
+> = Omit<BaseFieldConfig<FormValues, FieldName, "switch">, "placeholder"> & {
+  options: [{ label: string; value: string }, { label: string; value: string }];
+};
+
 export type FormFieldConfig<
   FormValues,
   FieldName extends keyof FormValues,
@@ -114,5 +126,6 @@ export type FormFieldConfig<
   | CheckboxFieldConfig<FormValues, FieldName>
   | DatePickerFieldConfig<FormValues, FieldName>
   | DateRangePickerFieldConfig<FormValues, FieldName>
+  | SwitchFieldConfig<FormValues, FieldName>
   | HiddenFieldConfig
   | CustomFields;

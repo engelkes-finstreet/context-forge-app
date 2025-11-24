@@ -13,6 +13,8 @@ import { SwaggerEndpoint } from "@/lib/services/swagger-service";
 import { CreateListActionsSubtaskForm } from "@/features/subtasks/forms/list-actions-subtask/create/create-list-actions-subtask-form";
 import { SelectOptions } from "@/components/forms/dynamic-form-field/types";
 import { CreateGenericSubtaskForm } from "@/features/subtasks/forms/generic-subtask/create-subtask-form";
+import { CreateSimpleFormSubtaskForm } from "@/features/subtasks/forms/simple-form-subtask/create/create-simple-form-subtask-form";
+import { CreatePageSubtaskForm } from "@/features/subtasks/forms/page-subtask/create/create-page-subtask-form";
 
 interface TypeSelectorWrapperProps {
   taskId: string;
@@ -95,6 +97,15 @@ function CreateSubtaskForm({
           nameOptions={nameOptions}
         />
       );
+    case SubtaskType.SIMPLE_FORM:
+      return (
+        <CreateSimpleFormSubtaskForm
+          taskId={taskId}
+          swaggerPathOptions={swaggerPathOptions}
+        />
+      );
+    case SubtaskType.PAGE:
+      return <CreatePageSubtaskForm taskId={taskId} />;
     default:
       return <div>Invalid subtask type</div>;
   }

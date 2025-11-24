@@ -129,6 +129,8 @@ enum SubtaskType {
   REQUEST
   INTERACTIVE_LIST
   LIST_ACTIONS_AND_PAGINATION
+  SIMPLE_FORM
+  PAGE
 }
 
 model Subtask {

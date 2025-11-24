@@ -5,3 +5,5 @@ export { ModalSubtaskDisplay } from "./modal-subtask-display";
 export { RequestSubtaskDisplay } from "./request-subtask-display";
 export { InteractiveListSubtaskDisplay as PresentationListSubtaskDisplay } from "./interactive-list-subtask-display";
 export { ListActionsSubtaskDisplay } from "./list-actions-subtask-display";
+export { SimpleFormSubtaskDisplay } from "./simple-form-subtask-display";
+export { PageSubtaskDisplay } from "./page-subtask-display";

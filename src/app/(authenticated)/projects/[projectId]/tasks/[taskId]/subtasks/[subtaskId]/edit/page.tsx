@@ -19,6 +19,8 @@ import { UpdateFormSubtaskForm } from "@/features/subtasks/forms/form-subtask/up
 import { UpdateInteractiveListSubtaskForm } from "@/features/subtasks/forms/interactive-list-subtask/update/update-interactive-list-subtask-form";
 import { UpdateModalSubtaskForm } from "@/features/subtasks/forms/modal-subtask/update/update-modal-subtask-form";
 import { UpdateListActionsSubtaskForm } from "@/features/subtasks/forms/list-actions-subtask/update/update-list-actions-subtask-form";
+import { UpdateSimpleFormSubtaskForm } from "@/features/subtasks/forms/simple-form-subtask/update/update-simple-form-subtask-form";
+import { UpdatePageSubtaskForm } from "@/features/subtasks/forms/page-subtask/update/update-page-subtask-form";
 
 interface EditSubtaskPageProps {
   params: Promise<{
@@ -80,6 +82,15 @@ export default async function EditSubtaskPage({
             nameOptions={nameOptions}
           />
         );
+      case SubtaskType.SIMPLE_FORM:
+        return (
+          <UpdateSimpleFormSubtaskForm
+            subtask={subtask}
+            swaggerPathOptions={swaggerPathOptions}
+          />
+        );
+      case SubtaskType.PAGE:
+        return <UpdatePageSubtaskForm subtask={subtask} />;
       default:
         return null;
     }

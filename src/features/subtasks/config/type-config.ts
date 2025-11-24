@@ -94,6 +94,26 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     enabled: true,
     badgeVariant: "default",
   },
+
+  [SubtaskType.SIMPLE_FORM]: {
+    type: SubtaskType.SIMPLE_FORM,
+    label: "Simple Form",
+    description: "Basic form with swagger path and description",
+    icon: "📄",
+    route: "simple-form",
+    enabled: true,
+    badgeVariant: "outline",
+  },
+
+  [SubtaskType.PAGE]: {
+    type: SubtaskType.PAGE,
+    label: "Page",
+    description: "Inquiry or portal page with translations",
+    icon: "📃",
+    route: "page",
+    enabled: true,
+    badgeVariant: "secondary",
+  },
 };
 
 /**

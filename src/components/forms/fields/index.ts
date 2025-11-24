@@ -6,6 +6,7 @@ export { FormPasswordInput } from "./form-password-input";
 export { FormCheckbox } from "./form-checkbox";
 export { FormDatePicker } from "./form-date-picker";
 export { FormDateRangePicker } from "./form-date-range-picker";
+export { FormSwitch } from "./form-switch";
 export {
   FormSwaggerEndpointSelector,
   encodeEndpoint,

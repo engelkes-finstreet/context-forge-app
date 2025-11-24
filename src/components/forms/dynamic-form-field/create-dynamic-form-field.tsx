@@ -12,6 +12,7 @@ import { FormSelect } from "@/components/forms/fields/form-select";
 import { FormCheckbox } from "@/components/forms/fields/form-checkbox";
 import { FormDatePicker } from "@/components/forms/fields/form-date-picker";
 import { FormDateRangePicker } from "@/components/forms/fields/form-date-range-picker";
+import { FormSwitch } from "@/components/forms/fields/form-switch";
 import { useFormConfig } from "@/components/forms/form";
 import { getFormFieldConfig } from "@/components/forms/utils/get-form-field-config";
 import React from "react";
@@ -41,6 +42,7 @@ const defaultComponents: Partial<
   [BaseField.CHECKBOX]: FormCheckbox,
   [BaseField.DATE_PICKER]: FormDatePicker,
   [BaseField.DATE_RANGE_PICKER]: FormDateRangePicker,
+  [BaseField.SWITCH]: FormSwitch,
 };
 
 // Factory function to create DynamicFormField with custom components

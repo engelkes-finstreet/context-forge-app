@@ -26,6 +26,8 @@ import {
   RequestSubtaskDisplay,
   PresentationListSubtaskDisplay,
   ListActionsSubtaskDisplay,
+  SimpleFormSubtaskDisplay,
+  PageSubtaskDisplay,
 } from "@/features/subtasks/components/display";
 import { SubtaskType } from "@prisma/client";
 import { DeleteSubtaskButton } from "@/features/subtasks/components/delete-subtask-button";
@@ -143,6 +145,22 @@ export default async function SubtaskDetailPage({
       case SubtaskType.LIST_ACTIONS_AND_PAGINATION:
         return (
           <ListActionsSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as any}
+          />
+        );
+
+      case SubtaskType.SIMPLE_FORM:
+        return (
+          <SimpleFormSubtaskDisplay
+            content={subtask.content}
+            metadata={parsedMetadata as any}
+          />
+        );
+
+      case SubtaskType.PAGE:
+        return (
+          <PageSubtaskDisplay
             content={subtask.content}
             metadata={parsedMetadata as any}
           />

@@ -9,6 +9,7 @@
  */
 
 import { SubtaskType } from "@prisma/client";
+import { PageType } from "@/features/subtasks/forms/page-subtask/use-page-type-options";
 
 // ============================================================================
 // Metadata Interfaces (Discriminated Union)
@@ -97,6 +98,28 @@ export interface ModalMetadata {
 }
 
 /**
+ * Simple Form subtask metadata
+ * Represents a simple form configuration with basic fields
+ */
+export interface SimpleFormMetadata {
+  simpleFormName: string;
+  swaggerPath: string;
+  description: string;
+}
+
+/**
+ * Page subtask metadata
+ * Represents a page configuration with different types (inquiry or portal)
+ */
+export interface PageMetadata {
+  pageType: PageType;
+  translations: {
+    title: string;
+    description?: string; // Only for inquiry pages
+  };
+}
+
+/**
  * Discriminated union of all subtask metadata types
  * TypeScript will narrow the type based on the `type` field
  */
@@ -104,7 +127,9 @@ export type SubtaskMetadata =
   | GenericMetadata
   | InquiryProcessMetadata
   | FormMetadata
-  | ModalMetadata;
+  | ModalMetadata
+  | SimpleFormMetadata
+  | PageMetadata;
 
 // ============================================================================
 // Helper Functions
