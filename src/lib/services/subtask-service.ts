@@ -61,12 +61,21 @@ export class SubtaskService {
       const order =
         data.order ?? (maxOrderSubtask ? maxOrderSubtask.order + 1 : 0);
 
-      return db.subtask.create({
-        data: {
-          ...data,
-          order,
-        },
-      });
+      // Create subtask and set parent task status to OPEN in a transaction
+      const [subtask] = await db.$transaction([
+        db.subtask.create({
+          data: {
+            ...data,
+            order,
+          },
+        }),
+        db.task.update({
+          where: { id: data.taskId },
+          data: { status: "OPEN" },
+        }),
+      ]);
+
+      return subtask;
     });
   }
 
