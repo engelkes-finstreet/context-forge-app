@@ -7,6 +7,7 @@ import { PageContent } from "@/components/ui/page-content";
 import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
+import { SubtaskTypeIcon } from "@/features/subtasks/components/subtask-type-icon";
 import { SubtaskType } from "@prisma/client";
 import { UpdateRequestSubtaskForm } from "@/features/subtasks/forms/request-subtask/update/update-request-subtask-form";
 import { ProjectService } from "@/lib/services/project-service";
@@ -113,8 +114,9 @@ export default async function EditSubtaskPage({
         <div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold text-gradient">Edit Subtask</h1>
-            <Badge variant={typeConfig.badgeVariant}>
-              {typeConfig.icon} {typeConfig.label}
+            <Badge variant={typeConfig.badgeVariant} className="flex items-center gap-1">
+              <SubtaskTypeIcon type={subtask.type} />
+              {typeConfig.label}
             </Badge>
           </div>
           <p className="text-muted-foreground">

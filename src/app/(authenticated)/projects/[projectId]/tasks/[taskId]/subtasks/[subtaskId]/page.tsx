@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
+import { SubtaskTypeIcon } from "@/features/subtasks/components/subtask-type-icon";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Status } from "@prisma/client";
 import {
@@ -195,8 +196,9 @@ export default async function SubtaskDetailPage({
               {statusConfig.icon}
               {statusConfig.label}
             </Badge>
-            <Badge variant={typeConfig.badgeVariant}>
-              {typeConfig.icon} {typeConfig.label}
+            <Badge variant={typeConfig.badgeVariant} className="flex items-center gap-1">
+              <SubtaskTypeIcon type={subtask.type} />
+              {typeConfig.label}
             </Badge>
           </div>
           <p className="text-muted-foreground">Task: {subtask.task.name}</p>

@@ -41,6 +41,7 @@ import { GripVertical, CheckCircle2, Circle, Clock } from "lucide-react";
 import { TypedLink } from "@/lib/routes";
 import { routes } from "@/lib/routes";
 import { getTypeConfig } from "@/features/subtasks/config/type-config";
+import { SubtaskTypeIcon } from "@/features/subtasks/components/subtask-type-icon";
 import { toast } from "@/lib/toast";
 import { Subtask, Status } from "@prisma/client";
 import { reorderSubtasksAction } from "@/features/subtasks/actions/reorder-subtasks-action";
@@ -166,8 +167,9 @@ function SortableSubtaskItem({
                       {statusConfig.icon}
                       {statusConfig.label}
                     </Badge>
-                    <Badge variant={typeConfig.badgeVariant}>
-                      {typeConfig.icon} {typeConfig.label}
+                    <Badge variant={typeConfig.badgeVariant} className="flex items-center gap-1">
+                      <SubtaskTypeIcon type={subtask.type} />
+                      {typeConfig.label}
                     </Badge>
                   </div>
                 </div>
