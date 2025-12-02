@@ -47,13 +47,18 @@ export function useSignInFormConfig(): ClientFormConfig<SignInType> {
     hideActions: true,
     formId: signInFormId,
     onSubmit: async (data) => {
-      await authClient.signIn.email({
-        email: data.email,
-        password: data.password,
-      });
+      try {
+        await authClient.signIn.email({
+          email: data.email,
+          password: data.password,
+        });
 
-      toast.success("Signed in successfully");
-      router.push(routes.home.path({}));
+        toast.success("Signed in successfully");
+        router.push(routes.home.path({}));
+      } catch (error) {
+        console.error(error);
+        toast.error("Invalid email or password");
+      }
     },
     renderFormActions: (isPending: boolean) => {
       return (

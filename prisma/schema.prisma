@@ -131,6 +131,7 @@ enum SubtaskType {
   LIST_ACTIONS_AND_PAGINATION
   SIMPLE_FORM
   PAGE
+  OVERVIEW
 }
 
 model Subtask {

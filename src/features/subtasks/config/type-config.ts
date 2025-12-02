@@ -148,6 +148,17 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     category: "navigation",
     badgeVariant: "secondary",
   },
+
+  [SubtaskType.OVERVIEW]: {
+    type: SubtaskType.OVERVIEW,
+    label: "Overview",
+    description: "Overview of the task",
+    icon: "LayoutGrid",
+    route: "overview",
+    enabled: true,
+    category: "navigation",
+    badgeVariant: "secondary",
+  },
 };
 
 /**
