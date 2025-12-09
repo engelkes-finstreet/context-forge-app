@@ -3,8 +3,8 @@ import { z } from "zod";
 const modalMetadataSchema = z.object({
   dataTypes: z.array(
     z.object({
-      keyName: z.string().min(1, "Key name is required"),
-      dataType: z.string().min(1, "Data type is required"),
+      keyName: z.string().optional(),
+      dataType: z.string().optional(),
     }),
   ),
   withOpenButton: z.boolean(),

@@ -149,8 +149,8 @@ export const SUBTASK_TYPE_CONFIG: Record<SubtaskType, SubtaskTypeConfig> = {
     badgeVariant: "secondary",
   },
 
-  [SubtaskType.OVERVIEW]: {
-    type: SubtaskType.OVERVIEW,
+  [SubtaskType.TASK_GROUP]: {
+    type: SubtaskType.TASK_GROUP,
     label: "Overview",
     description: "Overview of the task",
     icon: "LayoutGrid",

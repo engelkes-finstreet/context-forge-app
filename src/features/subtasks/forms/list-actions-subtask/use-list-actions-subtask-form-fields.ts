@@ -24,11 +24,6 @@ export function useCreateListActionsSubtaskFormFields({
       placeholder: "Enter list actions name",
     },
     metadata: {
-      pagePath: {
-        type: "input",
-        label: "Page Path",
-        placeholder: "Enter page path",
-      },
       withSearch: {
         type: "checkbox",
         label: "With Search",

@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const listActionsMetadataSchema = z.object({
-  pagePath: z.string().min(1, "Page path is required"),
   withSearch: z.boolean(),
   withSort: z.boolean(),
   withGrouping: z.boolean(),

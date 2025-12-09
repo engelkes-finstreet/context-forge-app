@@ -99,7 +99,7 @@ export function useCreateFormSubtaskFormFields(): FormFieldsType<CreateFormSubta
           placeholder: "Select variant",
           options: [
             { label: "Default", value: "default" },
-            { label: "Likert Scale", value: "likert-scale" },
+            { label: "Likert Scale", value: "likert" },
           ],
         },
         selectItems: {

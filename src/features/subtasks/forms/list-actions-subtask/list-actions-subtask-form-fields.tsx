@@ -14,7 +14,6 @@ export const ListActionsSubtaskFormFields = ({ fieldNames }: Props) => {
       <FieldSet>
         <FieldLegend>Basic Information</FieldLegend>
         <DynamicFormField fieldName={fieldNames.listActionsName} />
-        <DynamicFormField fieldName={fieldNames.metadata.pagePath} />
       </FieldSet>
 
       <FieldSet>

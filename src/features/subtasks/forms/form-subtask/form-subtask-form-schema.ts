@@ -44,7 +44,7 @@ const radioFieldSchema = baseFieldSchema.extend({
       value: z.string().min(1, "Value is required"),
     }),
   ),
-  variant: z.enum(["default", "likert-scale"]).default("default"),
+  variant: z.enum(["default", "likert"]).default("default"),
 });
 
 const yesNoRadioSchema = baseFieldSchema.extend({
@@ -55,8 +55,8 @@ const selectFieldSchema = baseFieldSchema.extend({
   fieldType: z.literal("select"),
   selectItems: z.array(
     z.object({
-      label: z.string().min(1, "Label is required"),
-      value: z.string().min(1, "Value is required"),
+      label: z.string().optional(),
+      value: z.string().optional(),
     }),
   ),
 });
